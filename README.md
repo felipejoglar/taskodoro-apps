@@ -1,4 +1,6 @@
 # Taskodoro
+[![Android CI](https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml/badge.svg)](https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml)
+[![iOS CI](https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml/badge.svg)](https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml)
 
 A productivity app made with Kotlin Multiplatform
 
