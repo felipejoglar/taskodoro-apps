@@ -24,13 +24,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew :apps:android:assemble
+        run: ./gradlew :tasks:assemble
 
       - name: Run Unit tests
-        run: ./gradlew :apps:android:test
-
-      - name: Run UI Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: ./gradlew :apps:android:connectedAndroidTest
+        run: ./gradlew :tasks:allTests
