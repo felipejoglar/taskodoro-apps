@@ -14,16 +14,18 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+package com.taskodoro.tasks.domain
+
+import com.taskodoro.tasks.domain.model.Task
+import kotlinx.coroutines.flow.Flow
+
+interface GetTasksUseCase {
+    operator fun invoke(): Flow<List<Task>>
 }
 
-rootProject.name = "Taskodoro"
+class GetTasks(
+    private val loadTasks: () -> Flow<List<Task>>
+) : GetTasksUseCase {
 
-include(":apps:android:taskodoro")
-
-include(":tasks:domain")
+    override fun invoke(): Flow<List<Task>> = loadTasks()
+}
