@@ -24,7 +24,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew :tasks:assemble
+        run: ./gradlew multiplatformBuild
 
       - name: Run Unit tests
-        run: ./gradlew :tasks:allTests
+        run: ./gradlew multiplatformTest
