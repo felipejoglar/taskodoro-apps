@@ -14,16 +14,8 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.tasks.domain.model
 
-rootProject.name = "Taskodoro"
-
-include(":apps:android:taskodoro")
-
-include(":tasks:domain")
+data class Task(
+    val title: String
+)

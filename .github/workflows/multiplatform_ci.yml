@@ -1,4 +1,4 @@
-name: Android CI
+name: Multiplatform CI
 
 on:
   push:
@@ -24,13 +24,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew androidBuild
+        run: ./gradlew multiplatformBuild
 
       - name: Run Unit tests
-        run: ./gradlew androidTest
-
-      - name: Run UI Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: ./gradlew androidUiTest
+        run: ./gradlew multiplatformTest
