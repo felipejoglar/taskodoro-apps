@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.domain.model
+package com.taskodoro.tasks.model
 
 data class Task(
     val title: String

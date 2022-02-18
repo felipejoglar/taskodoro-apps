@@ -28,20 +28,14 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "Tasks"
+            baseName = "TasksModel"
         }
     }
 
     sourceSets {
 
         /* Main source sets */
-        val commonMain by getting {
-            dependencies {
-                implementation(projects.tasks.model)
-
-                implementation(libs.kotlinx.coroutines)
-            }
-        }
+        val commonMain by getting
         val jvmMain by getting
         val nativeMain by creating
         val iosMain by creating
@@ -58,12 +52,7 @@ kotlin {
         iosSimulatorArm64Main.dependsOn(iosMain)
 
         /* Test source sets */
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-                implementation(libs.kotlinx.coroutines.test)
-            }
-        }
+        val commonTest by getting
         val jvmTest by getting
         val iosArm64Test by getting
         val iosX64Test by getting
@@ -78,11 +67,5 @@ kotlin {
         iosArm64Test.dependsOn(iosTest)
         iosX64Test.dependsOn(iosTest)
         iosSimulatorArm64Test.dependsOn(iosTest)
-    }
-
-    sourceSets.matching { it.name.endsWith("Test") }.all {
-        languageSettings {
-            optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
-        }
     }
 }
