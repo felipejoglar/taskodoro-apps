@@ -37,7 +37,7 @@ kotlin {
         /* Main source sets */
         val commonMain by getting {
             dependencies {
-                implementation(libs.kotlin.coroutines)
+                implementation(libs.kotlinx.coroutines)
             }
         }
         val jvmMain by getting
@@ -59,7 +59,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
-                implementation(libs.kotlin.coroutines.test)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
         val jvmTest by getting
