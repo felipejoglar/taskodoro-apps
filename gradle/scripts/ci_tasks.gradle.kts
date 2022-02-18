@@ -43,8 +43,12 @@ tasks.register("multiplatformBuild") {
     group = "build"
     description = "Assembles the outputs of all multiplatform modules."
 
+    dependsOn("tasks:model:clean")
+    dependsOn("tasks:model:assemble")
     dependsOn("tasks:domain:clean")
     dependsOn("tasks:domain:assemble")
+    dependsOn("tasks:data:clean")
+    dependsOn("tasks:data:assemble")
 }
 tasks.register("multiplatformTest") {
     group = "verification"
@@ -52,4 +56,6 @@ tasks.register("multiplatformTest") {
 
     dependsOn("tasks:domain:clean")
     dependsOn("tasks:domain:allTests")
+    dependsOn("tasks:data:clean")
+    dependsOn("tasks:data:allTests")
 }

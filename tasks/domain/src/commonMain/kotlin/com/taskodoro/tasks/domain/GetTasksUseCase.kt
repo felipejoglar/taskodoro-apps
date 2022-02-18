@@ -16,7 +16,7 @@
 
 package com.taskodoro.tasks.domain
 
-import com.taskodoro.tasks.domain.model.Task
+import com.taskodoro.tasks.model.Task
 import kotlinx.coroutines.flow.Flow
 
 interface GetTasksUseCase {

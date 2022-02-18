@@ -14,32 +14,29 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.tasks.data.datasources
 
-rootProject.name = "Taskodoro"
+import com.taskodoro.tasks.data.TaskLocalDataSource
+import com.taskodoro.tasks.model.Task
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-include(":apps:android:taskodoro")
+class InMemoryTaskDataSource : TaskLocalDataSource {
 
-include(":tasks:model")
-include(":tasks:domain")
-include(":tasks:data")
+    override fun getAllTasks(): Flow<List<Task>> = flow {
+        emit(
+            List(20) {
+                Task(title = "Task $it title")
+            }
+        )
 
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+        delay(5_000)
 
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
+        emit(
+            List(20) {
+                Task(title = "Task ${it * 2} title")
+            }
+        )
     }
 }

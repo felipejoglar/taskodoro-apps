@@ -14,32 +14,8 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.tasks.model
 
-rootProject.name = "Taskodoro"
-
-include(":apps:android:taskodoro")
-
-include(":tasks:model")
-include(":tasks:domain")
-include(":tasks:data")
-
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}
+data class Task(
+    val title: String
+)

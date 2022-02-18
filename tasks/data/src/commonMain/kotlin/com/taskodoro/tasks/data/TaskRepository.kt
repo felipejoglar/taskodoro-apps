@@ -14,8 +14,17 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.domain.model
+package com.taskodoro.tasks.data
 
-data class Task(
-    val title: String
-)
+import com.taskodoro.tasks.model.Task
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+
+class TaskRepository(
+    private val localDataSource: TaskLocalDataSource,
+) {
+
+    fun getTasks(): Flow<List<Task>> = localDataSource.getAllTasks()
+}
+

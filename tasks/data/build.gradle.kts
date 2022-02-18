@@ -16,11 +16,12 @@
 
 plugins {
     kotlin("multiplatform")
+    id("com.android.library")
 }
 
 kotlin {
 
-    jvm()
+    android()
 
     listOf(
         iosArm64(),
@@ -28,7 +29,7 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "Tasks"
+            baseName = "TasksData"
         }
     }
 
@@ -42,7 +43,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines)
             }
         }
-        val jvmMain by getting
+        val androidMain by getting
         val nativeMain by creating
         val iosMain by creating
         val iosArm64Main by getting
@@ -50,7 +51,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
 
         /* Main hierarchy */
-        jvmMain.dependsOn(commonMain)
+        androidMain.dependsOn(commonMain)
         nativeMain.dependsOn(commonMain)
         iosMain.dependsOn(nativeMain)
         iosX64Main.dependsOn(iosMain)
@@ -64,7 +65,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.test)
             }
         }
-        val jvmTest by getting
+        val androidTest by getting
         val iosArm64Test by getting
         val iosX64Test by getting
         val iosSimulatorArm64Test by getting
@@ -72,7 +73,7 @@ kotlin {
         val nativeTest by creating
 
         /* Test hierarchy */
-        jvmTest.dependsOn(commonTest)
+        androidTest.dependsOn(commonTest)
         nativeTest.dependsOn(commonTest)
         iosTest.dependsOn(nativeTest)
         iosArm64Test.dependsOn(iosTest)
@@ -84,5 +85,15 @@ kotlin {
         languageSettings {
             optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
+    }
+}
+
+android {
+    compileSdk = config.versions.compileSdk.get().toInt()
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
+    defaultConfig {
+        minSdk = config.versions.minSdk.get().toInt()
+        targetSdk = config.versions.targetSdk.get().toInt()
     }
 }
