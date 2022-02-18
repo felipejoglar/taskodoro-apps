@@ -23,8 +23,8 @@ kotlin {
     jvm()
 
     listOf(
-        iosX64(),
         iosArm64(),
+        iosX64(),
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
@@ -37,20 +37,18 @@ kotlin {
         /* Main source sets */
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.1")
+                implementation(libs.kotlin.coroutines)
             }
         }
         val jvmMain by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating
         val nativeMain by creating
+        val iosMain by creating
+        val iosArm64Main by getting
+        val iosX64Main by getting
+        val iosSimulatorArm64Main by getting
 
         /* Main hierarchy */
         jvmMain.dependsOn(commonMain)
-
         nativeMain.dependsOn(commonMain)
         iosMain.dependsOn(nativeMain)
         iosX64Main.dependsOn(iosMain)
@@ -60,24 +58,23 @@ kotlin {
         /* Test source sets */
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlin.coroutines.test)
             }
         }
         val jvmTest by getting
-        val nativeTest by creating
-        val iosX64Test by getting
         val iosArm64Test by getting
+        val iosX64Test by getting
         val iosSimulatorArm64Test by getting
         val iosTest by creating
+        val nativeTest by creating
 
         /* Test hierarchy */
         jvmTest.dependsOn(commonTest)
-
         nativeTest.dependsOn(commonTest)
         iosTest.dependsOn(nativeTest)
-        iosX64Test.dependsOn(iosTest)
         iosArm64Test.dependsOn(iosTest)
+        iosX64Test.dependsOn(iosTest)
         iosSimulatorArm64Test.dependsOn(iosTest)
     }
 

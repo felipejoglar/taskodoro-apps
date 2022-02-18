@@ -27,3 +27,16 @@ rootProject.name = "Taskodoro"
 include(":apps:android:taskodoro")
 
 include(":tasks:domain")
+
+enableFeaturePreview("VERSION_CATALOGS")
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("config") {
+            from(files("gradle/catalogs/config.versions.toml"))
+        }
+        create("libs") {
+            from(files("gradle/catalogs/libs.versions.toml"))
+        }
+    }
+}
