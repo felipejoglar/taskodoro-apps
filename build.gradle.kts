@@ -15,6 +15,7 @@
  */
 
 buildscript {
+    apply(from = "gradle/scripts/ci_tasks.gradle.kts")
 
     repositories {
         gradlePluginPortal()
@@ -23,9 +24,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-        classpath("com.android.tools.build:gradle:7.1.1")
-        classpath("com.squareup.sqldelight:gradle-plugin:1.5.3")
+        classpath(libs.kotlinGradle)
+        classpath(libs.androidBuildTools)
     }
 }
 
@@ -34,29 +34,4 @@ allprojects {
         google()
         mavenCentral()
     }
-}
-
-tasks.register("androidBuild") {
-    dependsOn("apps:android:taskodoro:clean")
-    dependsOn("apps:android:taskodoro:assemble")
-}
-
-tasks.register("androidTest") {
-    dependsOn("apps:android:taskodoro:clean")
-    dependsOn("apps:android:taskodoro:test")
-}
-
-tasks.register("androidUiTest") {
-    dependsOn("apps:android:taskodoro:clean")
-    dependsOn("apps:android:taskodoro:connectedAndroidTest")
-}
-
-tasks.register("multiplatformBuild") {
-    dependsOn("tasks:domain:clean")
-    dependsOn("tasks:domain:assemble")
-}
-
-tasks.register("multiplatformTest") {
-    dependsOn("tasks:domain:clean")
-    dependsOn("tasks:domain:allTests")
 }
