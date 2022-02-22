@@ -18,7 +18,6 @@ package com.taskodoro.tasks.data.datasources
 
 import com.taskodoro.tasks.data.TaskLocalDataSource
 import com.taskodoro.tasks.model.Task
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -28,14 +27,6 @@ class InMemoryTaskDataSource : TaskLocalDataSource {
         emit(
             List(20) {
                 Task(title = "Task $it title")
-            }
-        )
-
-        delay(5_000)
-
-        emit(
-            List(20) {
-                Task(title = "Task ${it * 2} title")
             }
         )
     }
