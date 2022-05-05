@@ -15,16 +15,32 @@
 //
 
 import SwiftUI
+import Tasks
 
-struct ContentView: View {
+struct TasksScreen: View {
+    @ObservedObject var viewModel: TasksViewModel
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TasksContent(tasks: viewModel.tasks)
+        .onAppear {
+            viewModel.getTasks()
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+struct TasksContent: View {
+    let tasks: [Task]
+    
+    var body: some View {
+        List(tasks) { task in
+            Text(task.title)
+                .padding()
+        }
+        .listStyle(.plain)
     }
 }
+
+extension Task : Identifiable {}
+
+
+

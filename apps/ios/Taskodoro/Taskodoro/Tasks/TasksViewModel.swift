@@ -13,18 +13,23 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+        
 
-import SwiftUI
+import Foundation
 import Tasks
 
-@main
-struct TaskodoroApp: App {
+class TasksViewModel: ObservableObject {
+    @Published var tasks = [Task]()
     
-    var body: some Scene {
-        WindowGroup {
-            let repository = TaskRepository(localDataSource: InMemoryTaskDataSource())
-            let viewModel = TasksViewModel(repository)
-            TasksScreen(viewModel: viewModel)
+    private let repository: TaskRepository
+    
+    init(_ repository: TaskRepository) {
+        self.repository = repository
+    }
+    
+    func getTasks() {
+        repository.getTasks { [weak self] tasks, _ in
+            self?.tasks = tasks ?? []
         }
     }
 }
