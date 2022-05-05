@@ -14,8 +14,18 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.model
+package com.taskodoro.tasks
 
-data class Task(
-    val title: String
-)
+import com.taskodoro.tasks.model.Task
+import kotlinx.coroutines.flow.Flow
+
+interface GetTasksUseCase {
+    operator fun invoke(): Flow<List<Task>>
+}
+
+class GetTasks(
+    private val loadTasks: () -> Flow<List<Task>>
+) : GetTasksUseCase {
+
+    override fun invoke(): Flow<List<Task>> = loadTasks()
+}

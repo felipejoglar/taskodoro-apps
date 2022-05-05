@@ -55,7 +55,8 @@ fun TaskItem(task: Task) {
     Text(
         text = task.title,
         style = MaterialTheme.typography.h5,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     )
 }

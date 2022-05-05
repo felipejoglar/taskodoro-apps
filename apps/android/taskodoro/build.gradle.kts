@@ -65,9 +65,7 @@ android {
 
 dependencies {
 
-    implementation(projects.tasks.model)
-    implementation(projects.tasks.domain)
-    implementation(projects.tasks.data)
+    implementation(projects.tasks)
 
     implementation(libs.androidx.core)
 

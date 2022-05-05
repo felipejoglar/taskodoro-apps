@@ -18,7 +18,7 @@ package com.taskodoro.android.app.tasks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.taskodoro.tasks.domain.GetTasksUseCase
+import com.taskodoro.tasks.GetTasksUseCase
 import com.taskodoro.tasks.model.Task
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

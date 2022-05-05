@@ -16,12 +16,11 @@
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
 }
 
 kotlin {
 
-    android()
+    jvm()
 
     listOf(
         iosArm64(),
@@ -29,7 +28,7 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "TasksData"
+            baseName = "Tasks"
         }
     }
 
@@ -38,12 +37,10 @@ kotlin {
         /* Main source sets */
         val commonMain by getting {
             dependencies {
-                implementation(projects.tasks.model)
-
                 implementation(libs.kotlinx.coroutines)
             }
         }
-        val androidMain by getting
+        val jvmMain by getting
         val nativeMain by creating
         val iosMain by creating
         val iosArm64Main by getting
@@ -51,7 +48,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
 
         /* Main hierarchy */
-        androidMain.dependsOn(commonMain)
+        jvmMain.dependsOn(commonMain)
         nativeMain.dependsOn(commonMain)
         iosMain.dependsOn(nativeMain)
         iosX64Main.dependsOn(iosMain)
@@ -65,7 +62,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.test)
             }
         }
-        val androidTest by getting
+        val jvmTest by getting
         val iosArm64Test by getting
         val iosX64Test by getting
         val iosSimulatorArm64Test by getting
@@ -73,7 +70,7 @@ kotlin {
         val nativeTest by creating
 
         /* Test hierarchy */
-        androidTest.dependsOn(commonTest)
+        jvmTest.dependsOn(commonTest)
         nativeTest.dependsOn(commonTest)
         iosTest.dependsOn(nativeTest)
         iosArm64Test.dependsOn(iosTest)
@@ -85,15 +82,5 @@ kotlin {
         languageSettings {
             optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
-    }
-}
-
-android {
-    compileSdk = config.versions.compileSdk.get().toInt()
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-    defaultConfig {
-        minSdk = config.versions.minSdk.get().toInt()
-        targetSdk = config.versions.targetSdk.get().toInt()
     }
 }

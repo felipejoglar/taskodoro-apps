@@ -19,8 +19,8 @@ package com.taskodoro.android.app.di
 import com.taskodoro.android.app.tasks.TasksViewModel
 import com.taskodoro.tasks.data.TaskRepository
 import com.taskodoro.tasks.data.datasources.InMemoryTaskDataSource
-import com.taskodoro.tasks.domain.GetTasks
-import com.taskodoro.tasks.domain.GetTasksUseCase
+import com.taskodoro.tasks.GetTasks
+import com.taskodoro.tasks.GetTasksUseCase
 
 object TasksComposer {
 

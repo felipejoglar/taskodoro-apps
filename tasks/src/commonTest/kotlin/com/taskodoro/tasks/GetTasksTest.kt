@@ -14,16 +14,16 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.domain
+package com.taskodoro.tasks
 
 import com.taskodoro.tasks.model.Task
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFails
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
 
 internal class GetTasksTest {
 
