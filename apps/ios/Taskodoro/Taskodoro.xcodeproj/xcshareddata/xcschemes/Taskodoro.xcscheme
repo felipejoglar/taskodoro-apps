@@ -26,25 +26,27 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "88CC304427B3D5B300D08D2C"
+            BuildableName = "Taskodoro.app"
+            BlueprintName = "Taskodoro"
+            ReferencedContainer = "container:Taskodoro.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "88CC305427B3D5B600D08D2C"
+               BlueprintIdentifier = "885952A42823E682004CC870"
                BuildableName = "TaskodoroTests.xctest"
                BlueprintName = "TaskodoroTests"
-               ReferencedContainer = "container:Taskodoro.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "88CC305E27B3D5B600D08D2C"
-               BuildableName = "TaskodoroUITests.xctest"
-               BlueprintName = "TaskodoroUITests"
                ReferencedContainer = "container:Taskodoro.xcodeproj">
             </BuildableReference>
          </TestableReference>

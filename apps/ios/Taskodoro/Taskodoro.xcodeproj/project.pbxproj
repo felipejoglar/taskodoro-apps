@@ -7,25 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		885952A82823E682004CC870 /* TaskodoroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885952A72823E682004CC870 /* TaskodoroTests.swift */; };
 		88CC304927B3D5B300D08D2C /* TaskodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC304827B3D5B300D08D2C /* TaskodoroApp.swift */; };
 		88CC304B27B3D5B300D08D2C /* TasksScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC304A27B3D5B300D08D2C /* TasksScreen.swift */; };
 		88CC304D27B3D5B600D08D2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CC304C27B3D5B600D08D2C /* Assets.xcassets */; };
 		88CC305027B3D5B600D08D2C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CC304F27B3D5B600D08D2C /* Preview Assets.xcassets */; };
-		88CC305A27B3D5B600D08D2C /* TaskodoroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC305927B3D5B600D08D2C /* TaskodoroTests.swift */; };
-		88CC306427B3D5B700D08D2C /* TaskodoroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC306327B3D5B700D08D2C /* TaskodoroUITests.swift */; };
-		88CC306627B3D5B700D08D2C /* TaskodoroUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC306527B3D5B700D08D2C /* TaskodoroUITestsLaunchTests.swift */; };
 		B19DA0D628232A4E002C433A /* TasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19DA0D528232A4E002C433A /* TasksViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		88CC305627B3D5B600D08D2C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88CC303D27B3D5B300D08D2C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 88CC304427B3D5B300D08D2C;
-			remoteInfo = Taskodoro;
-		};
-		88CC306027B3D5B600D08D2C /* PBXContainerItemProxy */ = {
+		885952A92823E682004CC870 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88CC303D27B3D5B300D08D2C /* Project object */;
 			proxyType = 1;
@@ -35,35 +26,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		885952A52823E682004CC870 /* TaskodoroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskodoroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		885952A72823E682004CC870 /* TaskodoroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskodoroTests.swift; sourceTree = "<group>"; };
 		88CC304527B3D5B300D08D2C /* Taskodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taskodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CC304827B3D5B300D08D2C /* TaskodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskodoroApp.swift; sourceTree = "<group>"; };
 		88CC304A27B3D5B300D08D2C /* TasksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreen.swift; sourceTree = "<group>"; };
 		88CC304C27B3D5B600D08D2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88CC304F27B3D5B600D08D2C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		88CC305527B3D5B600D08D2C /* TaskodoroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskodoroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		88CC305927B3D5B600D08D2C /* TaskodoroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskodoroTests.swift; sourceTree = "<group>"; };
-		88CC305F27B3D5B600D08D2C /* TaskodoroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskodoroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		88CC306327B3D5B700D08D2C /* TaskodoroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskodoroUITests.swift; sourceTree = "<group>"; };
-		88CC306527B3D5B700D08D2C /* TaskodoroUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskodoroUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B19DA0D528232A4E002C433A /* TasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		885952A22823E682004CC870 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88CC304227B3D5B300D08D2C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88CC305227B3D5B600D08D2C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88CC305C27B3D5B600D08D2C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -73,12 +54,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		885952A62823E682004CC870 /* TaskodoroTests */ = {
+			isa = PBXGroup;
+			children = (
+				885952A72823E682004CC870 /* TaskodoroTests.swift */,
+			);
+			path = TaskodoroTests;
+			sourceTree = "<group>";
+		};
 		88CC303C27B3D5B300D08D2C = {
 			isa = PBXGroup;
 			children = (
 				88CC304727B3D5B300D08D2C /* Taskodoro */,
-				88CC305827B3D5B600D08D2C /* TaskodoroTests */,
-				88CC306227B3D5B700D08D2C /* TaskodoroUITests */,
+				885952A62823E682004CC870 /* TaskodoroTests */,
 				88CC304627B3D5B300D08D2C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,8 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				88CC304527B3D5B300D08D2C /* Taskodoro.app */,
-				88CC305527B3D5B600D08D2C /* TaskodoroTests.xctest */,
-				88CC305F27B3D5B600D08D2C /* TaskodoroUITests.xctest */,
+				885952A52823E682004CC870 /* TaskodoroTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,23 +99,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		88CC305827B3D5B600D08D2C /* TaskodoroTests */ = {
-			isa = PBXGroup;
-			children = (
-				88CC305927B3D5B600D08D2C /* TaskodoroTests.swift */,
-			);
-			path = TaskodoroTests;
-			sourceTree = "<group>";
-		};
-		88CC306227B3D5B700D08D2C /* TaskodoroUITests */ = {
-			isa = PBXGroup;
-			children = (
-				88CC306327B3D5B700D08D2C /* TaskodoroUITests.swift */,
-				88CC306527B3D5B700D08D2C /* TaskodoroUITestsLaunchTests.swift */,
-			);
-			path = TaskodoroUITests;
-			sourceTree = "<group>";
-		};
 		B19DA0D4282329CC002C433A /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +111,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		885952A42823E682004CC870 /* TaskodoroTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 885952AB2823E682004CC870 /* Build configuration list for PBXNativeTarget "TaskodoroTests" */;
+			buildPhases = (
+				885952A12823E682004CC870 /* Sources */,
+				885952A22823E682004CC870 /* Frameworks */,
+				885952A32823E682004CC870 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				885952AA2823E682004CC870 /* PBXTargetDependency */,
+			);
+			name = TaskodoroTests;
+			productName = TaskodoroTests;
+			productReference = 885952A52823E682004CC870 /* TaskodoroTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		88CC304427B3D5B300D08D2C /* Taskodoro */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88CC306927B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "Taskodoro" */;
@@ -159,42 +147,6 @@
 			productReference = 88CC304527B3D5B300D08D2C /* Taskodoro.app */;
 			productType = "com.apple.product-type.application";
 		};
-		88CC305427B3D5B600D08D2C /* TaskodoroTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 88CC306C27B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "TaskodoroTests" */;
-			buildPhases = (
-				88CC305127B3D5B600D08D2C /* Sources */,
-				88CC305227B3D5B600D08D2C /* Frameworks */,
-				88CC305327B3D5B600D08D2C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				88CC305727B3D5B600D08D2C /* PBXTargetDependency */,
-			);
-			name = TaskodoroTests;
-			productName = TaskodoroTests;
-			productReference = 88CC305527B3D5B600D08D2C /* TaskodoroTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		88CC305E27B3D5B600D08D2C /* TaskodoroUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 88CC306F27B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "TaskodoroUITests" */;
-			buildPhases = (
-				88CC305B27B3D5B600D08D2C /* Sources */,
-				88CC305C27B3D5B600D08D2C /* Frameworks */,
-				88CC305D27B3D5B600D08D2C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				88CC306127B3D5B600D08D2C /* PBXTargetDependency */,
-			);
-			name = TaskodoroUITests;
-			productName = TaskodoroUITests;
-			productReference = 88CC305F27B3D5B600D08D2C /* TaskodoroUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -202,19 +154,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					885952A42823E682004CC870 = {
+						CreatedOnToolsVersion = 13.3;
+						TestTargetID = 88CC304427B3D5B300D08D2C;
+					};
 					88CC304427B3D5B300D08D2C = {
 						CreatedOnToolsVersion = 13.2.1;
-					};
-					88CC305427B3D5B600D08D2C = {
-						CreatedOnToolsVersion = 13.2.1;
-						TestTargetID = 88CC304427B3D5B300D08D2C;
-					};
-					88CC305E27B3D5B600D08D2C = {
-						CreatedOnToolsVersion = 13.2.1;
-						TestTargetID = 88CC304427B3D5B300D08D2C;
 					};
 				};
 			};
@@ -232,33 +180,25 @@
 			projectRoot = "";
 			targets = (
 				88CC304427B3D5B300D08D2C /* Taskodoro */,
-				88CC305427B3D5B600D08D2C /* TaskodoroTests */,
-				88CC305E27B3D5B600D08D2C /* TaskodoroUITests */,
+				885952A42823E682004CC870 /* TaskodoroTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		885952A32823E682004CC870 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88CC304327B3D5B300D08D2C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				88CC305027B3D5B600D08D2C /* Preview Assets.xcassets in Resources */,
 				88CC304D27B3D5B600D08D2C /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88CC305327B3D5B600D08D2C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88CC305D27B3D5B600D08D2C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +226,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		885952A12823E682004CC870 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				885952A82823E682004CC870 /* TaskodoroTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88CC304127B3D5B300D08D2C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -296,39 +244,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		88CC305127B3D5B600D08D2C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88CC305A27B3D5B600D08D2C /* TaskodoroTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88CC305B27B3D5B600D08D2C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88CC306427B3D5B700D08D2C /* TaskodoroUITests.swift in Sources */,
-				88CC306627B3D5B700D08D2C /* TaskodoroUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		88CC305727B3D5B600D08D2C /* PBXTargetDependency */ = {
+		885952AA2823E682004CC870 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 88CC304427B3D5B300D08D2C /* Taskodoro */;
-			targetProxy = 88CC305627B3D5B600D08D2C /* PBXContainerItemProxy */;
-		};
-		88CC306127B3D5B600D08D2C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 88CC304427B3D5B300D08D2C /* Taskodoro */;
-			targetProxy = 88CC306027B3D5B600D08D2C /* PBXContainerItemProxy */;
+			targetProxy = 885952A92823E682004CC870 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		885952AC2823E682004CC870 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.app.TaskodoroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Taskodoro.app/Taskodoro";
+			};
+			name = Debug;
+		};
+		885952AD2823E682004CC870 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.app.TaskodoroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Taskodoro.app/Taskodoro";
+			};
+			name = Release;
+		};
 		88CC306727B3D5B700D08D2C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -380,7 +340,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -435,7 +395,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -517,81 +477,18 @@
 			};
 			name = Release;
 		};
-		88CC306D27B3D5B700D08D2C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.app.TaskodoroTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Taskodoro.app/Taskodoro";
-			};
-			name = Debug;
-		};
-		88CC306E27B3D5B700D08D2C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.app.TaskodoroTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Taskodoro.app/Taskodoro";
-			};
-			name = Release;
-		};
-		88CC307027B3D5B700D08D2C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.app.TaskodoroUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Taskodoro;
-			};
-			name = Debug;
-		};
-		88CC307127B3D5B700D08D2C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.app.TaskodoroUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Taskodoro;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		885952AB2823E682004CC870 /* Build configuration list for PBXNativeTarget "TaskodoroTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				885952AC2823E682004CC870 /* Debug */,
+				885952AD2823E682004CC870 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		88CC304027B3D5B300D08D2C /* Build configuration list for PBXProject "Taskodoro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -606,24 +503,6 @@
 			buildConfigurations = (
 				88CC306A27B3D5B700D08D2C /* Debug */,
 				88CC306B27B3D5B700D08D2C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		88CC306C27B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "TaskodoroTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88CC306D27B3D5B700D08D2C /* Debug */,
-				88CC306E27B3D5B700D08D2C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		88CC306F27B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "TaskodoroUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88CC307027B3D5B700D08D2C /* Debug */,
-				88CC307127B3D5B700D08D2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
