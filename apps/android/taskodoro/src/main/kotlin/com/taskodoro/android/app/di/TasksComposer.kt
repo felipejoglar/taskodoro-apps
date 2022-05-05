@@ -19,8 +19,7 @@ package com.taskodoro.android.app.di
 import com.taskodoro.android.app.tasks.TasksViewModel
 import com.taskodoro.tasks.data.TaskRepository
 import com.taskodoro.tasks.data.datasources.InMemoryTaskDataSource
-import com.taskodoro.tasks.GetTasks
-import com.taskodoro.tasks.GetTasksUseCase
+import kotlinx.coroutines.Dispatchers
 
 object TasksComposer {
 
@@ -28,12 +27,9 @@ object TasksComposer {
         TaskRepository(localDataSource = InMemoryTaskDataSource())
     }
 
-    private val getTasksUseCase : GetTasksUseCase by lazy {
-        GetTasks(loadTasks = repository::getTasks)
-    }
-
     fun tasksViewModel(): TasksViewModel =
         TasksViewModel(
-            getTasksUseCase = getTasksUseCase
+            getTasks = repository::getTasks,
+            dispatcher = Dispatchers.Main
         )
 }

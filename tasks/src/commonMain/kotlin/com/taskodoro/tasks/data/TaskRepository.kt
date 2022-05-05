@@ -17,12 +17,11 @@
 package com.taskodoro.tasks.data
 
 import com.taskodoro.tasks.model.Task
-import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(
     private val localDataSource: TaskLocalDataSource,
 ) {
 
-    fun getTasks(): Flow<List<Task>> = localDataSource.getAllTasks()
+    suspend fun getTasks(): List<Task> = localDataSource.getAllTasks()
 }
 

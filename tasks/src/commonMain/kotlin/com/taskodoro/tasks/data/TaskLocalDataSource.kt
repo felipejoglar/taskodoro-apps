@@ -17,8 +17,7 @@
 package com.taskodoro.tasks.data
 
 import com.taskodoro.tasks.model.Task
-import kotlinx.coroutines.flow.Flow
 
 interface TaskLocalDataSource {
-    fun getAllTasks(): Flow<List<Task>>
+    suspend fun getAllTasks(): List<Task>
 }
