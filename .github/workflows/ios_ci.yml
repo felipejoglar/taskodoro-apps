@@ -10,7 +10,7 @@ jobs:
     name: Build and Test
     runs-on: macos-12
 
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
