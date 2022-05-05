@@ -77,7 +77,7 @@ internal class GetTasksTest {
     )
 
     private val expectedTasks = List(20) {
-        Task(title = "Task $it title")
+        Task(id = it.toLong(), title = "Task $it title")
     }
 
     private sealed class TestBehaviour {

@@ -26,7 +26,7 @@ class InMemoryTaskDataSource : TaskLocalDataSource {
     override fun getAllTasks(): Flow<List<Task>> = flow {
         emit(
             List(20) {
-                Task(title = "Task $it title")
+                Task(id = it.toLong(), title = "Task $it title")
             }
         )
     }
