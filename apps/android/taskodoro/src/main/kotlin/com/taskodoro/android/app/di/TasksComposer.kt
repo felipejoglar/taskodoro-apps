@@ -14,30 +14,22 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
+package com.taskodoro.android.app.di
+
+import com.taskodoro.android.app.tasks.TasksViewModel
+import com.taskodoro.tasks.data.TaskRepository
+import com.taskodoro.tasks.data.datasources.InMemoryTaskDataSource
+import kotlinx.coroutines.Dispatchers
+
+object TasksComposer {
+
+    private val repository: TaskRepository by lazy {
+        TaskRepository(localDataSource = InMemoryTaskDataSource())
     }
-}
 
-rootProject.name = "Taskodoro"
-
-include(":apps:android:taskodoro")
-
-include(":tasks")
-
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
+    fun tasksViewModel(): TasksViewModel =
+        TasksViewModel(
+            getTasks = repository::getTasks,
+            dispatcher = Dispatchers.Main
+        )
 }

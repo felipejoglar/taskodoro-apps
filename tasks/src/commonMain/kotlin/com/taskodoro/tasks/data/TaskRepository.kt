@@ -14,30 +14,14 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+package com.taskodoro.tasks.data
+
+import com.taskodoro.tasks.model.Task
+
+class TaskRepository(
+    private val localDataSource: TaskLocalDataSource,
+) {
+
+    suspend fun getTasks(): List<Task> = localDataSource.getAllTasks()
 }
 
-rootProject.name = "Taskodoro"
-
-include(":apps:android:taskodoro")
-
-include(":tasks")
-
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}

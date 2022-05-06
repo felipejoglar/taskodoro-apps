@@ -8,7 +8,9 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: macos-latest
+    runs-on: macos-12
+
+    timeout-minutes: 15
 
     steps:
       - name: Checkout

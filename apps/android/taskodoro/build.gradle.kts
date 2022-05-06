@@ -65,6 +65,8 @@ android {
 
 dependencies {
 
+    implementation(projects.tasks)
+
     implementation(libs.androidx.core)
 
     implementation(libs.bundles.androidx.compose)

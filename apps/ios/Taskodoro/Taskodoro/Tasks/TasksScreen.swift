@@ -17,14 +17,30 @@
 import SwiftUI
 import Tasks
 
-@main
-struct TaskodoroApp: App {
+struct TasksScreen: View {
+    @ObservedObject var viewModel: TasksViewModel
     
-    var body: some Scene {
-        WindowGroup {
-            let repository = TaskRepository(localDataSource: InMemoryTaskDataSource())
-            let viewModel = TasksViewModel(repository)
-            TasksScreen(viewModel: viewModel)
+    var body: some View {
+        TasksContent(tasks: viewModel.tasks)
+        .onAppear {
+            viewModel.getTasks()
         }
     }
 }
+
+struct TasksContent: View {
+    let tasks: [Task]
+    
+    var body: some View {
+        List(tasks) { task in
+            Text(task.title)
+                .padding()
+        }
+        .listStyle(.plain)
+    }
+}
+
+extension Task : Identifiable {}
+
+
+

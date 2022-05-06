@@ -14,30 +14,18 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.tasks.data.datasources
 
-rootProject.name = "Taskodoro"
+import com.taskodoro.tasks.data.TaskLocalDataSource
+import com.taskodoro.tasks.model.Task
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-include(":apps:android:taskodoro")
+class InMemoryTaskDataSource : TaskLocalDataSource {
 
-include(":tasks")
-
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
+    override suspend fun getAllTasks(): List<Task> = withContext(Dispatchers.Default) {
+        List(20) {
+            Task(id = it.toLong(), title = "Task $it title")
         }
     }
 }
