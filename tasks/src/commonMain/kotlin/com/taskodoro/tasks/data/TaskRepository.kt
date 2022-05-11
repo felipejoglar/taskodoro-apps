@@ -22,6 +22,6 @@ class TaskRepository(
     private val localDataSource: TaskLocalDataSource,
 ) {
 
-    suspend fun getTasks(): List<Task> = localDataSource.getAllTasks()
+    fun getTasks(): List<Task> = localDataSource.getAllTasks()
 }
 

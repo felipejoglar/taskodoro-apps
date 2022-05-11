@@ -19,5 +19,5 @@ package com.taskodoro.tasks.data
 import com.taskodoro.tasks.model.Task
 
 interface TaskLocalDataSource {
-    suspend fun getAllTasks(): List<Task>
+    fun getAllTasks(): List<Task>
 }

@@ -14,16 +14,18 @@
 //  limitations under the License.
 //
 
-import SwiftUI
 
-@main
-struct TaskodoroApp: App {
+import Foundation
+import Tasks
+
+final class TasksUIComposer {
+    private init() {}
     
-    private let tasksViewModel = TasksUIComposer.makeTasksViewModel()
-    
-    var body: some Scene {
-        WindowGroup {
-            TasksScreen(viewModel: tasksViewModel)
-        }
+    static func makeTasksViewModel() -> TasksViewModel {
+        let taskRepository = TaskRepository(localDataSource: InMemoryTaskDataSource())
+        let tasksLoader = deferredFuture(taskRepository.getTasks)
+            .eraseToAnyPublisher()
+        
+        return TasksViewModel(tasksLoader)
     }
 }

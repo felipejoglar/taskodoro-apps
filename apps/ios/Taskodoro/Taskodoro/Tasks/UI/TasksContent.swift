@@ -14,16 +14,32 @@
 //  limitations under the License.
 //
 
-import SwiftUI
 
-@main
-struct TaskodoroApp: App {
+import SwiftUI
+import Tasks
+
+struct TasksContent: View {
+    let tasks: [Task]
     
-    private let tasksViewModel = TasksUIComposer.makeTasksViewModel()
-    
-    var body: some Scene {
-        WindowGroup {
-            TasksScreen(viewModel: tasksViewModel)
+    var body: some View {
+        List(tasks) { task in
+            Text(task.title)
+                .padding()
         }
+        .listStyle(.plain)
+    }
+}
+
+extension Task : Identifiable {}
+
+struct TasksContent_Previews: PreviewProvider {
+    static var previews: some View {
+        let tasks = (0...19)
+            .map { id in
+                Task(id: id, title: "Task \(id) title")
+            }
+        TasksContent(tasks: tasks)
+        TasksContent(tasks: tasks)
+            .preferredColorScheme(.dark)
     }
 }

@@ -18,14 +18,11 @@ package com.taskodoro.tasks.data.datasources
 
 import com.taskodoro.tasks.data.TaskLocalDataSource
 import com.taskodoro.tasks.model.Task
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class InMemoryTaskDataSource : TaskLocalDataSource {
 
-    override suspend fun getAllTasks(): List<Task> = withContext(Dispatchers.Default) {
+    override fun getAllTasks(): List<Task> =
         List(20) {
             Task(id = it.toLong(), title = "Task $it title")
         }
-    }
 }

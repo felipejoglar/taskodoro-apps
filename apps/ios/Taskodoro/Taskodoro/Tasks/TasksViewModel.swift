@@ -13,23 +13,40 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-        
+
 
 import Foundation
 import Tasks
+import Combine
 
 class TasksViewModel: ObservableObject {
-    @Published var tasks = [Task]()
+    @Published private(set) var tasks = [Task]()
     
-    private let repository: TaskRepository
+    private let tasksLoader: AnyPublisher<[Task], Error>
+    private var cancellable: Cancellable?
     
-    init(_ repository: TaskRepository) {
-        self.repository = repository
+    init(_ tasksLoader: AnyPublisher<[Task], Error>) {
+        self.tasksLoader = tasksLoader
     }
     
     func getTasks() {
-        repository.getTasks { [weak self] tasks, _ in
-            self?.tasks = tasks ?? []
-        }
+        cancellable = tasksLoader
+            .sink(
+                receiveCompletion: { [weak self] completion in
+                    switch completion {
+                    case .finished: break
+                    
+                    case let .failure(error):
+                        self?.tasks = [Task(id: 0, title: "An error ocurred: \(error)")]
+                    }
+                }, receiveValue: { [weak self] tasks in
+                    self?.tasks = tasks
+                })
+    }
+    
+    func onClear() {
+        cancellable?.cancel()
+        cancellable = nil
     }
 }
+
