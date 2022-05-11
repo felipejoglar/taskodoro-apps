@@ -24,6 +24,8 @@ final class TasksUIComposer {
     static func makeTasksViewModel() -> TasksViewModel {
         let taskRepository = TaskRepository(localDataSource: InMemoryTaskDataSource())
         let tasksLoader = deferredFuture(taskRepository.getTasks)
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         
         return TasksViewModel(tasksLoader)
