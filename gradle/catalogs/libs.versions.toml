@@ -16,7 +16,7 @@
 
 [versions]
 kotlin = "1.6.21"
-androidBuildTools = "7.1.1"
+androidBuildTools = "7.1.3"
 
 coroutines-mt = "1.6.0-native-mt"
 
