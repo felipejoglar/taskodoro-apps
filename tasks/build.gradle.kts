@@ -35,11 +35,7 @@ kotlin {
     sourceSets {
 
         /* Main source sets */
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.kotlinx.coroutines)
-            }
-        }
+        val commonMain by getting
         val jvmMain by getting
         val nativeMain by creating
         val iosMain by creating
@@ -59,7 +55,6 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
-                implementation(libs.kotlinx.coroutines.test)
             }
         }
         val jvmTest by getting

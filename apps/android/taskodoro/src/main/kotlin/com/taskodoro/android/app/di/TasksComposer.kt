@@ -19,17 +19,24 @@ package com.taskodoro.android.app.di
 import com.taskodoro.android.app.tasks.TasksViewModel
 import com.taskodoro.tasks.data.TaskRepository
 import com.taskodoro.tasks.data.datasources.InMemoryTaskDataSource
+import com.taskodoro.tasks.model.Task
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 object TasksComposer {
+
+    private val tasks: Flow<List<Task>> by lazy {
+        flowEmitting { repository.getTasks() }
+            .flowOn(Dispatchers.IO)
+    }
 
     private val repository: TaskRepository by lazy {
         TaskRepository(localDataSource = InMemoryTaskDataSource())
     }
 
-    fun tasksViewModel(): TasksViewModel =
-        TasksViewModel(
-            getTasks = repository::getTasks,
-            dispatcher = Dispatchers.Main
-        )
+    fun tasksViewModel(): TasksViewModel = TasksViewModel(getTasks = tasks)
 }
+
+inline fun <T> flowEmitting(crossinline block: suspend () -> T): Flow<T> = flow { emit(block()) }

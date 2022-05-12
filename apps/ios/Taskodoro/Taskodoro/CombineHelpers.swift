@@ -13,17 +13,16 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+        
 
-import SwiftUI
+import Foundation
+import Combine
 
-@main
-struct TaskodoroApp: App {
-    
-    private let tasksViewModel = TasksUIComposer.makeTasksViewModel()
-    
-    var body: some Scene {
-        WindowGroup {
-            TasksScreen(viewModel: tasksViewModel)
+func deferredFuture<T>(_ block: @escaping () -> T) -> AnyPublisher<T, Error> {
+    return Deferred {
+        Future { completion in
+            completion(Result { block() } )
         }
     }
+    .eraseToAnyPublisher()
 }

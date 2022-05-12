@@ -19,27 +19,29 @@ package com.taskodoro.android.app.tasks
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taskodoro.tasks.model.Task
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 
 class TasksViewModel(
-    getTasks: suspend () -> List<Task>,
-    dispatcher: CoroutineDispatcher,
+    private val getTasks: Flow<List<Task>>
 ) : ViewModel() {
 
     private val _tasks = MutableStateFlow(emptyList<Task>())
     val tasks = _tasks.asStateFlow()
 
-    init {
-        viewModelScope.launch(dispatcher) {
-            val tasks = getTasks()
-            updateState(tasks = tasks)
-        }
+    fun getTasks() {
+        getTasks
+            .onEach(::updateState)
+            .catch { updateState(emptyList()) }
+            .launchIn(viewModelScope)
     }
 
     private fun updateState(tasks: List<Task>) {
-        _tasks.value = tasks
+        _tasks.update { tasks }
     }
 }

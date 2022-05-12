@@ -25,22 +25,8 @@ struct TasksScreen: View {
         .onAppear {
             viewModel.getTasks()
         }
-    }
-}
-
-struct TasksContent: View {
-    let tasks: [Task]
-    
-    var body: some View {
-        List(tasks) { task in
-            Text(task.title)
-                .padding()
+        .onDisappear {
+            viewModel.onClear()
         }
-        .listStyle(.plain)
     }
 }
-
-extension Task : Identifiable {}
-
-
-
