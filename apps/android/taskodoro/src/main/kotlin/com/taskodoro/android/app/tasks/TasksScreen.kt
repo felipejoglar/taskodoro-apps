@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,10 @@ fun TasksScreen(
     viewModel: TasksViewModel = TasksComposer.tasksViewModel()
 ) {
     val tasks = viewModel.tasks.collectAsState()
+
+    LaunchedEffect(tasks) {
+        viewModel.getTasks()
+    }
 
     TasksContent(tasks.value)
 }

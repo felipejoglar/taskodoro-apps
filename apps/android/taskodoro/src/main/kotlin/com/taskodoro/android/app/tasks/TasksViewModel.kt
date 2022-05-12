@@ -28,13 +28,13 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
 class TasksViewModel(
-    getTasks: Flow<List<Task>>
+    private val getTasks: Flow<List<Task>>
 ) : ViewModel() {
 
     private val _tasks = MutableStateFlow(emptyList<Task>())
     val tasks = _tasks.asStateFlow()
 
-    init {
+    fun getTasks() {
         getTasks
             .onEach(::updateState)
             .catch { updateState(emptyList()) }
