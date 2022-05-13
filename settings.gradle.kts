@@ -27,6 +27,7 @@ rootProject.name = "Taskodoro"
 include(":apps:android:taskodoro")
 
 include(":tasks")
+include(":storage")
 
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
