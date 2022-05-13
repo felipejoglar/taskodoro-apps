@@ -19,11 +19,9 @@ import SwiftUI
 @main
 struct TaskodoroApp: App {
     
-    private let tasksViewModel = TasksUIComposer.makeTasksViewModel()
-    
     var body: some Scene {
         WindowGroup {
-            TasksScreen(viewModel: tasksViewModel)
+            TasksUIComposer.makeTasksScreen()
         }
     }
 }

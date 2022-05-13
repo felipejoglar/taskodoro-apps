@@ -20,14 +20,17 @@ import Tasks
 
 final class TasksUIComposer {
     private init() {}
-    
-    static func makeTasksViewModel() -> TasksViewModel {
+        
+    static func makeTasksScreen() -> TasksScreen {
+        let dispatchers = DefaultDispatcherProvider()
         let taskRepository = TaskRepository(localDataSource: InMemoryTaskDataSource())
         let tasksLoader = deferredFuture(taskRepository.getTasks)
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
+            .subscribe(on: dispatchers.io)
+            .receive(on: dispatchers.main)
             .eraseToAnyPublisher()
+    
+        let taskViewModel = TasksViewModel(tasksLoader)
         
-        return TasksViewModel(tasksLoader)
+        return TasksScreen(viewModel: taskViewModel)
     }
 }
