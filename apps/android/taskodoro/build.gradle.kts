@@ -66,6 +66,7 @@ android {
 dependencies {
 
     implementation(projects.tasks)
+    implementation(projects.storage)
 
     implementation(libs.androidx.core)
 

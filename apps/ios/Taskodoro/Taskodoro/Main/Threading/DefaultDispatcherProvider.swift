@@ -17,7 +17,7 @@
 
 import Foundation
 
-struct DefaultDispatcherProvider : DispatcherProvider {
+struct DefaultDispatcherProvider: DispatcherProvider {
     var main = DispatchQueue.main
     var io = DispatchQueue.global()
 }

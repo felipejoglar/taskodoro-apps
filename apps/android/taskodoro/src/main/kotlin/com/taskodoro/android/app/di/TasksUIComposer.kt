@@ -17,15 +17,15 @@
 package com.taskodoro.android.app.di
 
 import com.taskodoro.android.app.tasks.TasksViewModel
+import com.taskodoro.storage.tasks.InMemoryTaskDataSource
 import com.taskodoro.tasks.data.TaskRepository
-import com.taskodoro.tasks.data.datasources.InMemoryTaskDataSource
 import com.taskodoro.tasks.model.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-object TasksComposer {
+object TasksUIComposer {
 
     private val tasks: Flow<List<Task>> by lazy {
         flowEmitting { repository.getTasks() }

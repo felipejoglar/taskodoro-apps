@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.data.datasources
+package com.taskodoro.storage.tasks
 
 import com.taskodoro.tasks.data.TaskLocalDataSource
 import com.taskodoro.tasks.model.Task

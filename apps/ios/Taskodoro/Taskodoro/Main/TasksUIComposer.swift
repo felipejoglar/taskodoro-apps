@@ -17,13 +17,15 @@
 
 import Combine
 import Tasks
+import Storage
 
 final class TasksUIComposer {
     private init() {}
         
     static func makeTasksScreen() -> TasksScreen {
         let dispatchers = DefaultDispatcherProvider()
-        let taskRepository = TaskRepository(localDataSource: InMemoryTaskDataSource())
+        let taskLocalDataSource = InMemoryTaskLocalDataSourceAdapter()
+        let taskRepository = TaskRepository(localDataSource: taskLocalDataSource)
         let tasksLoader = deferredFuture(taskRepository.getTasks)
             .subscribe(on: dispatchers.io)
             .receive(on: dispatchers.main)
@@ -32,5 +34,15 @@ final class TasksUIComposer {
         let taskViewModel = TasksViewModel(tasksLoader)
         
         return TasksScreen(viewModel: taskViewModel)
+    }
+}
+
+private final class InMemoryTaskLocalDataSourceAdapter: TaskLocalDataSource {
+    private let dataSource = InMemoryTaskDataSource()
+    
+    public func getAllTasks() -> [Task] {
+        dataSource.getAllTasks().map {
+            Task(id: $0.id, title: $0.title)
+        }
     }
 }
