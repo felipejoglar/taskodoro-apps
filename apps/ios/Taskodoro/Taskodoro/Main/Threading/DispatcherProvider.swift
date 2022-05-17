@@ -13,21 +13,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+     
+import Foundation
 
-
-import Combine
-import Tasks
-
-final class TasksUIComposer {
-    private init() {}
-    
-    static func makeTasksViewModel() -> TasksViewModel {
-        let taskRepository = TaskRepository(localDataSource: InMemoryTaskDataSource())
-        let tasksLoader = deferredFuture(taskRepository.getTasks)
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        
-        return TasksViewModel(tasksLoader)
-    }
+protocol DispatcherProvider {
+    var main: DispatchQueue { get }
+    var io: DispatchQueue { get }
 }

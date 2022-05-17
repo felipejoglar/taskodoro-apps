@@ -29,13 +29,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.taskodoro.android.app.di.TasksComposer
+import com.taskodoro.android.app.di.TasksUIComposer
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 import com.taskodoro.tasks.model.Task
 
 @Composable
 fun TasksScreen(
-    viewModel: TasksViewModel = TasksComposer.tasksViewModel()
+    viewModel: TasksViewModel = TasksUIComposer.tasksViewModel()
 ) {
     val tasks = viewModel.tasks.collectAsState()
 

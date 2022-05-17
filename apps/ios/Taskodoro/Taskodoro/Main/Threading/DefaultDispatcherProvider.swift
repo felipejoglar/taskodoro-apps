@@ -13,15 +13,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+        
 
-import SwiftUI
+import Foundation
 
-@main
-struct TaskodoroApp: App {
-    
-    var body: some Scene {
-        WindowGroup {
-            TasksUIComposer.makeTasksScreen()
-        }
-    }
+struct DefaultDispatcherProvider: DispatcherProvider {
+    var main = DispatchQueue.main
+    var io = DispatchQueue.global()
 }
