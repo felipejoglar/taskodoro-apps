@@ -72,4 +72,12 @@ kotlin {
         iosX64Test.dependsOn(iosTest)
         iosSimulatorArm64Test.dependsOn(iosTest)
     }
+
+    // Enable concurrent sweep phase in new native memory manager.
+    // https://kotlinlang.org/docs/whatsnew1620.html#concurrent-implementation-for-the-sweep-phase-in-new-memory-manager
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
+        binaries.all {
+            freeCompilerArgs = freeCompilerArgs.plus("-Xgc=cms")
+        }
+    }
 }
