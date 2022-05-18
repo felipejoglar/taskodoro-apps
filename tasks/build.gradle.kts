@@ -72,10 +72,4 @@ kotlin {
         iosX64Test.dependsOn(iosTest)
         iosSimulatorArm64Test.dependsOn(iosTest)
     }
-
-    sourceSets.matching { it.name.endsWith("Test") }.all {
-        languageSettings {
-            optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
-        }
-    }
 }
