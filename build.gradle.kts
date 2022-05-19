@@ -26,6 +26,7 @@ buildscript {
     dependencies {
         classpath(libs.kotlinGradle)
         classpath(libs.androidBuildTools)
+        classpath(libs.sqlDelight)
     }
 }
 
