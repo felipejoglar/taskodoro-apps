@@ -118,3 +118,13 @@ sqldelight {
         packageName = "com.taskodoro.storage.db"
     }
 }
+
+// As of today `allTest` task does not launches android unit tests.
+tasks.register("allTestsWithAndroid") {
+    group = "verification"
+    description = "Runs the tests for all targets in this module."
+
+    dependsOn("iosX64Test")
+    dependsOn("testDebugUnitTest")
+    dependsOn("testReleaseUnitTest")
+}
