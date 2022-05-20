@@ -19,6 +19,6 @@ package com.taskodoro.storage.tasks.helpers
 import com.taskodoro.tasks.model.Task
 
 internal fun anyTask() = Task(
-    id = 1,
+    id = "An id",
     description = "A task description"
 )

@@ -23,6 +23,6 @@ class InMemoryTaskDataSource : TaskLocalDataSource {
 
     override fun getAllTasks(): List<Task> =
         List(20) {
-            Task(id = it.toLong(), description = "Task $it description")
+            Task(id = it.toString(), description = "Task $it description")
         }
 }

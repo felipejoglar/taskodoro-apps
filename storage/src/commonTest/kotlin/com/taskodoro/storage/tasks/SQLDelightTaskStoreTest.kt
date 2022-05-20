@@ -63,7 +63,7 @@ class SQLDelightTaskStoreTest {
     private fun SQLDelightTaskStore.load() = tasksQueries.load()
         .executeAsList()
         .map {
-            Task(id = it.id.toLong(), description = it.description)
+            Task(id = it.id, description = it.description)
         }
 
     // endregion
