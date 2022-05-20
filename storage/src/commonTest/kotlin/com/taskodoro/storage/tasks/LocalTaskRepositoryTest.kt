@@ -17,8 +17,8 @@
 package com.taskodoro.storage.tasks
 
 import com.taskodoro.storage.tasks.helpers.TaskStoreSpy
+import com.taskodoro.storage.tasks.helpers.anyTask
 import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -78,11 +78,6 @@ class LocalTaskRepositoryTest {
 
         return TestObjects(sut, store, validator)
     }
-
-    private fun anyTask() = Task(
-        id = 1,
-        title = "A task title"
-    )
 
     private data class TestObjects(
         val sut: LocalTaskRepository,

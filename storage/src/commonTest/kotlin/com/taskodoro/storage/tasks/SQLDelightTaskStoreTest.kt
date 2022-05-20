@@ -17,6 +17,7 @@
 package com.taskodoro.storage.tasks
 
 import com.taskodoro.storage.db.TaskodoroDB
+import com.taskodoro.storage.tasks.helpers.anyTask
 import com.taskodoro.storage.tasks.helpers.makeTestDriver
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
 import com.taskodoro.tasks.model.Task
@@ -56,11 +57,6 @@ class SQLDelightTaskStoreTest {
 
         return SQLDelightTaskStore(database = db)
     }
-
-    private fun anyTask() = Task(
-        id = 1,
-        title = "A task title"
-    )
 
     private fun TaskodoroDB.clear() = taskdoroDBQueries.clearDB()
 
