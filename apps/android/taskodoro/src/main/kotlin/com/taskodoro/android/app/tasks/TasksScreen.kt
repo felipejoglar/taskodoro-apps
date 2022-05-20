@@ -58,7 +58,7 @@ fun TasksContent(tasks: List<Task>) {
 @Composable
 fun TaskItem(task: Task) {
     Text(
-        text = task.title,
+        text = task.description,
         style = MaterialTheme.typography.h5,
         modifier = Modifier
             .fillMaxWidth()
@@ -85,7 +85,7 @@ private fun TasksScreenPreview() {
             color = MaterialTheme.colors.background
         ) {
             val tasks = List(20) {
-                Task(id = it.toLong(), title = "Task $it title")
+                Task(id = it.toLong(), description = "Task $it description")
             }
             TasksContent(tasks = tasks)
         }

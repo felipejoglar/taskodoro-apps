@@ -29,7 +29,7 @@ class SQLDelightTaskStore(
     override fun save(task: Task) {
         tasksQueries.insert(
             id = task.id.toString(),
-            description = task.title,
+            description = task.description,
             completed = false,
             created_at = 0,
             updated_at = null
