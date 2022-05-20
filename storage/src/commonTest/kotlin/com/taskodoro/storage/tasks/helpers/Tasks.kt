@@ -20,5 +20,6 @@ import com.taskodoro.tasks.model.Task
 
 internal fun anyTask() = Task(
     id = "An id",
-    description = "A task description"
+    description = "A task description",
+    createdAt = 0L
 )

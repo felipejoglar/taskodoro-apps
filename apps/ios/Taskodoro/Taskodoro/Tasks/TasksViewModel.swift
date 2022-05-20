@@ -36,7 +36,13 @@ class TasksViewModel: ObservableObject {
                     case .finished: break
                     
                     case let .failure(error):
-                        self?.tasks = [Task(id: "", description: "An error ocurred: \(error)")]
+                        self?.tasks = [Task(
+                            id: "",
+                            description: "An error occurred: \(error)",
+                            isCompleted: false,
+                            createdAt: 0,
+                            updatedAt: nil
+                        )]
                     }
                 }, receiveValue: { [weak self] tasks in
                     self?.tasks = tasks

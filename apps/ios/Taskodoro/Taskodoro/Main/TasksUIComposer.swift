@@ -42,7 +42,13 @@ private final class InMemoryTaskLocalDataSourceAdapter: TaskLocalDataSource {
     
     public func getAllTasks() -> [Task] {
         dataSource.getAllTasks().map {
-            Task(id: String($0.id), description: $0.description)
+            Task(
+                id: String($0.id),
+                description: $0.description,
+                isCompleted: $0.isCompleted,
+                createdAt: $0.createdAt,
+                updatedAt: nil
+            )
         }
     }
 }
