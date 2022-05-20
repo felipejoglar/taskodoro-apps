@@ -45,6 +45,8 @@ tasks.register("multiplatformBuild") {
 
     dependsOn("tasks:clean")
     dependsOn("tasks:assemble")
+    dependsOn("storage:clean")
+    dependsOn("storage:assemble")
 }
 
 tasks.register("multiplatformTest") {
@@ -53,4 +55,6 @@ tasks.register("multiplatformTest") {
 
     dependsOn("tasks:clean")
     dependsOn("tasks:allTests")
+    dependsOn("storage:clean")
+    dependsOn("storage:allTestsWithAndroid")
 }
