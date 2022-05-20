@@ -47,6 +47,7 @@ androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-kt
 
 sqlDelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqlDelight-native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelight" }
+sqlDelight-jvm-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
 
 # test
 junit = { module = "junit:junit", version.ref = "junit" }

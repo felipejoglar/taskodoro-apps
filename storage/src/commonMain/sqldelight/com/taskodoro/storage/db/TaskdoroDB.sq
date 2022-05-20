@@ -1,0 +1,13 @@
+CREATE TABLE tasks  (
+    id TEXT NOT NULL PRIMARY KEY UNIQUE,
+    description TEXT NOT NULL,
+    completed INTEGER AS Boolean DEFAULT 0,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER
+);
+
+CREATE UNIQUE INDEX task_id ON tasks(id);
+
+clearDB {
+    DELETE FROM tasks;
+}

@@ -71,7 +71,11 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
-        val androidTest by getting
+        val androidTest by getting {
+            dependencies {
+                implementation(libs.sqlDelight.jvm.driver)
+            }
+        }
         val iosArm64Test by getting
         val iosX64Test by getting
         val iosSimulatorArm64Test by getting
@@ -106,5 +110,11 @@ android {
 
         minSdk = config.versions.minSdk.get().toInt()
         targetSdk = config.versions.targetSdk.get().toInt()
+    }
+}
+
+sqldelight {
+    database("TaskodoroDB") {
+        packageName = "com.taskodoro.storage.db"
     }
 }
