@@ -19,8 +19,10 @@ package com.taskodoro.storage.tasks
 import com.taskodoro.storage.tasks.helpers.TaskStoreSpy
 import com.taskodoro.storage.tasks.helpers.anyTask
 import com.taskodoro.tasks.TaskRepository
+import com.taskodoro.tasks.model.TaskValidation
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class LocalTaskRepositoryTest {
 
@@ -32,14 +34,15 @@ class LocalTaskRepositoryTest {
     }
 
     @Test
-    fun save_failsOnValidationError() {
+    fun save_failsWithValidationTypeOnValidationError() {
         val (sut, _, validator) = makeSUT()
         val task = anyTask()
 
         validator.completeValidationWithFailure()
         val result = sut.save(task)
 
-        assertEquals(Result.failure(TaskRepository.TaskValidationException), result)
+        assertTrue(result.exceptionOrNull() is TaskRepository.TaskValidationException)
+        assertTrue((result.exceptionOrNull() as TaskRepository.TaskValidationException).validationResult != TaskValidation.SUCCESS)
     }
 
     @Test
@@ -86,16 +89,16 @@ class LocalTaskRepositoryTest {
     )
 
     private class TaskValidatorStub {
-        private var isValid: Boolean? = null
+        private var validationResult: TaskValidation? = null
 
-        fun validate(): Boolean = isValid!!
+        fun validate(): TaskValidation = validationResult!!
 
         fun completeValidationSuccessfully() {
-            isValid = true
+            validationResult = TaskValidation.SUCCESS
         }
 
         fun completeValidationWithFailure() {
-            isValid = false
+            validationResult = TaskValidation.INVALID_TITLE
         }
     }
     // endregion

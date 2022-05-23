@@ -18,14 +18,17 @@ package com.taskodoro.storage.tasks
 
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.model.TaskValidation
 
 class LocalTaskRepository(
     private val store: TaskStore,
-    private val validate: (Task) -> Boolean,
+    private val validate: (Task) -> TaskValidation,
 ) : TaskRepository {
 
     override fun save(task: Task): Result<Unit> {
-        if (!validate(task)) return Result.failure(TaskRepository.TaskValidationException)
+        val validationResult = validate(task)
+        if (validationResult != TaskValidation.SUCCESS)
+            return Result.failure(TaskRepository.TaskValidationException(validationResult))
 
         return try {
             store.save(task)

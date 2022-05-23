@@ -17,9 +17,10 @@
 package com.taskodoro.tasks
 
 import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.model.TaskValidation
 
 interface TaskRepository {
-    object TaskValidationException : Exception()
+    data class TaskValidationException(val validationResult: TaskValidation) : Exception()
     object TaskInsertionException : Exception()
 
     fun save(task: Task): Result<Unit>
