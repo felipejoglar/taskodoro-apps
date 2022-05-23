@@ -31,7 +31,7 @@ class SQLDelightTaskStore(
             id = task.id,
             title = task.title,
             completed = false,
-            createdAt = 0,
+            createdAt = task.createdAt,
             updatedAt = 0,
         )
     }
