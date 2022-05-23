@@ -41,7 +41,7 @@ class TasksViewModel: ObservableObject {
                             description: "An error occurred: \(error)",
                             isCompleted: false,
                             createdAt: 0,
-                            updatedAt: nil
+                            updatedAt: 0
                         )]
                     }
                 }, receiveValue: { [weak self] tasks in

@@ -1,13 +1,13 @@
-CREATE TABLE tasks  (
+CREATE TABLE LocalTask  (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
     description TEXT NOT NULL,
     completed INTEGER AS Boolean DEFAULT 0,
-    created_at INTEGER NOT NULL,
-    updated_at INTEGER
+    createdAt INTEGER NOT NULL,
+    updatedAt INTEGER
 );
 
-CREATE UNIQUE INDEX task_id ON tasks(id);
+CREATE UNIQUE INDEX task_id ON LocalTask(id);
 
 clearDB {
-    DELETE FROM tasks;
+    DELETE FROM LocalTask;
 }

@@ -24,15 +24,15 @@ class SQLDelightTaskStore(
     database: TaskodoroDB
 ) : TaskStore {
 
-    internal val tasksQueries = database.tasksQueries
+    internal val tasksQueries = database.localTaskQueries
 
     override fun save(task: Task) {
         tasksQueries.insert(
-            id = task.id.toString(),
+            id = task.id,
             description = task.description,
             completed = false,
-            created_at = 0,
-            updated_at = null
+            createdAt = 0,
+            updatedAt = 0,
         )
     }
 }

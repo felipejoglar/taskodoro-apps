@@ -1,6 +1,0 @@
-insert:
-INSERT INTO tasks(id, description, completed, created_at, updated_at)
-VALUES (?, ?, ?, ?, ?);
-
-load:
-SELECT * FROM tasks;

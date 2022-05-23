@@ -42,9 +42,7 @@ class SQLDelightTaskStoreTest {
         val anyTask = anyTask()
         sut.save(anyTask)
 
-        assertFails {
-            sut.save(anyTask)
-        }
+        assertFails { sut.save(anyTask) }
     }
 
     // region Helpers
@@ -65,7 +63,7 @@ class SQLDelightTaskStoreTest {
             Task(
                 id = it.id,
                 description = it.description,
-                createdAt = it.created_at
+                createdAt = it.createdAt
             )
         }
 
