@@ -1,6 +1,6 @@
 CREATE TABLE LocalTask  (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
-    description TEXT NOT NULL,
+    title TEXT NOT NULL,
     completed INTEGER AS Boolean DEFAULT 0,
     createdAt INTEGER NOT NULL,
     updatedAt INTEGER

@@ -62,7 +62,7 @@ class SQLDelightTaskStoreTest {
         .map {
             Task(
                 id = it.id,
-                description = it.description,
+                title = it.title,
                 createdAt = it.createdAt
             )
         }

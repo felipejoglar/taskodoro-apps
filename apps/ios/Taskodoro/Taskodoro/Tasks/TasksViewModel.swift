@@ -38,7 +38,7 @@ class TasksViewModel: ObservableObject {
                     case let .failure(error):
                         self?.tasks = [Task(
                             id: "",
-                            description: "An error occurred: \(error)",
+                            title: "An error occurred: \(error)",
                             isCompleted: false,
                             createdAt: 0,
                             updatedAt: 0

@@ -58,7 +58,7 @@ fun TasksContent(tasks: List<Task>) {
 @Composable
 fun TaskItem(task: Task) {
     Text(
-        text = task.description,
+        text = task.title,
         style = MaterialTheme.typography.h5,
         modifier = Modifier
             .fillMaxWidth()
@@ -87,7 +87,7 @@ private fun TasksScreenPreview() {
             val tasks = List(20) {
                 Task(
                     id = it.toString(),
-                    description = "Task $it description",
+                    title = "Task $it title",
                     createdAt = it.toLong(),
                 )
             }

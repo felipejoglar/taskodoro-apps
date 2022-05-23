@@ -44,7 +44,7 @@ private final class InMemoryTaskLocalDataSourceAdapter: TaskLocalDataSource {
         dataSource.getAllTasks().map { localTask in
             Task(
                 id: String(localTask.id),
-                description: localTask.description_,
+                title: localTask.title,
                 isCompleted: localTask.isCompleted,
                 createdAt: localTask.createdAt,
                 updatedAt: localTask.updatedAt

@@ -25,7 +25,7 @@ class InMemoryTaskDataSource : TaskLocalDataSource {
         List(20) {
             Task(
                 id = it.toString(),
-                description = "Task $it description",
+                title = "Task $it title",
                 createdAt = it.toLong()
             )
         }

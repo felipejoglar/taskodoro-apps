@@ -1,5 +1,5 @@
 insert:
-INSERT INTO LocalTask(id, description, completed, createdAt, updatedAt)
+INSERT INTO LocalTask(id, title, completed, createdAt, updatedAt)
 VALUES (?, ?, ?, ?, ?);
 
 load:

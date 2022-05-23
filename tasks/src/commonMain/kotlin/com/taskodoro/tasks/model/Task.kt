@@ -18,7 +18,7 @@ package com.taskodoro.tasks.model
 
 data class Task(
     val id: String,
-    val description: String,
+    val title: String,
     val isCompleted: Boolean = false,
     val createdAt: Long,
     val updatedAt: Long = 0,

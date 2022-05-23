@@ -23,7 +23,7 @@ struct TasksContent: View {
     
     var body: some View {
         List(tasks) { task in
-            Text(task.description_)
+            Text(task.title)
                 .padding()
         }
         .listStyle(.plain)
@@ -38,7 +38,7 @@ struct TasksContent_Previews: PreviewProvider {
             .map { id in
                 Task(
                     id: String(id),
-                    description: "Task \(id) description",
+                    title: "Task \(id) title",
                     isCompleted: false,
                     createdAt: 0,
                     updatedAt: 0
