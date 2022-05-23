@@ -31,10 +31,14 @@ class LocalTaskRepository(
             return Result.failure(TaskRepository.TaskValidationException(validationResult))
 
         return try {
-            store.save(task)
+            store.save(task.withTrimmedValues())
             Result.success(Unit)
         } catch (exception: Exception) {
             Result.failure(TaskRepository.TaskInsertionException)
         }
     }
+
+    private fun Task.withTrimmedValues(): Task = copy(title = title.trim())
 }
+
+

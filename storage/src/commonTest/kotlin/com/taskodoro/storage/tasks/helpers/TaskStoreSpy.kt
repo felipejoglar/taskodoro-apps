@@ -26,11 +26,14 @@ class TaskStoreSpy : TaskStore {
 
     var messages = mutableListOf<Message>()
         private set
+    var savedTasks = mutableListOf<Task>()
+        private set
 
     private var insertionSuccessful = true
 
     override fun save(task: Task) {
         messages.add(Message.SAVE)
+        savedTasks.add(task)
 
         if (!insertionSuccessful) throw Exception()
     }

@@ -69,6 +69,19 @@ class LocalTaskRepositoryTest {
         assertEquals(Result.success(Unit), result)
     }
 
+    @Test
+    fun save_succeedsWithTrimmedValuesOnSuccessfulInsertion() {
+        val (sut, store, validator) = makeSUT()
+        val task = anyTask().copy(title = "   A title   ")
+
+        validator.completeValidationSuccessfully()
+        store.completeInsertionSuccessfully()
+        val result = sut.save(task)
+
+        assertEquals(Result.success(Unit), result)
+        assertEquals("A title", store.savedTasks.first().title)
+    }
+
     // region Helpers
 
     private fun makeSUT(): TestObjects {
