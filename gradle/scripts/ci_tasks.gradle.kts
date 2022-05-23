@@ -54,7 +54,7 @@ tasks.register("multiplatformTest") {
     description = "Runs the tests for all targets in all multiplatform modules."
 
     dependsOn("tasks:clean")
-    dependsOn("tasks:allTests")
+    dependsOn("tasks:allTestsWithAndroid")
     dependsOn("storage:clean")
     dependsOn("storage:allTestsWithAndroid")
 }
