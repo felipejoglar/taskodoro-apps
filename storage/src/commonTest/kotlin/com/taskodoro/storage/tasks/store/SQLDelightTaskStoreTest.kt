@@ -14,12 +14,11 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks
+package com.taskodoro.storage.tasks.store
 
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.tasks.helpers.anyTask
 import com.taskodoro.storage.tasks.helpers.makeTestDriver
-import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
 import com.taskodoro.tasks.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals
