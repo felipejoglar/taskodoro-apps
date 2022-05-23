@@ -29,20 +29,20 @@ class SQLDelightTaskStoreTest {
     @Test
     fun save_succeedsOnSuccessfulInsertion() {
         val sut = makeSUT()
-        val anyTask = anyTask()
+        val task = anyTask()
 
-        sut.save(anyTask)
+        sut.save(task)
 
-        assertEquals(anyTask, sut.load().first())
+        assertEquals(task, sut.load().first())
     }
 
     @Test
     fun save_failsOnInsertionFailure() {
         val sut = makeSUT()
-        val anyTask = anyTask()
-        sut.save(anyTask)
+        val task = anyTask()
+        sut.save(task)
 
-        assertFails { sut.save(anyTask) }
+        assertFails { sut.save(task) }
     }
 
     // region Helpers
