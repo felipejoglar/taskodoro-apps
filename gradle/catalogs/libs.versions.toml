@@ -23,6 +23,8 @@ compose = "1.2.0-beta01"
 activity-compose = "1.4.0"
 lifecycle = "2.4.1"
 
+hilt = "2.38.1"
+
 sqlDelight = "1.5.3"
 
 junit = "4.13.2"
@@ -35,6 +37,7 @@ espresso = "3.4.0"
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 androidBuildTools = { module = "com.android.tools.build:gradle", version.ref = "androidBuildTools" }
 sqlDelight = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
+hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 
 # dependencies
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
@@ -44,6 +47,8 @@ androidx-compose-material = { module = "androidx.compose.material:material", ver
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 
 sqlDelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqlDelight-native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelight" }
