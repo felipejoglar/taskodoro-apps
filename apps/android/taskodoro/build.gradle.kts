@@ -55,6 +55,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
+        isCoreLibraryDesugaringEnabled = true
     }
 
     buildFeatures {
@@ -68,9 +70,16 @@ android {
     packagingOptions {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
     }
+
+    kotlin.sourceSets.matching { it.name.endsWith("Test") }.all {
+        languageSettings {
+            optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+        }
+    }
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.android.desugar)
 
     implementation(projects.tasks)
     implementation(projects.storage)
@@ -86,6 +95,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.coroutines.test)
 
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso)

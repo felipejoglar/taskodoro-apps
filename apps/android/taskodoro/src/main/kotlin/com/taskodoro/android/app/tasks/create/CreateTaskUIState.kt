@@ -14,20 +14,25 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.android.app
+package com.taskodoro.android.app.tasks.create
 
-import org.junit.Test
+data class CreateTaskUIState(
+    val loading: Boolean,
+    val isTaskSaved: Boolean,
+    val error: Error?
+) {
+    companion object {
+        val INITIAL = CreateTaskUIState(
+            loading = false,
+            isTaskSaved = false,
+            error = null,
+        )
+    }
 
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    sealed class Error {
+        object Unknown : Error()
+        object Insertion : Error()
+        object EmptyTitle : Error()
+        object InvalidTitle : Error()
     }
 }
