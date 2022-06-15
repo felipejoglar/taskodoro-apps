@@ -38,14 +38,14 @@ class CreateTaskViewModelTest {
     fun init_doesNotModifyInitialState() {
         val (sut, _) = makeSUT()
 
-        Assert.assertEquals(CreateTaskUIState.INITIAL, sut.uiState.value)
+        Assert.assertEquals(CreateTaskUIState.INITIAL, sut.state.value)
     }
 
     @Test
     fun save_emitsCorrectStatesOnSuccessfulSave() = runTest {
         val (sut, repository) = makeSUT()
 
-        test(sut.uiState) { states ->
+        test(sut.state) { states ->
 
             repository.completeSuccessfully()
             sut.save(anyTitle())
@@ -70,7 +70,7 @@ class CreateTaskViewModelTest {
     fun save_emitsInsertionErrorOnInsertionError() = runTest {
         val (sut, repository) = makeSUT()
 
-        test(sut.uiState) { states ->
+        test(sut.state) { states ->
 
             repository.completeWithError(TaskRepository.TaskInsertionException)
             sut.save(anyTitle())
@@ -89,7 +89,7 @@ class CreateTaskViewModelTest {
     fun save_emitsEmptyTitleErrorOnEmptyTitleValidationError() = runTest {
         val (sut, repository) = makeSUT()
 
-        test(sut.uiState) { states ->
+        test(sut.state) { states ->
 
             repository
                 .completeWithError(TaskRepository.TaskValidationException(TaskValidation.EMPTY_TITLE))
@@ -109,7 +109,7 @@ class CreateTaskViewModelTest {
     fun save_emitsInvalidTitleErrorOnInvalidTitleValidationError() = runTest {
         val (sut, repository) = makeSUT()
 
-        test(sut.uiState) { states ->
+        test(sut.state) { states ->
 
             repository
                 .completeWithError(TaskRepository.TaskValidationException(TaskValidation.INVALID_TITLE))
@@ -129,7 +129,7 @@ class CreateTaskViewModelTest {
     fun save_emitsUnknownErrorOnCaughtError() = runTest {
         val (sut, repository) = makeSUT()
 
-        test(sut.uiState) { states ->
+        test(sut.state) { states ->
 
             repository.throwError()
             sut.save(anyTitle())

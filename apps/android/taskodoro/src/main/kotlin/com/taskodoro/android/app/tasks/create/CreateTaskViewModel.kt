@@ -36,8 +36,8 @@ class CreateTaskViewModel(
     private val saveTask: (Task) -> Flow<Result<Unit>>,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CreateTaskUIState.INITIAL)
-    internal val uiState = _uiState.asStateFlow()
+    private val _state = MutableStateFlow(CreateTaskUIState.INITIAL)
+    internal val state = _state.asStateFlow()
 
     fun save(title: String) {
         val task = Task(
@@ -70,15 +70,19 @@ class CreateTaskViewModel(
         when (error.validationResult) {
             TaskValidation.EMPTY_TITLE -> updateWithError(CreateTaskUIState.Error.EmptyTitle)
             TaskValidation.INVALID_TITLE -> updateWithError(CreateTaskUIState.Error.InvalidTitle)
-            else -> {}
+            TaskValidation.SUCCESS -> updateWith(isTaskSaved = true)
         }
     }
 
-    private fun updateWith(loading: Boolean = false, isTaskSaved: Boolean = false) {
-        _uiState.update { it.copy(loading = loading, isTaskSaved = isTaskSaved) }
+    private fun updateWith(
+        loading: Boolean = false,
+        isTaskSaved: Boolean = false,
+        error: CreateTaskUIState.Error? = null
+    ) {
+        _state.update { it.copy(loading = loading, isTaskSaved = isTaskSaved, error = error) }
     }
 
     private fun updateWithError(error: CreateTaskUIState.Error) {
-        _uiState.update { it.copy(loading = false, error = error) }
+        _state.update { it.copy(loading = false, error = error) }
     }
 }
