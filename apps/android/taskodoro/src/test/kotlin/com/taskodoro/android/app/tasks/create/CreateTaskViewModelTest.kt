@@ -52,17 +52,14 @@ class CreateTaskViewModelTest {
 
             runCurrent()
 
-            Assert.assertEquals(CreateTaskUIState(), states.first())
-
-            val secondState = states[1]
-            Assert.assertTrue(secondState.loading)
-            Assert.assertFalse(secondState.isTaskSaved)
-            Assert.assertNull(secondState.error)
-
-            val lastState = states.last()
-            Assert.assertFalse(lastState.loading)
-            Assert.assertTrue(lastState.isTaskSaved)
-            Assert.assertNull(lastState.error)
+            Assert.assertEquals(
+                listOf(
+                    CreateTaskUIState(),
+                    CreateTaskUIState(loading = true),
+                    CreateTaskUIState(isTaskSaved = true)
+                ),
+                states
+            )
         }
     }
 
@@ -77,11 +74,14 @@ class CreateTaskViewModelTest {
 
             runCurrent()
 
-            val lastState = states.last()
-            Assert.assertFalse(lastState.loading)
-            Assert.assertFalse(lastState.isTaskSaved)
-            Assert.assertNotNull(lastState.error)
-            Assert.assertTrue(lastState.error is CreateTaskUIState.Error.Insertion)
+            Assert.assertEquals(
+                listOf(
+                    CreateTaskUIState(),
+                    CreateTaskUIState(loading = true),
+                    CreateTaskUIState(error = CreateTaskUIState.Error.Insertion)
+                ),
+                states
+            )
         }
     }
 
@@ -97,11 +97,14 @@ class CreateTaskViewModelTest {
 
             runCurrent()
 
-            val lastState = states.last()
-            Assert.assertFalse(lastState.loading)
-            Assert.assertFalse(lastState.isTaskSaved)
-            Assert.assertNotNull(lastState.error)
-            Assert.assertTrue(lastState.error is CreateTaskUIState.Error.EmptyTitle)
+            Assert.assertEquals(
+                listOf(
+                    CreateTaskUIState(),
+                    CreateTaskUIState(loading = true),
+                    CreateTaskUIState(error = CreateTaskUIState.Error.EmptyTitle)
+                ),
+                states
+            )
         }
     }
 
@@ -117,11 +120,14 @@ class CreateTaskViewModelTest {
 
             runCurrent()
 
-            val lastState = states.last()
-            Assert.assertFalse(lastState.loading)
-            Assert.assertFalse(lastState.isTaskSaved)
-            Assert.assertNotNull(lastState.error)
-            Assert.assertTrue(lastState.error is CreateTaskUIState.Error.InvalidTitle)
+            Assert.assertEquals(
+                listOf(
+                    CreateTaskUIState(),
+                    CreateTaskUIState(loading = true),
+                    CreateTaskUIState(error = CreateTaskUIState.Error.InvalidTitle)
+                ),
+                states
+            )
         }
     }
 
@@ -136,11 +142,41 @@ class CreateTaskViewModelTest {
 
             runCurrent()
 
-            val lastState = states.last()
-            Assert.assertFalse(lastState.loading)
-            Assert.assertFalse(lastState.isTaskSaved)
-            Assert.assertNotNull(lastState.error)
-            Assert.assertTrue(lastState.error is CreateTaskUIState.Error.Unknown)
+            Assert.assertEquals(
+                listOf(
+                    CreateTaskUIState(),
+                    CreateTaskUIState(loading = true),
+                    CreateTaskUIState(error = CreateTaskUIState.Error.Unknown)
+                ),
+                states
+            )
+        }
+    }
+
+    @Test
+    fun save_clearsErrorWhenSavingCorrectlyAfterError() = runTest {
+        val (sut, repository) = makeSUT()
+
+        test(sut.state) { states ->
+
+            repository.throwError()
+            sut.save(anyTitle())
+
+            repository.completeSuccessfully()
+            sut.save(anyTitle())
+
+            runCurrent()
+
+            Assert.assertEquals(
+                listOf(
+                    CreateTaskUIState(),
+                    CreateTaskUIState(loading = true),
+                    CreateTaskUIState(error = CreateTaskUIState.Error.Unknown),
+                    CreateTaskUIState(loading = true),
+                    CreateTaskUIState(isTaskSaved = true)
+                ),
+                states
+            )
         }
     }
 
@@ -164,7 +200,10 @@ class CreateTaskViewModelTest {
         private var shouldThrowError = false
 
         fun save(): Flow<Result<Unit>> = flow {
-            if (shouldThrowError) throw Exception()
+            if (shouldThrowError) {
+                shouldThrowError = false
+                throw Exception()
+            }
             emit(result!!)
         }
 
