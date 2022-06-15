@@ -16,7 +16,7 @@
 
 package com.taskodoro.tasks.model
 
-enum class TaskValidation {
+enum class TaskValidationResult {
     SUCCESS,
     EMPTY_TITLE,
     INVALID_TITLE,

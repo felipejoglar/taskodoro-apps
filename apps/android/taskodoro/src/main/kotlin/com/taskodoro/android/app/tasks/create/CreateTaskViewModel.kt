@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidation
+import com.taskodoro.tasks.model.TaskValidationResult
 import java.time.Instant
 import java.util.*
 import kotlinx.coroutines.flow.Flow
@@ -68,9 +68,9 @@ class CreateTaskViewModel(
 
     private fun handleValidationError(error: TaskRepository.TaskValidationException) {
         when (error.validationResult) {
-            TaskValidation.EMPTY_TITLE -> updateWithError(CreateTaskUIState.Error.EmptyTitle)
-            TaskValidation.INVALID_TITLE -> updateWithError(CreateTaskUIState.Error.InvalidTitle)
-            TaskValidation.SUCCESS -> updateWith(isTaskSaved = true)
+            TaskValidationResult.EMPTY_TITLE -> updateWithError(CreateTaskUIState.Error.EmptyTitle)
+            TaskValidationResult.INVALID_TITLE -> updateWithError(CreateTaskUIState.Error.InvalidTitle)
+            TaskValidationResult.SUCCESS -> updateWith(isTaskSaved = true)
         }
     }
 

@@ -17,7 +17,7 @@
 package com.taskodoro.tasks
 
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidation
+import com.taskodoro.tasks.model.TaskValidationResult
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -32,8 +32,8 @@ class TaskValidatorTest {
         val validationResult = sut.validate(emptyTitleTask)
         val validationResult1 = sut.validate(emptyTitleTask1)
 
-        assertEquals(TaskValidation.EMPTY_TITLE, validationResult)
-        assertEquals(TaskValidation.EMPTY_TITLE, validationResult1)
+        assertEquals(TaskValidationResult.EMPTY_TITLE, validationResult)
+        assertEquals(TaskValidationResult.EMPTY_TITLE, validationResult1)
     }
 
     @Test
@@ -47,9 +47,9 @@ class TaskValidatorTest {
         val validationResult1 = sut.validate(invalidTitleTask1)
         val validationResult2 = sut.validate(invalidTitleTask2)
 
-        assertEquals(TaskValidation.INVALID_TITLE, validationResult)
-        assertEquals(TaskValidation.INVALID_TITLE, validationResult1)
-        assertEquals(TaskValidation.INVALID_TITLE, validationResult2)
+        assertEquals(TaskValidationResult.INVALID_TITLE, validationResult)
+        assertEquals(TaskValidationResult.INVALID_TITLE, validationResult1)
+        assertEquals(TaskValidationResult.INVALID_TITLE, validationResult2)
     }
 
     @Test
@@ -63,9 +63,9 @@ class TaskValidatorTest {
         val validationResult1 = sut.validate(validTitleTask1)
         val validationResult2 = sut.validate(validTitleTask2)
 
-        assertEquals(TaskValidation.SUCCESS, validationResult)
-        assertEquals(TaskValidation.SUCCESS, validationResult1)
-        assertEquals(TaskValidation.SUCCESS, validationResult2)
+        assertEquals(TaskValidationResult.SUCCESS, validationResult)
+        assertEquals(TaskValidationResult.SUCCESS, validationResult1)
+        assertEquals(TaskValidationResult.SUCCESS, validationResult2)
     }
 
     // region Helpers

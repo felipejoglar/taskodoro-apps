@@ -19,7 +19,7 @@ package com.taskodoro.android.app.tasks.create
 import com.taskodoro.android.app.helpers.MainDispatcherRule
 import com.taskodoro.android.app.helpers.test
 import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.model.TaskValidation
+import com.taskodoro.tasks.model.TaskValidationResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runCurrent
@@ -92,7 +92,7 @@ class CreateTaskViewModelTest {
         test(sut.state) { states ->
 
             repository
-                .completeWithError(TaskRepository.TaskValidationException(TaskValidation.EMPTY_TITLE))
+                .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.EMPTY_TITLE))
             sut.save(anyTitle())
 
             runCurrent()
@@ -115,7 +115,7 @@ class CreateTaskViewModelTest {
         test(sut.state) { states ->
 
             repository
-                .completeWithError(TaskRepository.TaskValidationException(TaskValidation.INVALID_TITLE))
+                .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.INVALID_TITLE))
             sut.save(anyTitle())
 
             runCurrent()
