@@ -36,7 +36,7 @@ class CreateTaskViewModel(
     private val saveTask: (Task) -> Flow<Result<Unit>>,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(CreateTaskUIState.INITIAL)
+    private val _state = MutableStateFlow(CreateTaskUIState())
     internal val state = _state.asStateFlow()
 
     fun save(title: String) {

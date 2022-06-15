@@ -38,7 +38,7 @@ class CreateTaskViewModelTest {
     fun init_doesNotModifyInitialState() {
         val (sut, _) = makeSUT()
 
-        Assert.assertEquals(CreateTaskUIState.INITIAL, sut.state.value)
+        Assert.assertEquals(CreateTaskUIState(), sut.state.value)
     }
 
     @Test
@@ -52,7 +52,7 @@ class CreateTaskViewModelTest {
 
             runCurrent()
 
-            Assert.assertEquals(CreateTaskUIState.INITIAL, states.first())
+            Assert.assertEquals(CreateTaskUIState(), states.first())
 
             val secondState = states[1]
             Assert.assertTrue(secondState.loading)

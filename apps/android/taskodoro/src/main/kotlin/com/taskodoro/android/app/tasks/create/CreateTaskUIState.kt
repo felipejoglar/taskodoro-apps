@@ -17,18 +17,10 @@
 package com.taskodoro.android.app.tasks.create
 
 data class CreateTaskUIState(
-    val loading: Boolean,
-    val isTaskSaved: Boolean,
-    val error: Error?
+    val loading: Boolean = false,
+    val isTaskSaved: Boolean = false,
+    val error: Error? = null,
 ) {
-    companion object {
-        val INITIAL = CreateTaskUIState(
-            loading = false,
-            isTaskSaved = false,
-            error = null,
-        )
-    }
-
     sealed class Error {
         object Unknown : Error()
         object Insertion : Error()
