@@ -16,23 +16,17 @@
 
 package com.taskodoro.android.app.tasks.create
 
-import com.taskodoro.android.app.helpers.MainDispatcherRule
-import com.taskodoro.android.app.helpers.test
+import com.taskodoro.android.app.helpers.expect
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.TaskValidationResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
-import org.junit.Rule
 import org.junit.Test
 
 
 class CreateTaskViewModelTest {
-
-    @get:Rule
-    var coroutinesRule = MainDispatcherRule()
 
     @Test
     fun init_doesNotModifyInitialState() {
@@ -44,143 +38,101 @@ class CreateTaskViewModelTest {
     @Test
     fun save_emitsCorrectStatesOnSuccessfulSave() = runTest {
         val (sut, repository) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(isTaskSaved = true)
+        )
 
-        test(sut.state) { states ->
-
+        expect(sut.state, expectedStates) {
             repository.completeSuccessfully()
             sut.save(anyTitle())
-
-            runCurrent()
-
-            Assert.assertEquals(
-                listOf(
-                    CreateTaskUIState(),
-                    CreateTaskUIState(loading = true),
-                    CreateTaskUIState(isTaskSaved = true)
-                ),
-                states
-            )
         }
     }
 
     @Test
     fun save_emitsInsertionErrorOnInsertionError() = runTest {
         val (sut, repository) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(error = CreateTaskUIState.Error.Insertion)
+        )
 
-        test(sut.state) { states ->
-
+        expect(sut.state, expectedStates) {
             repository.completeWithError(TaskRepository.TaskInsertionException)
             sut.save(anyTitle())
-
-            runCurrent()
-
-            Assert.assertEquals(
-                listOf(
-                    CreateTaskUIState(),
-                    CreateTaskUIState(loading = true),
-                    CreateTaskUIState(error = CreateTaskUIState.Error.Insertion)
-                ),
-                states
-            )
         }
     }
 
     @Test
     fun save_emitsEmptyTitleErrorOnEmptyTitleValidationError() = runTest {
         val (sut, repository) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(error = CreateTaskUIState.Error.EmptyTitle)
+        )
 
-        test(sut.state) { states ->
-
+        expect(sut.state, expectedStates) {
             repository
                 .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.EMPTY_TITLE))
             sut.save(anyTitle())
-
-            runCurrent()
-
-            Assert.assertEquals(
-                listOf(
-                    CreateTaskUIState(),
-                    CreateTaskUIState(loading = true),
-                    CreateTaskUIState(error = CreateTaskUIState.Error.EmptyTitle)
-                ),
-                states
-            )
         }
     }
 
     @Test
     fun save_emitsInvalidTitleErrorOnInvalidTitleValidationError() = runTest {
         val (sut, repository) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(error = CreateTaskUIState.Error.InvalidTitle)
+        )
 
-        test(sut.state) { states ->
-
+        expect(sut.state, expectedStates) {
             repository
                 .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.INVALID_TITLE))
             sut.save(anyTitle())
-
-            runCurrent()
-
-            Assert.assertEquals(
-                listOf(
-                    CreateTaskUIState(),
-                    CreateTaskUIState(loading = true),
-                    CreateTaskUIState(error = CreateTaskUIState.Error.InvalidTitle)
-                ),
-                states
-            )
         }
     }
 
     @Test
     fun save_emitsUnknownErrorOnCaughtError() = runTest {
         val (sut, repository) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(error = CreateTaskUIState.Error.Unknown)
+        )
 
-        test(sut.state) { states ->
-
+        expect(sut.state, expectedStates) {
             repository.throwError()
             sut.save(anyTitle())
-
-            runCurrent()
-
-            Assert.assertEquals(
-                listOf(
-                    CreateTaskUIState(),
-                    CreateTaskUIState(loading = true),
-                    CreateTaskUIState(error = CreateTaskUIState.Error.Unknown)
-                ),
-                states
-            )
         }
     }
 
     @Test
-    fun save_clearsErrorWhenSavingCorrectlyAfterError() = runTest {
+    fun save_clearsErrorWhenSavingCorrectlyAfterError() {
         val (sut, repository) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(error = CreateTaskUIState.Error.Unknown),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(isTaskSaved = true)
+        )
 
-        test(sut.state) { states ->
-
+        expect(sut.state, expectedStates) {
             repository.throwError()
             sut.save(anyTitle())
 
             repository.completeSuccessfully()
             sut.save(anyTitle())
-
-            runCurrent()
-
-            Assert.assertEquals(
-                listOf(
-                    CreateTaskUIState(),
-                    CreateTaskUIState(loading = true),
-                    CreateTaskUIState(error = CreateTaskUIState.Error.Unknown),
-                    CreateTaskUIState(loading = true),
-                    CreateTaskUIState(isTaskSaved = true)
-                ),
-                states
-            )
         }
     }
 
-    // region Helpers
+// region Helpers
 
     private fun makeSUT(): Pair<CreateTaskViewModel, RepositoryStub> {
         val repository = RepositoryStub()
@@ -220,5 +172,5 @@ class CreateTaskViewModelTest {
         }
     }
 
-    // endregion
+// endregion
 }

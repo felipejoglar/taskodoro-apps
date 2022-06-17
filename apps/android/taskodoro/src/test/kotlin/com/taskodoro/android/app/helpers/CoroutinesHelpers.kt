@@ -22,38 +22,33 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
-import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
+import org.junit.Assert
 
-class MainDispatcherRule(
-    private val testCoroutineScheduler: TestCoroutineScheduler = TestCoroutineScheduler(),
-    private val testDispatcher: TestDispatcher = StandardTestDispatcher(testCoroutineScheduler),
-) : TestWatcher() {
-
-    override fun starting(description: Description) {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    override fun finished(description: Description) {
-        Dispatchers.resetMain()
-    }
-}
-
-fun <T> TestScope.test(
+fun <T> expect(
     flow: Flow<T>,
-    validate: TestScope.(List<T>) -> Unit
+    expectedValues: List<T>,
+    action: () -> Unit,
 ) {
-    val values = mutableListOf<T>()
-    val job = launch(UnconfinedTestDispatcher(testScheduler)) {
-        flow.toList(values)
+    Dispatchers.setMain(StandardTestDispatcher(TestCoroutineScheduler()))
+
+    runTest {
+        val values = mutableListOf<T>()
+        val job = launch(UnconfinedTestDispatcher(testScheduler)) {
+            flow.toList(values)
+        }
+
+        action()
+        runCurrent()
+
+        Assert.assertEquals(expectedValues, values)
+
+        job.cancel()
     }
 
-    validate(values)
-
-    job.cancel()
+    Dispatchers.resetMain()
 }
