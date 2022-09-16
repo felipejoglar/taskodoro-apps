@@ -16,7 +16,7 @@
 
 package com.taskodoro.android.app.tasks.create
 
-import com.taskodoro.android.app.helpers.expect
+import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.TaskValidationResult
 import kotlinx.coroutines.flow.Flow
@@ -44,7 +44,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(isTaskSaved = true)
         )
 
-        expect(sut.state, expectedStates) {
+        expectEquals(sut.state, expectedStates) {
             repository.completeSuccessfully()
             sut.save(anyTitle())
         }
@@ -59,7 +59,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(error = CreateTaskUIState.Error.Insertion)
         )
 
-        expect(sut.state, expectedStates) {
+        expectEquals(sut.state, expectedStates) {
             repository.completeWithError(TaskRepository.TaskInsertionException)
             sut.save(anyTitle())
         }
@@ -74,7 +74,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(error = CreateTaskUIState.Error.EmptyTitle)
         )
 
-        expect(sut.state, expectedStates) {
+        expectEquals(sut.state, expectedStates) {
             repository
                 .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.EMPTY_TITLE))
             sut.save(anyTitle())
@@ -90,7 +90,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(error = CreateTaskUIState.Error.InvalidTitle)
         )
 
-        expect(sut.state, expectedStates) {
+        expectEquals(sut.state, expectedStates) {
             repository
                 .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.INVALID_TITLE))
             sut.save(anyTitle())
@@ -106,7 +106,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(error = CreateTaskUIState.Error.Unknown)
         )
 
-        expect(sut.state, expectedStates) {
+        expectEquals(sut.state, expectedStates) {
             repository.throwError()
             sut.save(anyTitle())
         }
@@ -123,7 +123,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(isTaskSaved = true)
         )
 
-        expect(sut.state, expectedStates) {
+        expectEquals(sut.state, expectedStates) {
             repository.throwError()
             sut.save(anyTitle())
 

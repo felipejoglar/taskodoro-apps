@@ -29,7 +29,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert
 
-fun <T> expect(
+fun <T> expectEquals(
     flow: Flow<T>,
     expectedValues: List<T>,
     action: () -> Unit,
