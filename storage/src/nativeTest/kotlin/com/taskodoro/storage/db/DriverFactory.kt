@@ -14,24 +14,25 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks.helpers
+package com.taskodoro.storage.db
 
 import co.touchlab.sqliter.DatabaseConfiguration
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import com.squareup.sqldelight.drivers.native.wrapConnection
-import com.taskodoro.storage.db.TaskodoroDB
 
-internal actual fun makeTestDriver(): SqlDriver {
-    val schema = TaskodoroDB.Schema
-    return NativeSqliteDriver(
-        DatabaseConfiguration(
-            name = "TaskodoroDB",
-            version = schema.version,
-            create = { connection ->
-                wrapConnection(connection) { schema.create(it) }
-            },
-            inMemory = true
+actual class DriverFactory {
+    actual fun createDriver(): SqlDriver {
+        val schema = TaskodoroDB.Schema
+        return NativeSqliteDriver(
+            DatabaseConfiguration(
+                name = "TaskodoroDB",
+                version = schema.version,
+                create = { connection ->
+                    wrapConnection(connection) { schema.create(it) }
+                },
+                inMemory = true
+            )
         )
-    )
+    }
 }

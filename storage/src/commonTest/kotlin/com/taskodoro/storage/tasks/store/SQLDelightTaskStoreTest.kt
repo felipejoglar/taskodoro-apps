@@ -16,9 +16,9 @@
 
 package com.taskodoro.storage.tasks.store
 
+import com.taskodoro.storage.db.DriverFactory
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.tasks.helpers.anyTask
-import com.taskodoro.storage.tasks.helpers.makeTestDriver
 import com.taskodoro.tasks.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -48,7 +48,7 @@ class SQLDelightTaskStoreTest {
     // region Helpers
 
     private fun makeSUT(): SQLDelightTaskStore {
-        val driver = makeTestDriver()
+        val driver = DriverFactory().createDriver()
         val db = TaskodoroDB(driver)
         db.clear()
 

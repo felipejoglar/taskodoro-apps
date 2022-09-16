@@ -14,8 +14,12 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks.helpers
+package com.taskodoro.storage.db
 
 import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 
-internal expect fun makeTestDriver(): SqlDriver
+actual class DriverFactory {
+    actual fun createDriver(): SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        .also { TaskodoroDB.Schema.create(it) }
+}
