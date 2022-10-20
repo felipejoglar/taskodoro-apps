@@ -19,6 +19,9 @@ package com.taskodoro.android.app.tasks.create
 import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.TaskValidationResult
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.Assert
@@ -136,7 +139,8 @@ class CreateTaskViewModelTest {
     private fun makeSUT(): Pair<CreateTaskViewModel, RepositoryStub> {
         val repository = RepositoryStub()
         val sut = CreateTaskViewModel(
-            saveTask = { repository.save() }
+            saveTask = { repository.save() },
+            scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         )
 
         return sut to repository

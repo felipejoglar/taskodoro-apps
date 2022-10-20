@@ -16,13 +16,10 @@
 
 package com.taskodoro.android.app.tasks.create
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.model.TaskValidationResult
-import java.time.Instant
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,10 +28,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import java.time.Instant
+import java.util.UUID
 
 class CreateTaskViewModel(
     private val saveTask: (Task) -> Flow<Result<Unit>>,
-) : ViewModel() {
+    private val scope: CoroutineScope,
+) {
 
     private val _state = MutableStateFlow(CreateTaskUIState())
     internal val state = _state.asStateFlow()
@@ -50,7 +50,7 @@ class CreateTaskViewModel(
             .onStart { updateWith(loading = true) }
             .onEach(::handleResult)
             .catch { updateWithError(CreateTaskUIState.Error.Unknown) }
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     private fun handleResult(result: Result<Unit>) {
