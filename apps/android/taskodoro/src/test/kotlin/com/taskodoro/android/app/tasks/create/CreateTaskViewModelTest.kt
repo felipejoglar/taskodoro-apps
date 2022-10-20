@@ -21,7 +21,6 @@ import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.TaskValidationResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
@@ -36,7 +35,7 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun save_emitsCorrectStatesOnSuccessfulSave() = runTest {
+    fun save_emitsCorrectStatesOnSuccessfulSave() {
         val (sut, repository) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
@@ -51,7 +50,7 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun save_emitsInsertionErrorOnInsertionError() = runTest {
+    fun save_emitsInsertionErrorOnInsertionError() {
         val (sut, repository) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
@@ -66,7 +65,7 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun save_emitsEmptyTitleErrorOnEmptyTitleValidationError() = runTest {
+    fun save_emitsEmptyTitleErrorOnEmptyTitleValidationError() {
         val (sut, repository) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
@@ -82,7 +81,7 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun save_emitsInvalidTitleErrorOnInvalidTitleValidationError() = runTest {
+    fun save_emitsInvalidTitleErrorOnInvalidTitleValidationError() {
         val (sut, repository) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
@@ -98,7 +97,7 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun save_emitsUnknownErrorOnCaughtError() = runTest {
+    fun save_emitsUnknownErrorOnCaughtError() {
         val (sut, repository) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
@@ -132,7 +131,7 @@ class CreateTaskViewModelTest {
         }
     }
 
-// region Helpers
+    // region Helpers
 
     private fun makeSUT(): Pair<CreateTaskViewModel, RepositoryStub> {
         val repository = RepositoryStub()
@@ -172,5 +171,5 @@ class CreateTaskViewModelTest {
         }
     }
 
-// endregion
+    // endregion
 }
