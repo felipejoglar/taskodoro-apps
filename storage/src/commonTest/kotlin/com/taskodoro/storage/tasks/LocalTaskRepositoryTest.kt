@@ -19,7 +19,6 @@ package com.taskodoro.storage.tasks
 import com.taskodoro.storage.tasks.helpers.TaskStoreSpy
 import com.taskodoro.storage.tasks.helpers.anyTask
 import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.model.TaskValidationResult
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -27,39 +26,16 @@ class LocalTaskRepositoryTest {
 
     @Test
     fun init_doesNotMessageStoreOnCreation() {
-        val (_, store, _) = makeSUT()
+        val (_, store) = makeSUT()
 
         assertEquals(emptyList(), store.messages)
     }
 
     @Test
-    fun save_failsWithInvalidTitleTaskExceptionOnInvalidTitleFailure() {
-        val (sut, _, validator) = makeSUT()
-        val task = anyTask()
-
-        validator.completeValidationWithInvalidTitleFailure()
-        val result = sut.save(task)
-
-        assertEquals(Result.failure(TaskRepository.TaskException.InvalidTitle), result)
-    }
-
-    @Test
-    fun save_failsWithEmptyTitleTaskExceptionOnEmptyTitleFailure() {
-        val (sut, _, validator) = makeSUT()
-        val task = anyTask()
-
-        validator.completeValidationWithEmptyTitleFailure()
-        val result = sut.save(task)
-
-        assertEquals(Result.failure(TaskRepository.TaskException.EmptyTitle), result)
-    }
-
-    @Test
     fun save_failsOnInsertionError() {
-        val (sut, store, validator) = makeSUT()
+        val (sut, store) = makeSUT()
         val task = anyTask()
 
-        validator.completeValidationSuccessfully()
         store.completeInsertionWithFailure()
         val result = sut.save(task)
 
@@ -68,64 +44,23 @@ class LocalTaskRepositoryTest {
 
     @Test
     fun save_succeedsOnSuccessfulInsertion() {
-        val (sut, store, validator) = makeSUT()
+        val (sut, store) = makeSUT()
         val task = anyTask()
 
-        validator.completeValidationSuccessfully()
         store.completeInsertionSuccessfully()
         val result = sut.save(task)
 
         assertEquals(Result.success(Unit), result)
-    }
-
-    @Test
-    fun save_succeedsWithTrimmedValuesOnSuccessfulInsertion() {
-        val (sut, store, validator) = makeSUT()
-        val task = anyTask().copy(title = "   A title   ")
-
-        validator.completeValidationSuccessfully()
-        store.completeInsertionSuccessfully()
-        val result = sut.save(task)
-
-        assertEquals(Result.success(Unit), result)
-        assertEquals("A title", store.savedTasks.first().title)
     }
 
     // region Helpers
 
-    private fun makeSUT(): TestObjects {
+    private fun makeSUT(): Pair<TaskRepository, TaskStoreSpy> {
         val store = TaskStoreSpy()
-        val validator = TaskValidatorStub()
-        val sut = LocalTaskRepository(
-            store = store,
-            validate = { validator.validate() }
-        )
+        val sut = LocalTaskRepository(store = store)
 
-        return TestObjects(sut, store, validator)
+        return sut to store
     }
 
-    private data class TestObjects(
-        val sut: LocalTaskRepository,
-        val store: TaskStoreSpy,
-        val validator: TaskValidatorStub,
-    )
-
-    private class TaskValidatorStub {
-        private var validationResult: TaskValidationResult? = null
-
-        fun validate(): TaskValidationResult = validationResult!!
-
-        fun completeValidationSuccessfully() {
-            validationResult = TaskValidationResult.SUCCESS
-        }
-
-        fun completeValidationWithEmptyTitleFailure() {
-            validationResult = TaskValidationResult.EMPTY_TITLE
-        }
-
-        fun completeValidationWithInvalidTitleFailure() {
-            validationResult = TaskValidationResult.INVALID_TITLE
-        }
-    }
     // endregion
 }

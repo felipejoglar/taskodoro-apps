@@ -19,7 +19,7 @@ package com.taskodoro.storage.tasks.helpers
 import com.taskodoro.storage.tasks.TaskStore
 import com.taskodoro.tasks.model.Task
 
-class TaskStoreSpy : TaskStore {
+internal class TaskStoreSpy : TaskStore {
     enum class Message {
         SAVE
     }

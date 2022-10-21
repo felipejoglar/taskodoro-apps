@@ -17,35 +17,19 @@
 package com.taskodoro.storage.tasks
 
 import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.TaskRepository.TaskException
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidationResult
-import com.taskodoro.tasks.model.TaskValidationResult.EMPTY_TITLE
-import com.taskodoro.tasks.model.TaskValidationResult.INVALID_TITLE
-import com.taskodoro.tasks.model.TaskValidationResult.SUCCESS
 
 class LocalTaskRepository(
     private val store: TaskStore,
-    private val validate: (Task) -> TaskValidationResult,
 ) : TaskRepository {
 
     override fun save(task: Task): Result<Unit> =
         try {
-            when (validate(task)) {
-                EMPTY_TITLE -> Result.failure(TaskException.EmptyTitle)
-                INVALID_TITLE -> Result.failure(TaskException.InvalidTitle)
-                SUCCESS -> insert(task)
-            }
+            store.save(task)
+            Result.success(Unit)
         } catch (exception: Exception) {
-            Result.failure(TaskException.SaveFailed)
+            Result.failure(TaskRepository.TaskException.SaveFailed)
         }
-
-    private fun insert(task: Task): Result<Unit> {
-        store.save(task.withTrimmedValues())
-        return Result.success(Unit)
-    }
-
-    private fun Task.withTrimmedValues(): Task = copy(title = title.trim())
 }
 
 
