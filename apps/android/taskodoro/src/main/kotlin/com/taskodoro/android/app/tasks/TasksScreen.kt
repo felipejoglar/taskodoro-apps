@@ -85,7 +85,11 @@ private fun TasksScreenPreview() {
             color = MaterialTheme.colors.background
         ) {
             val tasks = List(20) {
-                Task(id = it.toLong(), title = "Task $it title")
+                Task(
+                    id = it.toString(),
+                    title = "Task $it title",
+                    createdAt = it.toLong(),
+                )
             }
             TasksContent(tasks = tasks)
         }

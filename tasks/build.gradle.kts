@@ -16,11 +16,12 @@
 
 plugins {
     kotlin("multiplatform")
+    id("com.android.library")
 }
 
 kotlin {
 
-    jvm()
+    android()
 
     listOf(
         iosArm64(),
@@ -36,7 +37,7 @@ kotlin {
 
         /* Main source sets */
         val commonMain by getting
-        val jvmMain by getting
+        val androidMain by getting
         val nativeMain by creating
         val iosMain by creating
         val iosArm64Main by getting
@@ -44,7 +45,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
 
         /* Main hierarchy */
-        jvmMain.dependsOn(commonMain)
+        androidMain.dependsOn(commonMain)
         nativeMain.dependsOn(commonMain)
         iosMain.dependsOn(nativeMain)
         iosX64Main.dependsOn(iosMain)
@@ -57,7 +58,7 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
-        val jvmTest by getting
+        val androidTest by getting
         val iosArm64Test by getting
         val iosX64Test by getting
         val iosSimulatorArm64Test by getting
@@ -65,7 +66,7 @@ kotlin {
         val nativeTest by creating
 
         /* Test hierarchy */
-        jvmTest.dependsOn(commonTest)
+        androidTest.dependsOn(commonTest)
         nativeTest.dependsOn(commonTest)
         iosTest.dependsOn(nativeTest)
         iosArm64Test.dependsOn(iosTest)
@@ -80,4 +81,28 @@ kotlin {
             freeCompilerArgs = freeCompilerArgs.plus("-Xgc=cms")
         }
     }
+}
+
+android {
+    compileSdk = config.versions.compileSdk.get().toInt()
+    buildToolsVersion = config.versions.buildTools.get()
+
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
+    defaultConfig {
+
+        minSdk = config.versions.minSdk.get().toInt()
+        targetSdk = config.versions.targetSdk.get().toInt()
+    }
+}
+
+
+// As of today `allTest` task does not launches android unit tests.
+tasks.register("allTestsWithAndroid") {
+    group = "verification"
+    description = "Runs the tests for all targets in this module."
+
+    dependsOn("iosX64Test")
+    dependsOn("testDebugUnitTest")
+    dependsOn("testReleaseUnitTest")
 }

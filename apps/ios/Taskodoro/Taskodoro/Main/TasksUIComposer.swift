@@ -25,7 +25,7 @@ final class TasksUIComposer {
     static func makeTasksScreen() -> TasksScreen {
         let dispatchers = DefaultDispatcherProvider()
         let taskLocalDataSource = InMemoryTaskLocalDataSourceAdapter()
-        let taskRepository = TaskRepository(localDataSource: taskLocalDataSource)
+        let taskRepository = TaskRepository_(localDataSource: taskLocalDataSource)
         let tasksLoader = deferredFuture(taskRepository.getTasks)
             .subscribe(on: dispatchers.io)
             .receive(on: dispatchers.main)
@@ -41,8 +41,14 @@ private final class InMemoryTaskLocalDataSourceAdapter: TaskLocalDataSource {
     private let dataSource = InMemoryTaskDataSource()
     
     public func getAllTasks() -> [Task] {
-        dataSource.getAllTasks().map {
-            Task(id: $0.id, title: $0.title)
+        dataSource.getAllTasks().map { localTask in
+            Task(
+                id: String(localTask.id),
+                title: localTask.title,
+                isCompleted: localTask.isCompleted,
+                createdAt: localTask.createdAt,
+                updatedAt: localTask.updatedAt
+            )
         }
     }
 }

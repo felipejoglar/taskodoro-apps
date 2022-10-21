@@ -36,7 +36,13 @@ struct TasksContent_Previews: PreviewProvider {
     static var previews: some View {
         let tasks = (0...19)
             .map { id in
-                Task(id: id, title: "Task \(id) title")
+                Task(
+                    id: String(id),
+                    title: "Task \(id) title",
+                    isCompleted: false,
+                    createdAt: 0,
+                    updatedAt: 0
+                )
             }
         TasksContent(tasks: tasks)
         TasksContent(tasks: tasks)
