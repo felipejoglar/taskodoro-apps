@@ -17,11 +17,13 @@
 package com.taskodoro.tasks
 
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidationResult
 
 interface TaskRepository {
-    data class TaskValidationException(val validationResult: TaskValidationResult) : Exception()
-    object TaskInsertionException : Exception()
+    sealed class TaskException : Exception() {
+        object EmptyTitle : TaskException()
+        object InvalidTitle : TaskException()
+        object SaveFailed : TaskException()
+    }
 
     fun save(task: Task): Result<Unit>
 }

@@ -18,7 +18,6 @@ package com.taskodoro.android.app.tasks.create
 
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidationResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,21 +55,14 @@ class CreateTaskViewModel(
     private fun handleResult(result: Result<Unit>) {
         result
             .onSuccess { updateWith(isTaskSaved = true) }
-            .onFailure(::handleError)
+            .onFailure { handleError(it as? TaskRepository.TaskException) }
     }
 
-    private fun handleError(error: Throwable) {
+    private fun handleError(error: TaskRepository.TaskException?) {
         when (error) {
-            is TaskRepository.TaskInsertionException -> updateWithError(CreateTaskUIState.Error.Insertion)
-            is TaskRepository.TaskValidationException -> handleValidationError(error)
-        }
-    }
-
-    private fun handleValidationError(error: TaskRepository.TaskValidationException) {
-        when (error.validationResult) {
-            TaskValidationResult.EMPTY_TITLE -> updateWithError(CreateTaskUIState.Error.EmptyTitle)
-            TaskValidationResult.INVALID_TITLE -> updateWithError(CreateTaskUIState.Error.InvalidTitle)
-            TaskValidationResult.SUCCESS -> updateWith(isTaskSaved = true)
+            TaskRepository.TaskException.EmptyTitle -> updateWithError(CreateTaskUIState.Error.EmptyTitle)
+            TaskRepository.TaskException.InvalidTitle -> updateWithError(CreateTaskUIState.Error.InvalidTitle)
+            TaskRepository.TaskException.SaveFailed, null -> updateWithError(CreateTaskUIState.Error.Unknown)
         }
     }
 

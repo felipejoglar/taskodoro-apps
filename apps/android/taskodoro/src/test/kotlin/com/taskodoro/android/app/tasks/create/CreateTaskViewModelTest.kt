@@ -18,7 +18,6 @@ package com.taskodoro.android.app.tasks.create
 
 import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.model.TaskValidationResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -53,21 +52,6 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun save_emitsInsertionErrorOnInsertionError() {
-        val (sut, repository) = makeSUT()
-        val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = CreateTaskUIState.Error.Insertion)
-        )
-
-        expectEquals(sut.state, expectedStates) {
-            repository.completeWithError(TaskRepository.TaskInsertionException)
-            sut.save(anyTitle())
-        }
-    }
-
-    @Test
     fun save_emitsEmptyTitleErrorOnEmptyTitleValidationError() {
         val (sut, repository) = makeSUT()
         val expectedStates = listOf(
@@ -77,8 +61,7 @@ class CreateTaskViewModelTest {
         )
 
         expectEquals(sut.state, expectedStates) {
-            repository
-                .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.EMPTY_TITLE))
+            repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
             sut.save(anyTitle())
         }
     }
@@ -93,8 +76,22 @@ class CreateTaskViewModelTest {
         )
 
         expectEquals(sut.state, expectedStates) {
-            repository
-                .completeWithError(TaskRepository.TaskValidationException(TaskValidationResult.INVALID_TITLE))
+            repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
+            sut.save(anyTitle())
+        }
+    }
+
+    @Test
+    fun save_emitsUnknownErrorOnSaveFailedError() {
+        val (sut, repository) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(error = CreateTaskUIState.Error.Unknown)
+        )
+
+        expectEquals(sut.state, expectedStates) {
+            repository.completeWithError(TaskRepository.TaskException.SaveFailed)
             sut.save(anyTitle())
         }
     }

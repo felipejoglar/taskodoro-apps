@@ -23,7 +23,6 @@ data class CreateTaskUIState(
 ) {
     sealed class Error {
         object Unknown : Error()
-        object Insertion : Error()
         object EmptyTitle : Error()
         object InvalidTitle : Error()
     }

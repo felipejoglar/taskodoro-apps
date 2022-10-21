@@ -22,7 +22,6 @@ import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.TaskValidationResult
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class LocalTaskRepositoryTest {
 
@@ -34,15 +33,25 @@ class LocalTaskRepositoryTest {
     }
 
     @Test
-    fun save_failsWithValidationTypeOnValidationError() {
+    fun save_failsWithInvalidTitleTaskExceptionOnInvalidTitleFailure() {
         val (sut, _, validator) = makeSUT()
         val task = anyTask()
 
-        validator.completeValidationWithFailure()
+        validator.completeValidationWithInvalidTitleFailure()
         val result = sut.save(task)
 
-        assertTrue(result.exceptionOrNull() is TaskRepository.TaskValidationException)
-        assertTrue((result.exceptionOrNull() as TaskRepository.TaskValidationException).validationResult != TaskValidationResult.SUCCESS)
+        assertEquals(Result.failure(TaskRepository.TaskException.InvalidTitle), result)
+    }
+
+    @Test
+    fun save_failsWithEmptyTitleTaskExceptionOnEmptyTitleFailure() {
+        val (sut, _, validator) = makeSUT()
+        val task = anyTask()
+
+        validator.completeValidationWithEmptyTitleFailure()
+        val result = sut.save(task)
+
+        assertEquals(Result.failure(TaskRepository.TaskException.EmptyTitle), result)
     }
 
     @Test
@@ -54,7 +63,7 @@ class LocalTaskRepositoryTest {
         store.completeInsertionWithFailure()
         val result = sut.save(task)
 
-        assertEquals(Result.failure(TaskRepository.TaskInsertionException), result)
+        assertEquals(Result.failure(TaskRepository.TaskException.SaveFailed), result)
     }
 
     @Test
@@ -110,7 +119,11 @@ class LocalTaskRepositoryTest {
             validationResult = TaskValidationResult.SUCCESS
         }
 
-        fun completeValidationWithFailure() {
+        fun completeValidationWithEmptyTitleFailure() {
+            validationResult = TaskValidationResult.EMPTY_TITLE
+        }
+
+        fun completeValidationWithInvalidTitleFailure() {
             validationResult = TaskValidationResult.INVALID_TITLE
         }
     }
