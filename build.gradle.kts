@@ -24,7 +24,8 @@ buildscript {
     }
 
     dependencies {
-        classpath(libs.kotlinGradle)
+        // Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
 
         // Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
         classpath("com.android.tools.build:gradle:7.3.1")

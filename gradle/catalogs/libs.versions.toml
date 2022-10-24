@@ -15,7 +15,7 @@
 #
 
 [versions]
-kotlin = "1.6.21"
+kotlin = "1.7.10"
 
 desugar = "1.1.5"
 core-ktx = "1.7.0"
@@ -35,7 +35,6 @@ espresso = "3.4.0"
 
 [libraries]
 # classpath
-kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 sqlDelight = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 
