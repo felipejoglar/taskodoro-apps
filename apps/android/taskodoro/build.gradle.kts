@@ -20,6 +20,7 @@ plugins {
 }
 
 android {
+    namespace = "com.taskodoro.android.app"
 
     compileSdk = config.versions.compileSdk.get().toInt()
     buildToolsVersion = config.versions.buildTools.get()

@@ -101,6 +101,8 @@ kotlin {
 }
 
 android {
+    namespace = "com.taskodoro.storage"
+
     compileSdk = config.versions.compileSdk.get().toInt()
     buildToolsVersion = config.versions.buildTools.get()
 
