@@ -86,19 +86,11 @@ dependencies {
     implementation(projects.tasks)
     implementation(projects.storage)
 
-    implementation(libs.androidx.core)
-
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.activity.compose)
 
-    implementation(libs.androidx.lifecycle.runtime)
-
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
-
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.espresso)
-    androidTestImplementation(libs.androidx.compose.test)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
