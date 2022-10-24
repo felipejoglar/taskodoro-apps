@@ -24,10 +24,14 @@ buildscript {
     }
 
     dependencies {
-        classpath(libs.kotlinGradle)
-        classpath(libs.androidBuildTools)
-        classpath(libs.sqlDelight)
-        classpath(libs.hilt)
+        // Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
+
+        // Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
+        classpath("com.android.tools.build:gradle:7.3.1")
+
+        // SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
+        classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqlDelight.get()}")
     }
 }
 

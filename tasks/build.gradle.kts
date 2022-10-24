@@ -84,6 +84,8 @@ kotlin {
 }
 
 android {
+    namespace = "com.taskodoro.tasks"
+
     compileSdk = config.versions.compileSdk.get().toInt()
     buildToolsVersion = config.versions.buildTools.get()
 

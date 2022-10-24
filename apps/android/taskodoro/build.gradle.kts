@@ -17,11 +17,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("dagger.hilt.android.plugin")
-    kotlin("kapt")
 }
 
 android {
+    namespace = "com.taskodoro.android.app"
 
     compileSdk = config.versions.compileSdk.get().toInt()
     buildToolsVersion = config.versions.buildTools.get()
@@ -64,7 +63,11 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     packagingOptions {
@@ -84,26 +87,11 @@ dependencies {
     implementation(projects.tasks)
     implementation(projects.storage)
 
-    implementation(libs.androidx.core)
-
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.activity.compose)
-
-    implementation(libs.androidx.lifecycle.runtime)
-
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
 
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.espresso)
-    androidTestImplementation(libs.androidx.compose.test)
-
     debugImplementation(libs.androidx.compose.ui.tooling)
-}
-
-kapt {
-    correctErrorTypes = true
 }
