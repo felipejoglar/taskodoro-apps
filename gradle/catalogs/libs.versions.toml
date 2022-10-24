@@ -26,7 +26,7 @@ lifecycle = "2.4.1"
 hilt = "2.38.1"
 coroutines = "1.6.1"
 
-sqlDelight = "1.5.3"
+sqlDelight = "1.5.4"
 
 junit = "4.13.2"
 
@@ -35,7 +35,6 @@ espresso = "3.4.0"
 
 [libraries]
 # classpath
-sqlDelight = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 
 # dependencies

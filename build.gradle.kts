@@ -30,7 +30,9 @@ buildscript {
         // Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
         classpath("com.android.tools.build:gradle:7.3.1")
 
-        classpath(libs.sqlDelight)
+        // SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
+        classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqlDelight.get()}")
+
         classpath(libs.hilt)
     }
 }
