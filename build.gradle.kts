@@ -25,7 +25,10 @@ buildscript {
 
     dependencies {
         classpath(libs.kotlinGradle)
-        classpath(libs.androidBuildTools)
+
+        // Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
+        classpath("com.android.tools.build:gradle:7.3.1")
+
         classpath(libs.sqlDelight)
         classpath(libs.hilt)
     }
