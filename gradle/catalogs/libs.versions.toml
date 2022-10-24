@@ -20,7 +20,7 @@ kotlin = "1.7.10"
 desugar = "1.1.5"
 core-ktx = "1.9.0"
 activity-compose = "1.6.1"
-lifecycle = "2.4.1"
+lifecycle = "2.5.1"
 
 compose = "1.3.0"
 compose-compiler = "1.3.2"
@@ -50,6 +50,7 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", versi
 # Activity Compose - https://developer.android.com/jetpack/androidx/releases/activity
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 
+# Lifecycle - https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 
 sqlDelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelight" }
