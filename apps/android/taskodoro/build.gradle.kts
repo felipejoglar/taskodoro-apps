@@ -17,8 +17,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("dagger.hilt.android.plugin")
-    kotlin("kapt")
 }
 
 android {
@@ -91,9 +89,6 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.runtime)
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
 
@@ -102,8 +97,4 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.test)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
-}
-
-kapt {
-    correctErrorTypes = true
 }

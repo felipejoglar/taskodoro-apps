@@ -32,8 +32,6 @@ buildscript {
 
         // SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
         classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqlDelight.get()}")
-
-        classpath(libs.hilt)
     }
 }
 
