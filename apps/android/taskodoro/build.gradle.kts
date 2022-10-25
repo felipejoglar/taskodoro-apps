@@ -90,6 +90,8 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.activity.compose)
 
+    implementation(libs.accompanist.systemuicontroller)
+
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
 
