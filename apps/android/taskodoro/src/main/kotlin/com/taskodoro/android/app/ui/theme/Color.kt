@@ -18,7 +18,21 @@ package com.taskodoro.android.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val Gunmetal = Color(0xFF2E3440)
+val Charcoal = Color(0xFF3B4252)
+val AliceBlueLight = Color(0xFFECEFF4)
+val AliceBlue = Color(0xFFE5E9F0)
+val DarkSkyBlue = Color(0xFF88C0D0)
+val Opal = Color(0xFF8FBCBB)
+val FuzzyWuzzy = Color(0xFFBF616A)
+val CopperCrayola = Color(0xFFD08770)
+val GoldCrayola = Color(0xFFEBCB8B)
+val DarkSeaGreen = Color(0xFFA3BE8C)
+val OperaMauve = Color(0xFFB48EAD)
+
+
+val TaskodoroRed = FuzzyWuzzy
+val TaskodoroOrange = CopperCrayola
+val TaskodoroYellow = GoldCrayola
+val TaskodoroGreen = DarkSeaGreen
+val TaskodoroPurple = OperaMauve
