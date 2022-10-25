@@ -21,6 +21,7 @@ desugar = "1.1.5"
 activity-compose = "1.6.1"
 
 compose = "1.3.0"
+compose-material3 = "1.0.0"
 compose-compiler = "1.3.2"
 
 accompanist = "0.27.0"
@@ -37,6 +38,7 @@ android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref =
 
 # Jetpack Compose - https://developer.android.com/jetpack/androidx/releases/compose
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 
@@ -62,6 +64,6 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 
 [bundles]
 androidx-compose = [
-    "androidx-compose-material",
+    "androidx-compose-material3",
     "androidx-compose-ui-tooling-preview",
 ]

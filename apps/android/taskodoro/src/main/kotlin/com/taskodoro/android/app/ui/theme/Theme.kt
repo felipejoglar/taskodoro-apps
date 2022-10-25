@@ -17,52 +17,80 @@
 package com.taskodoro.android.app.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val DarkColorPalette = lightColors(
-    primary = DarkSkyBlue,
-    secondary = Opal,
-    background = Gunmetal,
-    surface = Charcoal,
-    error = FuzzyWuzzy,
-    onPrimary = AliceBlueLight,
-    onSecondary = AliceBlueLight,
-    onBackground = AliceBlueLight,
-    onSurface = AliceBlue,
-    onError = AliceBlueLight
+private val DarkColors = darkColorScheme(
+    primary = Frost02_600,
+    onPrimary = SnowStorm01,
+    primaryContainer = Frost02_800,
+    onPrimaryContainer = Frost02_300,
+    secondary = Frost01_600,
+    onSecondary = SnowStorm01,
+    secondaryContainer = Frost01_800,
+    onSecondaryContainer = Frost01_300,
+    tertiary = Frost04_800,
+    onTertiary = SnowStorm01,
+    tertiaryContainer = Frost04_1000,
+    onTertiaryContainer = Frost04_500,
+    error = AuroraRed800,
+    errorContainer = AuroraRed1000,
+    onError = SnowStorm01,
+    onErrorContainer = AuroraRed500,
+    background = PolarNight01,
+    onBackground = SnowStorm01,
+    surface = PolarNight02,
+    onSurface = SnowStorm02,
+    inverseOnSurface = PolarNight02,
+    inverseSurface = SnowStorm02,
+    inversePrimary = Frost02_600,
+    outline = SnowStorm03,
+    outlineVariant = PolarNight04,
 )
 
-private val LightColorPalette = darkColors(
-    primary = DarkSkyBlue,
-    secondary = Opal,
-    background = AliceBlueLight,
-    surface = AliceBlue,
-    error = FuzzyWuzzy,
-    onPrimary = Gunmetal,
-    onSecondary = Gunmetal,
-    onBackground = Gunmetal,
-    onSurface = Charcoal,
-    onError = Gunmetal
+private val LightColors = lightColorScheme(
+    primary = Frost02_600,
+    onPrimary = PolarNight01,
+    primaryContainer = Frost02_300,
+    onPrimaryContainer = Frost02_800,
+    secondary = Frost01_600,
+    onSecondary = PolarNight01,
+    secondaryContainer = Frost01_300,
+    onSecondaryContainer = Frost01_800,
+    tertiary = Frost04_800,
+    onTertiary = PolarNight01,
+    tertiaryContainer = Frost04_500,
+    onTertiaryContainer = Frost04_1000,
+    error = AuroraRed800,
+    errorContainer = AuroraRed500,
+    onError = PolarNight01,
+    onErrorContainer = AuroraRed1000,
+    background = SnowStorm01,
+    onBackground = PolarNight01,
+    surface = SnowStorm02,
+    onSurface = PolarNight02,
+    inverseOnSurface = SnowStorm02,
+    inverseSurface = PolarNight02,
+    inversePrimary = Frost02_600,
+    outline = PolarNight04,
+    outlineVariant = SnowStorm03,
 )
 
 @Composable
 fun TaskodoroTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
+    val colors = if (!useDarkTheme) {
+        LightColors
     } else {
-        LightColorPalette
+        DarkColors
     }
 
     MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
+        colorScheme = colors,
         content = content
     )
 }
