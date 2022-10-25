@@ -19,6 +19,7 @@ package com.taskodoro.android.app.tasks
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
@@ -47,8 +48,14 @@ fun TasksScreen(
 }
 
 @Composable
-fun TasksContent(tasks: List<Task>) {
-    LazyColumn {
+fun TasksContent(
+    tasks: List<Task>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier
+            .systemBarsPadding()
+    ) {
         items(tasks) { task ->
             TaskItem(task)
         }
