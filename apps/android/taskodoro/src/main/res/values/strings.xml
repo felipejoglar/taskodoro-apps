@@ -26,5 +26,8 @@
     <string name="create_new_task_priority_medium">Medium</string>
     <string name="create_new_task_priority_high">High</string>
     <string name="create_new_task_create_task_button">Create task</string>
+    <string name="create_new_task_empty_title_error">Task\'s title can\'t be empty</string>
+    <string name="create_new_task_invalid_title_error">Task\'s title should have at least 4 characters</string>
+    <string name="create_new_task_unknown_error">An error has occurred, please try again.</string>
 
 </resources>

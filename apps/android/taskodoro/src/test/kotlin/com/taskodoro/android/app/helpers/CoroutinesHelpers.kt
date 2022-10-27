@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert
@@ -32,7 +32,7 @@ import org.junit.Assert
 fun <T> expectEquals(
     flow: Flow<T>,
     expectedValues: List<T>,
-    action: () -> Unit,
+    actions: List<() -> Unit>,
 ) {
     Dispatchers.setMain(StandardTestDispatcher(TestCoroutineScheduler()))
 
@@ -42,8 +42,10 @@ fun <T> expectEquals(
             flow.toList(values)
         }
 
-        action()
-        runCurrent()
+        actions.forEach { action ->
+            action()
+            advanceUntilIdle()
+        }
 
         Assert.assertEquals(expectedValues, values)
 

@@ -16,6 +16,8 @@
 
 package com.taskodoro.android.app.tasks.create
 
+import androidx.annotation.StringRes
+import com.taskodoro.android.app.R
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
 import kotlinx.coroutines.CoroutineScope
@@ -48,7 +50,7 @@ class CreateTaskViewModel(
         saveTask(task)
             .onStart { updateWith(loading = true) }
             .onEach(::handleResult)
-            .catch { updateWithError(CreateTaskUIState.Error.Unknown) }
+            .catch { updateWithError(R.string.create_new_task_unknown_error) }
             .launchIn(scope)
     }
 
@@ -60,21 +62,31 @@ class CreateTaskViewModel(
 
     private fun handleError(error: TaskRepository.TaskException?) {
         when (error) {
-            TaskRepository.TaskException.EmptyTitle -> updateWithError(CreateTaskUIState.Error.EmptyTitle)
-            TaskRepository.TaskException.InvalidTitle -> updateWithError(CreateTaskUIState.Error.InvalidTitle)
-            TaskRepository.TaskException.SaveFailed, null -> updateWithError(CreateTaskUIState.Error.Unknown)
+            TaskRepository.TaskException.EmptyTitle -> updateWithTitleError(R.string.create_new_task_empty_title_error)
+            TaskRepository.TaskException.InvalidTitle -> updateWithTitleError(R.string.create_new_task_invalid_title_error)
+            TaskRepository.TaskException.SaveFailed, null -> updateWithError(R.string.create_new_task_unknown_error)
         }
     }
 
     private fun updateWith(
         loading: Boolean = false,
         isTaskSaved: Boolean = false,
-        error: CreateTaskUIState.Error? = null
     ) {
-        _state.update { it.copy(loading = loading, isTaskSaved = isTaskSaved, error = error) }
+        _state.update {
+            it.copy(
+                loading = loading,
+                isTaskSaved = isTaskSaved,
+                titleError = null,
+                error = null
+            )
+        }
     }
 
-    private fun updateWithError(error: CreateTaskUIState.Error) {
+    private fun updateWithError(@StringRes error: Int) {
         _state.update { it.copy(loading = false, error = error) }
+    }
+
+    private fun updateWithTitleError(@StringRes titleError: Int) {
+        _state.update { it.copy(loading = false, titleError = titleError) }
     }
 }

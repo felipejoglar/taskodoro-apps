@@ -16,6 +16,7 @@
 
 package com.taskodoro.android.app.tasks.create
 
+import com.taskodoro.android.app.R
 import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.TaskRepository
 import kotlinx.coroutines.CoroutineScope
@@ -45,10 +46,14 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(isTaskSaved = true)
         )
 
-        expectEquals(sut.state, expectedStates) {
-            repository.completeSuccessfully()
-            sut.save(anyTitle())
-        }
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf {
+                repository.completeSuccessfully()
+                sut.save(anyTitle())
+            }
+        )
     }
 
     @Test
@@ -57,13 +62,17 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = CreateTaskUIState.Error.EmptyTitle)
+            CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error)
         )
 
-        expectEquals(sut.state, expectedStates) {
-            repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-            sut.save(anyTitle())
-        }
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf {
+                repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
+                sut.save(anyTitle())
+            }
+        )
     }
 
     @Test
@@ -72,13 +81,17 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = CreateTaskUIState.Error.InvalidTitle)
+            CreateTaskUIState(titleError = R.string.create_new_task_invalid_title_error)
         )
 
-        expectEquals(sut.state, expectedStates) {
-            repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
-            sut.save(anyTitle())
-        }
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf {
+                repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
+                sut.save(anyTitle())
+            }
+        )
     }
 
     @Test
@@ -87,13 +100,17 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = CreateTaskUIState.Error.Unknown)
+            CreateTaskUIState(error = R.string.create_new_task_unknown_error)
         )
 
-        expectEquals(sut.state, expectedStates) {
-            repository.completeWithError(TaskRepository.TaskException.SaveFailed)
-            sut.save(anyTitle())
-        }
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf {
+                repository.completeWithError(TaskRepository.TaskException.SaveFailed)
+                sut.save(anyTitle())
+            }
+        )
     }
 
     @Test
@@ -102,33 +119,46 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = CreateTaskUIState.Error.Unknown)
+            CreateTaskUIState(error = R.string.create_new_task_unknown_error)
         )
 
-        expectEquals(sut.state, expectedStates) {
-            repository.throwError()
-            sut.save(anyTitle())
-        }
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf {
+                repository.throwError()
+                sut.save(anyTitle())
+            }
+        )
     }
 
     @Test
     fun save_clearsErrorWhenSavingCorrectlyAfterError() {
         val (sut, repository) = makeSUT()
-        val expectedStates = listOf(
+        val expectedStatesForUnknownError = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = CreateTaskUIState.Error.Unknown),
+            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error),
             CreateTaskUIState(loading = true),
             CreateTaskUIState(isTaskSaved = true)
         )
 
-        expectEquals(sut.state, expectedStates) {
-            repository.throwError()
-            sut.save(anyTitle())
-
-            repository.completeSuccessfully()
-            sut.save(anyTitle())
-        }
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStatesForUnknownError,
+            actions = listOf({
+                repository.throwError()
+                sut.save(anyTitle())
+            }, {
+                repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
+                sut.save(anyTitle())
+            }, {
+                repository.completeSuccessfully()
+                sut.save(anyTitle())
+            })
+        )
     }
 
     // region Helpers
