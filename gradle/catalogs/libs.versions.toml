@@ -37,8 +37,8 @@ junit = "4.13.2"
 android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
 # Jetpack Compose - https://developer.android.com/jetpack/androidx/releases/compose
-androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 
@@ -65,5 +65,6 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 [bundles]
 androidx-compose = [
     "androidx-compose-material3",
+    "androidx-compose-material-icons-extended",
     "androidx-compose-ui-tooling-preview",
 ]
