@@ -16,4 +16,15 @@
 
 <resources>
     <string name="app_name">Taskodoro</string>
+
+    <!--  SCREEN: CREATE NEW TASK  -->
+    <string name="create_new_task_screen_title">Create new task</string>
+    <string name="create_new_task_title">Title</string>
+    <string name="create_new_task_description">Description</string>
+    <string name="create_new_task_priority">Priority</string>
+    <string name="create_new_task_priority_low">Low</string>
+    <string name="create_new_task_priority_medium">Medium</string>
+    <string name="create_new_task_priority_high">High</string>
+    <string name="create_new_task_create_task_button">Create task</string>
+
 </resources>
