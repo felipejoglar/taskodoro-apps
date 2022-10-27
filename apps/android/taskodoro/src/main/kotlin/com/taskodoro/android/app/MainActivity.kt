@@ -20,7 +20,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import com.taskodoro.android.app.tasks.TasksScreen
+import com.taskodoro.android.app.tasks.create.CreateTaskScreen
+import com.taskodoro.android.app.tasks.create.CreateTaskUIState
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +33,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TaskodoroTemplate {
-                TasksScreen()
+                CreateTaskScreen(
+                    state = CreateTaskUIState(),
+                    onCreateTaskClick = { _, _, _ -> },
+                    onBackClick = {}
+                )
             }
         }
     }
