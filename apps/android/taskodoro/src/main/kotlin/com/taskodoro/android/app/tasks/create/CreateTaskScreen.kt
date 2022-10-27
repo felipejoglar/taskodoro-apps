@@ -17,6 +17,8 @@
 package com.taskodoro.android.app.tasks.create
 
 import android.content.res.Configuration
+import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +32,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,6 +52,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,17 +77,19 @@ fun CreateTaskScreen(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
             .consumedWindowInsets(WindowInsets.navigationBars)
             .imePadding(),
-        topBar = { TaskodoroLargeTopBar(
-            title = {
-                Text(
-                    stringResource(id = R.string.create_new_task_screen_title),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            },
-            onNavigationClick = onBackClick,
-            scrollBehavior = scrollBehavior
-        ) }
+        topBar = {
+            TaskodoroLargeTopBar(
+                title = {
+                    Text(
+                        stringResource(id = R.string.create_new_task_screen_title),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                onNavigationClick = onBackClick,
+                scrollBehavior = scrollBehavior
+            )
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -102,10 +108,27 @@ fun CreateTaskScreen(
                 description = description,
                 onDescriptionChange = { description = it },
                 priority = priority,
-                onPriorityChange = { priority = it }
+                onPriorityChange = { priority = it },
+                titleError = state.titleError
             )
 
             Spacer(modifier = Modifier.weight(1f))
+
+            state.error?.let {
+                Text(
+                    text = stringResource(id = state.error),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onErrorContainer,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = MaterialTheme.colorScheme.errorContainer,
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                        .padding(12.dp)
+                )
+            }
 
             TaskodoroButton(
                 onClick = { onCreateTaskClick(title.text, description.text, priority) },
@@ -126,12 +149,14 @@ fun CreateTaskScreen(
 fun CreateTaskForm(
     title: TextFieldValue,
     onTitleChange: (TextFieldValue) -> Unit,
+    @StringRes titleError: Int?,
     description: TextFieldValue,
     onDescriptionChange: (TextFieldValue) -> Unit,
     priority: Int,
-    onPriorityChange: (Int) -> Unit
+    onPriorityChange: (Int) -> Unit,
 ) {
     val titleLabel = stringResource(id = R.string.create_new_task_title)
+    val isTitleError = titleError != null
     OutlinedTextField(
         value = title,
         onValueChange = onTitleChange,
@@ -142,6 +167,14 @@ fun CreateTaskForm(
             capitalization = KeyboardCapitalization.Sentences,
             imeAction = ImeAction.Next
         ),
+        isError = isTitleError,
+        supportingText = {
+            if (isTitleError)
+                Text(
+                    text = stringResource(titleError!!),
+                    color = MaterialTheme.colorScheme.error
+                )
+        },
         modifier = Modifier
             .fillMaxWidth()
     )
@@ -203,6 +236,32 @@ private fun CreateTaskScreenPreview() {
     TaskodoroTemplate {
         CreateTaskScreen(
             state = CreateTaskUIState(),
+            onCreateTaskClick = { _, _, _ -> },
+            onBackClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Day Mode",
+    widthDp = 360,
+    heightDp = 640,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+)
+@Preview(
+    name = "Night Mode",
+    widthDp = 360,
+    heightDp = 640,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
+@Composable
+private fun CreateTaskScreenWithErrorsPreview() {
+    TaskodoroTemplate {
+        CreateTaskScreen(
+            state = CreateTaskUIState(
+                titleError = R.string.create_new_task_empty_title_error,
+                error = R.string.create_new_task_unknown_error
+            ),
             onCreateTaskClick = { _, _, _ -> },
             onBackClick = {}
         )
