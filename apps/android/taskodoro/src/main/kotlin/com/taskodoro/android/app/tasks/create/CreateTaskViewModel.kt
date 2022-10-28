@@ -40,10 +40,12 @@ class CreateTaskViewModel(
     private val _state = MutableStateFlow(CreateTaskUIState())
     internal val state = _state.asStateFlow()
 
-    fun save(title: String) {
+    fun save(title: String, description: String, priority: Int) {
         val task = Task(
             id = UUID.randomUUID().toString(),
             title = title,
+            description = description,
+            priority = Task.Priority.fromValue(priority),
             createdAt = Instant.now().epochSecond
         )
 

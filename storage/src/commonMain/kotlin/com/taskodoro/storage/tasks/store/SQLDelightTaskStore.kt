@@ -30,6 +30,8 @@ class SQLDelightTaskStore(
         tasksQueries.insert(
             id = task.id,
             title = task.title,
+            description = task.description,
+            priority = task.priority.ordinal.toLong(),
             completed = false,
             createdAt = task.createdAt,
             updatedAt = 0,

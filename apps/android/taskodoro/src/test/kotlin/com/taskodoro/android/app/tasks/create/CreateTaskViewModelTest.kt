@@ -51,7 +51,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeSuccessfully()
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             }
         )
     }
@@ -70,7 +70,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             }
         )
     }
@@ -89,7 +89,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             }
         )
     }
@@ -108,7 +108,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.SaveFailed)
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             }
         )
     }
@@ -127,7 +127,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.throwError()
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             }
         )
     }
@@ -150,13 +150,13 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStatesForUnknownError,
             actions = listOf({
                 repository.throwError()
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             }, {
                 repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             }, {
                 repository.completeSuccessfully()
-                sut.save(anyTitle())
+                sut.save(anyTitle(), anyDescription(), anyPriority())
             })
         )
     }
@@ -174,6 +174,8 @@ class CreateTaskViewModelTest {
     }
 
     private fun anyTitle() = "any title"
+    private fun anyDescription() = "any description"
+    private fun anyPriority() = 1
 
 
     private class RepositoryStub {

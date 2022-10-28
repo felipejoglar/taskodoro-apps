@@ -19,7 +19,23 @@ package com.taskodoro.tasks.model
 data class Task(
     val id: String,
     val title: String,
+    val description: String? = null,
+    val priority: Priority = Priority.MEDIUM,
     val isCompleted: Boolean = false,
     val createdAt: Long,
     val updatedAt: Long = 0,
-)
+) {
+
+    enum class Priority{
+        LOW, MEDIUM, HIGH;
+
+        companion object {
+            fun fromValue(value: Int)=
+                when {
+                 value < 1 -> LOW
+                 value == 1 -> MEDIUM
+                 else ->   HIGH
+                }
+        }
+    }
+}
