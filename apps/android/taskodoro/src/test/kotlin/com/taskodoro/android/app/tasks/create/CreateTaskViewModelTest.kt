@@ -38,6 +38,69 @@ class CreateTaskViewModelTest {
     }
 
     @Test
+    fun onTitleChanged_updatesTitleState() {
+        val (sut, _) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(title = "Hello"),
+            CreateTaskUIState(title = "Hello, World!")
+        )
+
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf({
+                sut.onTitleChanged("Hello")
+            }, {
+                sut.onTitleChanged("Hello, World!")
+            })
+        )
+    }
+
+    @Test
+    fun onDescriptionChanged_updatesDescriptionState() {
+        val (sut, _) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(description = "Hello"),
+            CreateTaskUIState(description = "Hello, World!")
+        )
+
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf({
+                sut.onDescriptionChanged("Hello")
+            }, {
+                sut.onDescriptionChanged("Hello, World!")
+            })
+        )
+    }
+
+    @Test
+    fun onPriorityChanged_updatesPriorityState() {
+        val (sut, _) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(priority = 0),
+            CreateTaskUIState(priority = 1),
+            CreateTaskUIState(priority = 2)
+        )
+
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf({
+                sut.onPriorityChanged(0)
+            }, {
+                sut.onPriorityChanged(1)
+            }, {
+                sut.onPriorityChanged(2)
+            })
+        )
+    }
+
+    @Test
     fun save_emitsCorrectStatesOnSuccessfulSave() {
         val (sut, repository) = makeSUT()
         val expectedStates = listOf(
@@ -51,7 +114,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeSuccessfully()
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             }
         )
     }
@@ -70,7 +133,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             }
         )
     }
@@ -89,7 +152,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             }
         )
     }
@@ -108,7 +171,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.SaveFailed)
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             }
         )
     }
@@ -127,7 +190,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.throwError()
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             }
         )
     }
@@ -150,13 +213,13 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStatesForUnknownError,
             actions = listOf({
                 repository.throwError()
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             }, {
                 repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             }, {
                 repository.completeSuccessfully()
-                sut.save(anyTitle(), anyDescription(), anyPriority())
+                sut.save()
             })
         )
     }

@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -35,11 +36,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.app.R
+import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.buttons.SegmentedButton
+import com.taskodoro.android.app.ui.components.buttons.TaskodoroButton
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 
 /**
@@ -48,31 +51,36 @@ import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskForm(
-    title: TextFieldValue,
-    onTitleChange: (TextFieldValue) -> Unit,
-    @StringRes titleError: Int?,
-    description: TextFieldValue,
-    onDescriptionChange: (TextFieldValue) -> Unit,
+    title: String,
+    description: String,
     priority: Int,
-    onPriorityChange: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    onTitleChanged: (String) -> Unit,
+    onDescriptionChanged: (String) -> Unit,
+    onPriorityChanged: (Int) -> Unit,
+    @StringRes submitLabel: Int,
+    onSubmitClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+    loading: Boolean = false,
+    @StringRes titleErrorLabel: Int? = null,
+    @StringRes errorLabel: Int? = null,
 ) {
     Column(modifier = modifier) {
         val titleLabel = stringResource(id = R.string.task_form_title)
-        val isTitleError = titleError != null
+        val isTitleError = titleErrorLabel != null
         OutlinedTextField(
             value = title,
-            onValueChange = onTitleChange,
+            onValueChange = onTitleChanged,
             label = { Text(titleLabel) },
             placeholder = { Text(titleLabel) },
-            maxLines = 1,
+            singleLine = true,
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences, imeAction = ImeAction.Next
             ),
             isError = isTitleError,
             supportingText = {
                 if (isTitleError) Text(
-                    text = stringResource(titleError!!), color = MaterialTheme.colorScheme.error
+                    text = stringResource(titleErrorLabel!!),
+                    color = MaterialTheme.colorScheme.error
                 )
             },
             modifier = Modifier.fillMaxWidth()
@@ -83,7 +91,7 @@ fun TaskForm(
         val descriptionLabel = stringResource(id = R.string.task_form_description)
         OutlinedTextField(
             value = description,
-            onValueChange = onDescriptionChange,
+            onValueChange = onDescriptionChanged,
             label = { Text(descriptionLabel) },
             placeholder = { Text(descriptionLabel) },
             keyboardOptions = KeyboardOptions(
@@ -103,9 +111,39 @@ fun TaskForm(
         SegmentedButton(
             items = getPriorityLabels(),
             selectedItemIndex = priority,
-            onSelectedItemChange = onPriorityChange,
+            onSelectedItemChange = onPriorityChanged,
             modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        errorLabel?.let {
+            Text(
+                text = stringResource(id = errorLabel),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.errorContainer,
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .padding(12.dp)
+            )
+        }
+
+        TaskodoroButton(
+            onClick = onSubmitClicked,
+            loading = loading,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        )
+        {
+            Text(stringResource(id = submitLabel))
+        }
     }
 
 }
@@ -119,23 +157,61 @@ private fun getPriorityLabels(): List<String> = listOf(
 
 @Preview(
     name = "Day Mode",
+    widthDp = 360,
+    heightDp = 640,
     uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Preview(
     name = "Night Mode",
+    widthDp = 360,
+    heightDp = 640,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 private fun TaskFormPreview() {
     TaskodoroTheme {
         TaskForm(
-            title = TextFieldValue(),
-            onTitleChange = {},
-            titleError = null,
-            description = TextFieldValue(),
-            onDescriptionChange = {},
+            title = "",
+            onTitleChanged = {},
+            description = "",
+            onDescriptionChanged = {},
             priority = 1,
-            onPriorityChange = {},
+            onPriorityChanged = {},
+            submitLabel = R.string.create_new_task_create_task_button,
+            onSubmitClicked = {},
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp)
+        )
+    }
+}
+
+@Preview(
+    name = "Day Mode",
+    widthDp = 360,
+    heightDp = 640,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+)
+@Preview(
+    name = "Night Mode",
+    widthDp = 360,
+    heightDp = 640,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
+@Composable
+private fun TaskFormWithErrorsPreview() {
+    TaskodoroTemplate {
+        TaskForm(
+            title = "",
+            onTitleChanged = {},
+            description = "",
+            onDescriptionChanged = {},
+            priority = 1,
+            onPriorityChanged = {},
+            submitLabel = R.string.create_new_task_create_task_button,
+            onSubmitClicked = {},
+            titleErrorLabel = R.string.create_new_task_empty_title_error,
+            errorLabel = R.string.create_new_task_unknown_error,
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)

@@ -19,10 +19,23 @@ package com.taskodoro.android.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import com.taskodoro.android.app.tasks.create.CreateTaskScreen
-import com.taskodoro.android.app.tasks.create.CreateTaskUIState
+import com.taskodoro.android.app.tasks.create.CreateTaskViewModel
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
+import com.taskodoro.storage.db.DriverFactory
+import com.taskodoro.storage.db.TaskodoroDB
+import com.taskodoro.storage.tasks.LocalTaskRepository
+import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
+import com.taskodoro.tasks.TaskValidator
+import com.taskodoro.tasks.save
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 
 class MainActivity : ComponentActivity() {
 
@@ -31,12 +44,31 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        val sqlDriver = DriverFactory(applicationContext).createDriver()
+        val database = TaskodoroDB(sqlDriver).apply { taskdoroDBQueries.clearDB() }
+        val store = SQLDelightTaskStore(database)
+        val repository = LocalTaskRepository(store)
+
         setContent {
+            val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+            val viewModel = CreateTaskViewModel(
+                saveTask = { task ->
+                    flowOf(save(task, repository, TaskValidator::validate))
+                        .flowOn(Dispatchers.Default)
+                },
+                scope = scope
+            )
+
+            val state by viewModel.state.collectAsState()
+
             TaskodoroTemplate {
                 CreateTaskScreen(
-                    state = CreateTaskUIState(),
-                    onCreateTaskClick = { _, _, _ -> },
-                    onBackClick = {}
+                    state = state,
+                    onTitleChanged = viewModel::onTitleChanged,
+                    onDescriptionChanged = viewModel::onDescriptionChanged,
+                    onPriorityChanged = viewModel::onPriorityChanged,
+                    onCreateTaskClick = viewModel::save,
+                    onBackClick = ::finish
                 )
             }
         }
