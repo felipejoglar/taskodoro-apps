@@ -33,7 +33,7 @@ import java.time.Instant
 import java.util.UUID
 
 class CreateTaskViewModel(
-    private val saveTask: (Task) -> Flow<Result<Unit>>,
+    private val createTask: (Task) -> Flow<Result<Unit>>,
     private val scope: CoroutineScope,
 ) {
 
@@ -52,7 +52,7 @@ class CreateTaskViewModel(
         _state.update { it.copy(priority = priority) }
     }
 
-    fun save() {
+    fun create() {
         val task = Task(
             id = UUID.randomUUID().toString(),
             title = state.value.title,
@@ -61,7 +61,7 @@ class CreateTaskViewModel(
             createdAt = Instant.now().epochSecond
         )
 
-        saveTask(task)
+        createTask(task)
             .onStart { updateWith(loading = true) }
             .onEach(::handleResult)
             .catch { updateWithError(R.string.create_new_task_unknown_error) }
@@ -89,7 +89,7 @@ class CreateTaskViewModel(
         _state.update {
             it.copy(
                 loading = loading,
-                isTaskSaved = isTaskSaved,
+                isTaskCreated = isTaskSaved,
                 titleError = null,
                 error = null
             )

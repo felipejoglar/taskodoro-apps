@@ -106,7 +106,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(isTaskSaved = true)
+            CreateTaskUIState(isTaskCreated = true)
         )
 
         expectEquals(
@@ -114,7 +114,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeSuccessfully()
-                sut.save()
+                sut.create()
             }
         )
     }
@@ -133,7 +133,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.save()
+                sut.create()
             }
         )
     }
@@ -152,7 +152,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
-                sut.save()
+                sut.create()
             }
         )
     }
@@ -171,7 +171,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.SaveFailed)
-                sut.save()
+                sut.create()
             }
         )
     }
@@ -190,7 +190,7 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 repository.throwError()
-                sut.save()
+                sut.create()
             }
         )
     }
@@ -205,7 +205,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(loading = true),
             CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(isTaskSaved = true)
+            CreateTaskUIState(isTaskCreated = true)
         )
 
         expectEquals(
@@ -213,13 +213,13 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStatesForUnknownError,
             actions = listOf({
                 repository.throwError()
-                sut.save()
+                sut.create()
             }, {
                 repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.save()
+                sut.create()
             }, {
                 repository.completeSuccessfully()
-                sut.save()
+                sut.create()
             })
         )
     }
@@ -229,7 +229,7 @@ class CreateTaskViewModelTest {
     private fun makeSUT(): Pair<CreateTaskViewModel, RepositoryStub> {
         val repository = RepositoryStub()
         val sut = CreateTaskViewModel(
-            saveTask = { repository.save() },
+            createTask = { repository.save() },
             scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         )
 

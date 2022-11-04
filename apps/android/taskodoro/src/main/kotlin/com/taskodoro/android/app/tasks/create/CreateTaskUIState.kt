@@ -23,7 +23,7 @@ data class CreateTaskUIState(
     val description: String = "",
     val priority: Int = 1,
     val loading: Boolean = false,
-    val isTaskSaved: Boolean = false,
+    val isTaskCreated: Boolean = false,
     @StringRes val titleError: Int? = null,
     @StringRes val error: Int? = null,
 )

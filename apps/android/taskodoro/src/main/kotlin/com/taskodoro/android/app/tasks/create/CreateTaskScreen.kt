@@ -49,10 +49,13 @@ fun CreateTaskScreen(
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onPriorityChanged: (Int) -> Unit,
-    onCreateTaskClick: () -> Unit,
+    onCreateTaskClicked: () -> Unit,
+    onTaskCreated: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    if (state.isTaskCreated) onTaskCreated()
+
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         modifier = modifier
@@ -82,7 +85,7 @@ fun CreateTaskScreen(
             priority = state.priority,
             onPriorityChanged = onPriorityChanged,
             submitLabel = R.string.create_new_task_create_task_button,
-            onSubmitClicked = { onCreateTaskClick() },
+            onSubmitClicked = { onCreateTaskClicked() },
             loading = state.loading,
             titleErrorLabel = state.titleError,
             errorLabel = state.error,
@@ -115,7 +118,8 @@ private fun CreateTaskScreenPreview() {
             onTitleChanged = {},
             onDescriptionChanged = {},
             onPriorityChanged = {},
-            onCreateTaskClick = {},
+            onCreateTaskClicked = {},
+            onTaskCreated = {},
             onBackClick = {}
         )
     }
@@ -144,7 +148,8 @@ private fun CreateTaskScreenWithErrorsPreview() {
             onTitleChanged = {},
             onDescriptionChanged = {},
             onPriorityChanged = {},
-            onCreateTaskClick = {},
+            onCreateTaskClicked = {},
+            onTaskCreated = {},
             onBackClick = {}
         )
     }

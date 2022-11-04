@@ -17,6 +17,7 @@
 package com.taskodoro.android.app
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
             val viewModel = CreateTaskViewModel(
-                saveTask = { task ->
+                createTask = { task ->
                     flowOf(save(task, repository, TaskValidator::validate))
                         .flowOn(Dispatchers.Default)
                 },
@@ -67,7 +68,10 @@ class MainActivity : ComponentActivity() {
                     onTitleChanged = viewModel::onTitleChanged,
                     onDescriptionChanged = viewModel::onDescriptionChanged,
                     onPriorityChanged = viewModel::onPriorityChanged,
-                    onCreateTaskClick = viewModel::save,
+                    onCreateTaskClicked = viewModel::create,
+                    onTaskCreated = {
+                        Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
+                    },
                     onBackClick = ::finish
                 )
             }
