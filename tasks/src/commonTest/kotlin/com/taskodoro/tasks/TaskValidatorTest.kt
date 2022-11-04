@@ -25,12 +25,11 @@ class TaskValidatorTest {
 
     @Test
     fun validate_failsWithEmptyTitleOnEmptyTitle() {
-        val sut = makeSUT()
         val emptyTitleTask = makeTaskWithTitle("")
         val emptyTitleTask1 = makeTaskWithTitle("   ")
 
-        val validationResult = sut.validate(emptyTitleTask)
-        val validationResult1 = sut.validate(emptyTitleTask1)
+        val validationResult = TaskValidator.validate(emptyTitleTask)
+        val validationResult1 = TaskValidator.validate(emptyTitleTask1)
 
         assertEquals(TaskValidationResult.EMPTY_TITLE, validationResult)
         assertEquals(TaskValidationResult.EMPTY_TITLE, validationResult1)
@@ -38,14 +37,13 @@ class TaskValidatorTest {
 
     @Test
     fun validate_failsWithInvalidTitleOnInvalidTitle() {
-        val sut = makeSUT()
         val invalidTitleTask = makeTaskWithTitle("12")
         val invalidTitleTask1 = makeTaskWithTitle("123")
         val invalidTitleTask2 = makeTaskWithTitle("   123   ")
 
-        val validationResult = sut.validate(invalidTitleTask)
-        val validationResult1 = sut.validate(invalidTitleTask1)
-        val validationResult2 = sut.validate(invalidTitleTask2)
+        val validationResult = TaskValidator.validate(invalidTitleTask)
+        val validationResult1 = TaskValidator.validate(invalidTitleTask1)
+        val validationResult2 = TaskValidator.validate(invalidTitleTask2)
 
         assertEquals(TaskValidationResult.INVALID_TITLE, validationResult)
         assertEquals(TaskValidationResult.INVALID_TITLE, validationResult1)
@@ -54,14 +52,13 @@ class TaskValidatorTest {
 
     @Test
     fun validate_succeedsOnValidTitle() {
-        val sut = makeSUT()
         val validTitleTask = makeTaskWithTitle("1234")
         val validTitleTask1 = makeTaskWithTitle("A valid title")
         val validTitleTask2 = makeTaskWithTitle("    1234    ")
 
-        val validationResult = sut.validate(validTitleTask)
-        val validationResult1 = sut.validate(validTitleTask1)
-        val validationResult2 = sut.validate(validTitleTask2)
+        val validationResult = TaskValidator.validate(validTitleTask)
+        val validationResult1 = TaskValidator.validate(validTitleTask1)
+        val validationResult2 = TaskValidator.validate(validTitleTask2)
 
         assertEquals(TaskValidationResult.SUCCESS, validationResult)
         assertEquals(TaskValidationResult.SUCCESS, validationResult1)
@@ -69,8 +66,6 @@ class TaskValidatorTest {
     }
 
     // region Helpers
-
-    private fun makeSUT() = TaskValidator()
 
     private fun makeTaskWithTitle(title: String): Task =
         Task(
