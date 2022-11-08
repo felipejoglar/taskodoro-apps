@@ -45,6 +45,8 @@ private final class InMemoryTaskLocalDataSourceAdapter: TaskLocalDataSource {
             Task(
                 id: String(localTask.id),
                 title: localTask.title,
+                description: "A task description",
+                priority: .medium,
                 isCompleted: localTask.isCompleted,
                 createdAt: localTask.createdAt,
                 updatedAt: localTask.updatedAt

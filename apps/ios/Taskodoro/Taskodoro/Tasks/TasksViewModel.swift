@@ -39,6 +39,8 @@ class TasksViewModel: ObservableObject {
                         self?.tasks = [Task(
                             id: "",
                             title: "An error occurred: \(error)",
+                            description: "A task description",
+                            priority: .medium,
                             isCompleted: false,
                             createdAt: 0,
                             updatedAt: 0
