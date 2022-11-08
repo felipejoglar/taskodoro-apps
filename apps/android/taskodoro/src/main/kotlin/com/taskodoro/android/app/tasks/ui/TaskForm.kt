@@ -18,6 +18,7 @@ package com.taskodoro.android.app.tasks.ui
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -78,10 +79,13 @@ fun TaskForm(
             ),
             isError = isTitleError,
             supportingText = {
-                if (isTitleError) Text(
-                    text = stringResource(titleErrorLabel!!),
-                    color = MaterialTheme.colorScheme.error
-                )
+                AnimatedVisibility(isTitleError) {
+                    val label = titleErrorLabel?.let { stringResource(it) } ?: ""
+                    Text(
+                        text = label,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -117,9 +121,10 @@ fun TaskForm(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        errorLabel?.let {
+        AnimatedVisibility(errorLabel != null) {
+            val label = errorLabel?.let { stringResource(it) } ?: ""
             Text(
-                text = stringResource(id = errorLabel),
+                text = label,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer,
                 textAlign = TextAlign.Center,
