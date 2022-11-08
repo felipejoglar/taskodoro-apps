@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
@@ -35,6 +36,7 @@ import com.taskodoro.tasks.save
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 
@@ -75,6 +77,8 @@ class MainActivity : ComponentActivity() {
                     onBackClicked = ::finish
                 )
             }
+
+            DisposableEffect(Unit) { onDispose { scope.cancel() }}
         }
     }
 }
