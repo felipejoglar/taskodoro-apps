@@ -39,6 +39,8 @@ struct TasksContent_Previews: PreviewProvider {
                 Task(
                     id: String(id),
                     title: "Task \(id) title",
+                    description: "A task description",
+                    priority: .medium,
                     isCompleted: false,
                     createdAt: 0,
                     updatedAt: 0

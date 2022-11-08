@@ -21,7 +21,10 @@ desugar = "1.1.5"
 activity-compose = "1.6.1"
 
 compose = "1.3.0"
+compose-material3 = "1.0.0"
 compose-compiler = "1.3.2"
+
+accompanist = "0.27.0"
 
 coroutines = "1.6.4"
 
@@ -33,11 +36,14 @@ junit = "4.13.2"
 # Desugaring - https://developer.android.com/studio/write/java8-support#library-desugaring
 android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
-
 # Jetpack Compose - https://developer.android.com/jetpack/androidx/releases/compose
-androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+
+# Accompanist -https://google.github.io/accompanist/
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 # Activity Compose - https://developer.android.com/jetpack/androidx/releases/activity
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -58,6 +64,7 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 
 [bundles]
 androidx-compose = [
-    "androidx-compose-material",
+    "androidx-compose-material3",
+    "androidx-compose-material-icons-extended",
     "androidx-compose-ui-tooling-preview",
 ]

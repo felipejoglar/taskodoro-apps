@@ -17,29 +17,68 @@
 package com.taskodoro.android.app
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.ui.Modifier
-import com.taskodoro.android.app.tasks.TasksScreen
-import com.taskodoro.android.app.ui.theme.TaskodoroTheme
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.core.view.WindowCompat
+import com.taskodoro.android.app.tasks.create.CreateTaskScreen
+import com.taskodoro.android.app.tasks.create.CreateTaskViewModel
+import com.taskodoro.android.app.ui.components.TaskodoroTemplate
+import com.taskodoro.storage.db.DriverFactory
+import com.taskodoro.storage.db.TaskodoroDB
+import com.taskodoro.storage.tasks.LocalTaskRepository
+import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
+import com.taskodoro.tasks.TaskValidator
+import com.taskodoro.tasks.save
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val sqlDriver = DriverFactory(applicationContext).createDriver()
+        val database = TaskodoroDB(sqlDriver).apply { taskdoroDBQueries.clearDB() }
+        val store = SQLDelightTaskStore(database)
+        val repository = LocalTaskRepository(store)
+
         setContent {
-            TaskodoroTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    TasksScreen()
-                }
+            val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+            val viewModel = CreateTaskViewModel(
+                createTask = { task ->
+                    flowOf(save(task, repository, TaskValidator::validate))
+                        .flowOn(Dispatchers.Default)
+                },
+                scope = scope
+            )
+
+            val state by viewModel.state.collectAsState()
+
+            TaskodoroTemplate {
+                CreateTaskScreen(
+                    state = state,
+                    onTitleChanged = viewModel::onTitleChanged,
+                    onDescriptionChanged = viewModel::onDescriptionChanged,
+                    onPriorityChanged = viewModel::onPriorityChanged,
+                    onCreateTaskClicked = viewModel::create,
+                    onTaskCreated = {
+                        Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
+                    },
+                    onBackClicked = ::finish
+                )
             }
+
+            DisposableEffect(Unit) { onDispose { scope.cancel() }}
         }
     }
 }

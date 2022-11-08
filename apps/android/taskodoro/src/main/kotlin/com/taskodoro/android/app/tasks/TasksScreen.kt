@@ -19,10 +19,11 @@ package com.taskodoro.android.app.tasks
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.app.di.TasksUIComposer
-import com.taskodoro.android.app.ui.theme.TaskodoroTheme
+import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.tasks.model.Task
 
 @Composable
@@ -47,8 +48,14 @@ fun TasksScreen(
 }
 
 @Composable
-fun TasksContent(tasks: List<Task>) {
-    LazyColumn {
+fun TasksContent(
+    tasks: List<Task>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier
+            .systemBarsPadding()
+    ) {
         items(tasks) { task ->
             TaskItem(task)
         }
@@ -59,7 +66,7 @@ fun TasksContent(tasks: List<Task>) {
 fun TaskItem(task: Task) {
     Text(
         text = task.title,
-        style = MaterialTheme.typography.h5,
+        style = MaterialTheme.typography.headlineMedium,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -80,19 +87,14 @@ fun TaskItem(task: Task) {
 )
 @Composable
 private fun TasksScreenPreview() {
-    TaskodoroTheme {
-        androidx.compose.material.Surface(
-            color = MaterialTheme.colors.background
-        ) {
-            val tasks = List(20) {
-                Task(
-                    id = it.toString(),
-                    title = "Task $it title",
-                    createdAt = it.toLong(),
-                )
-            }
-            TasksContent(tasks = tasks)
+    TaskodoroTemplate {
+        val tasks = List(20) {
+            Task(
+                id = it.toString(),
+                title = "Task $it title",
+                createdAt = it.toLong(),
+            )
         }
-
+        TasksContent(tasks = tasks)
     }
 }

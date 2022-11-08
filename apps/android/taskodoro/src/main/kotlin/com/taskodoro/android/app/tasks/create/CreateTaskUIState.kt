@@ -16,14 +16,14 @@
 
 package com.taskodoro.android.app.tasks.create
 
+import androidx.annotation.StringRes
+
 data class CreateTaskUIState(
+    val title: String = "",
+    val description: String = "",
+    val priority: Int = 1,
     val loading: Boolean = false,
-    val isTaskSaved: Boolean = false,
-    val error: Error? = null,
-) {
-    sealed class Error {
-        object Unknown : Error()
-        object EmptyTitle : Error()
-        object InvalidTitle : Error()
-    }
-}
+    val isTaskCreated: Boolean = false,
+    @StringRes val titleError: Int? = null,
+    @StringRes val error: Int? = null,
+)
