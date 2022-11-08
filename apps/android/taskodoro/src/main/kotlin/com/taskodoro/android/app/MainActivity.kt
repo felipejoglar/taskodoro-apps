@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                     onTaskCreated = {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
                     },
-                    onBackClick = ::finish
+                    onBackClicked = ::finish
                 )
             }
         }

@@ -51,7 +51,7 @@ fun CreateTaskScreen(
     onPriorityChanged: (Int) -> Unit,
     onCreateTaskClicked: () -> Unit,
     onTaskCreated: () -> Unit,
-    onBackClick: () -> Unit,
+    onBackClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (state.isTaskCreated) onTaskCreated()
@@ -72,7 +72,7 @@ fun CreateTaskScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                onNavigationClick = onBackClick,
+                onNavigationClick = onBackClicked,
                 scrollBehavior = scrollBehavior
             )
         }
@@ -120,7 +120,7 @@ private fun CreateTaskScreenPreview() {
             onPriorityChanged = {},
             onCreateTaskClicked = {},
             onTaskCreated = {},
-            onBackClick = {}
+            onBackClicked = {}
         )
     }
 }
@@ -150,7 +150,7 @@ private fun CreateTaskScreenWithErrorsPreview() {
             onPriorityChanged = {},
             onCreateTaskClicked = {},
             onTaskCreated = {},
-            onBackClick = {}
+            onBackClicked = {}
         )
     }
 }
