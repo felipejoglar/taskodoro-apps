@@ -19,42 +19,38 @@ tasks.register("androidBuild") {
     group = "build"
     description = "Assemble main outputs for all android modules and variants."
 
-    dependsOn("apps:android:taskodoro:clean")
-    dependsOn("apps:android:taskodoro:assemble")
+    dependsOn("apps:android:app:clean")
+    dependsOn("apps:android:app:assemble")
 }
 
 tasks.register("androidTest") {
     group = "verification"
     description = "Run unit tests for all android modules and variants."
 
-    dependsOn("apps:android:taskodoro:clean")
-    dependsOn("apps:android:taskodoro:test")
+    dependsOn("apps:android:app:clean")
+    dependsOn("apps:android:app:test")
 }
 
 tasks.register("androidUiTest") {
     group = "verification"
     description = "Installs and runs instrumentation tests for all android modules and flavors on connected devices."
 
-    dependsOn("apps:android:taskodoro:clean")
-    dependsOn("apps:android:taskodoro:connectedAndroidTest")
+    dependsOn("apps:android:app:clean")
+    dependsOn("apps:android:app:connectedAndroidTest")
 }
 
 tasks.register("multiplatformBuild") {
     group = "build"
     description = "Assembles the outputs of all multiplatform modules."
 
-    dependsOn("tasks:clean")
-    dependsOn("tasks:assemble")
-    dependsOn("storage:clean")
-    dependsOn("storage:assemble")
+    dependsOn("taskodoro-core:clean")
+    dependsOn("taskodoro-core:assemble")
 }
 
 tasks.register("multiplatformTest") {
     group = "verification"
     description = "Runs the tests for all targets in all multiplatform modules."
 
-    dependsOn("tasks:clean")
-    dependsOn("tasks:allTestsWithAndroid")
-    dependsOn("storage:clean")
-    dependsOn("storage:allTestsWithAndroid")
+    dependsOn("taskodoro-core:clean")
+    dependsOn("taskodoro-core:allTestsWithAndroid")
 }
