@@ -40,7 +40,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.taskodoro.android.app.R
+import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.buttons.SegmentedButton
 import com.taskodoro.android.app.ui.components.buttons.TaskodoroButton

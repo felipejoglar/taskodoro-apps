@@ -17,7 +17,7 @@
 package com.taskodoro.android.app.tasks.create
 
 import androidx.annotation.StringRes
-import com.taskodoro.android.app.R
+import com.taskodoro.android.R
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
 import kotlinx.coroutines.CoroutineScope

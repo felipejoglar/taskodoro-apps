@@ -20,13 +20,13 @@ plugins {
 }
 
 android {
-    namespace = "com.taskodoro.android.app"
+    namespace = "com.taskodoro.android"
 
     compileSdk = config.versions.compileSdk.get().toInt()
     buildToolsVersion = config.versions.buildTools.get()
 
     defaultConfig {
-        applicationId = "com.taskodoro.android.app"
+        applicationId = "com.taskodoro.android"
 
         minSdk = config.versions.minSdk.get().toInt()
         targetSdk = config.versions.targetSdk.get().toInt()

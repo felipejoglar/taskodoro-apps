@@ -24,7 +24,7 @@ pluginManagement {
 
 rootProject.name = "Taskodoro"
 
-include(":apps:android:taskodoro")
+include(":apps:android:app")
 
 include(":tasks")
 include(":storage")

@@ -37,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.taskodoro.android.app.R
+import com.taskodoro.android.R
 import com.taskodoro.android.app.tasks.ui.TaskForm
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.appbars.TaskodoroLargeTopBar
