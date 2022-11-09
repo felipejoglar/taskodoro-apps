@@ -24,10 +24,9 @@ pluginManagement {
 
 rootProject.name = "Taskodoro"
 
-include(":apps:android:taskodoro")
+include(":apps:android:app")
 
-include(":tasks")
-include(":storage")
+include(":taskodoro-core")
 
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
