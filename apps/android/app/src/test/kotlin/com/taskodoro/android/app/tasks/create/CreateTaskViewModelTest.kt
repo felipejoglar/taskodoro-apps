@@ -16,7 +16,7 @@
 
 package com.taskodoro.android.app.tasks.create
 
-import com.taskodoro.android.app.R
+import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.TaskRepository
 import kotlinx.coroutines.CoroutineScope

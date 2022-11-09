@@ -84,8 +84,7 @@ android {
 dependencies {
     coreLibraryDesugaring(libs.android.desugar)
 
-    implementation(projects.tasks)
-    implementation(projects.storage)
+    implementation(projects.taskodoroCore)
 
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.activity.compose)
