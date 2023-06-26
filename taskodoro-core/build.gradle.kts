@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(libs.sqlDelight.jvm.driver)
             }
@@ -79,7 +79,7 @@ kotlin {
         val nativeTest by creating
 
         /* Test hierarchy */
-        androidTest.dependsOn(commonTest)
+        androidUnitTest.dependsOn(commonTest)
         nativeTest.dependsOn(commonTest)
         iosTest.dependsOn(nativeTest)
         iosArm64Test.dependsOn(iosTest)
