@@ -26,7 +26,7 @@ compose-compiler = "1.4.7"
 
 accompanist = "0.30.1"
 
-coroutines = "1.6.4"
+coroutines = "1.7.1"
 
 sqlDelight = "1.5.5"
 
