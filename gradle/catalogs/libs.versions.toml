@@ -18,7 +18,7 @@
 kotlin = "1.8.21"
 
 desugar = "1.1.5"
-activity-compose = "1.6.1"
+activity-compose = "1.7.2"
 
 compose = "1.4.3"
 compose-material3 = "1.1.1"
