@@ -28,7 +28,6 @@ include(":apps:android:app")
 
 include(":taskodoro")
 
-enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
