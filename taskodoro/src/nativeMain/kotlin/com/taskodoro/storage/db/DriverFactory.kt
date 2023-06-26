@@ -14,30 +14,14 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.storage.db
 
-rootProject.name = "Taskodoro_App"
+import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
-include(":apps:android:app")
+actual class DriverFactory {
 
-include(":taskodoro")
-
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
+    actual fun createDriver(): SqlDriver {
+        return NativeSqliteDriver(TaskodoroDB.Schema, "TaskodoroDB")
     }
 }

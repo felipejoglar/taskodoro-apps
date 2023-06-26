@@ -14,30 +14,27 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.storage.tasks.store
 
-rootProject.name = "Taskodoro_App"
+import com.taskodoro.storage.db.TaskodoroDB
+import com.taskodoro.storage.tasks.TaskStore
+import com.taskodoro.tasks.model.Task
 
-include(":apps:android:app")
+class SQLDelightTaskStore(
+    database: TaskodoroDB
+) : TaskStore {
 
-include(":taskodoro")
+    internal val tasksQueries = database.localTaskQueries
 
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
+    override fun save(task: Task) {
+        tasksQueries.insert(
+            id = task.id,
+            title = task.title,
+            description = task.description,
+            priority = task.priority.ordinal.toLong(),
+            completed = false,
+            createdAt = task.createdAt,
+            updatedAt = 0,
+        )
     }
 }

@@ -14,30 +14,28 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.tasks.model
 
-rootProject.name = "Taskodoro_App"
+data class Task(
+    val id: String,
+    val title: String,
+    val description: String? = null,
+    val priority: Priority = Priority.MEDIUM,
+    val isCompleted: Boolean = false,
+    val createdAt: Long,
+    val updatedAt: Long = 0,
+) {
 
-include(":apps:android:app")
+    enum class Priority{
+        LOW, MEDIUM, HIGH;
 
-include(":taskodoro")
-
-enableFeaturePreview("VERSION_CATALOGS")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
+        companion object {
+            fun fromValue(value: Int)=
+                when {
+                 value < 1 -> LOW
+                 value == 1 -> MEDIUM
+                 else ->   HIGH
+                }
         }
     }
 }
