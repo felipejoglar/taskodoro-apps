@@ -14,29 +14,17 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.model
 
-rootProject.name = "Taskodoro_App"
+import platform.Foundation.NSUUID
 
-include(":apps:android:app")
+class NSUUIDGenerator : UuidGenerator {
+    override fun randomUuidString() = NSUUID().UUIDString()
 
-include(":taskodoro")
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
+    override fun isValidUuidValue(value: String) = try {
+        NSUUID(value)
+        true
+    } catch (exception: Exception) {
+        false
     }
 }

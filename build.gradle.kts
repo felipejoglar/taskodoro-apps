@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
 
         // Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
-        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("com.android.tools.build:gradle:8.0.2")
 
         // SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
         classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqlDelight.get()}")

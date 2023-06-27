@@ -14,29 +14,10 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.tasks.model
 
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-
-include(":taskodoro")
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
+enum class TaskValidationResult {
+    SUCCESS,
+    EMPTY_TITLE,
+    INVALID_TITLE,
 }

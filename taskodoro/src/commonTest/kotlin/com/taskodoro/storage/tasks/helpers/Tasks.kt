@@ -14,29 +14,12 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.storage.tasks.helpers
 
-rootProject.name = "Taskodoro_App"
+import com.taskodoro.tasks.model.Task
 
-include(":apps:android:app")
-
-include(":taskodoro")
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}
+internal fun anyTask() = Task(
+    id = "An id",
+    title = "A task title",
+    createdAt = 0L
+)

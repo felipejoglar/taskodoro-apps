@@ -14,29 +14,23 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.tasks
 
-rootProject.name = "Taskodoro_App"
+import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.model.TaskValidationResult
 
-include(":apps:android:app")
+class TaskValidator {
 
-include(":taskodoro")
+    companion object {
+        private const val MINIMUM_TITLE_LENGTH = 4
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
+        fun validate(task: Task): TaskValidationResult =
+            if (task.title.isBlank()) {
+                TaskValidationResult.EMPTY_TITLE
+            } else if (task.title.trim().length < MINIMUM_TITLE_LENGTH) {
+                TaskValidationResult.INVALID_TITLE
+            } else {
+                TaskValidationResult.SUCCESS
+            }
     }
 }
