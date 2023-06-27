@@ -3,24 +3,71 @@ name: iOS CI
 on:
   push:
     branches: [ main ]
+    paths:
+      - .github/workflows/ios_ci.yml
+      - apps/ios
+      - taskodoro
+      - build.gradle.kts
+      - settings.gradle.kts
   pull_request:
+    types: [ opened, synchronize, ready_for_review, reopened ]
+    branches: [ main ]
+    paths:
+      - .github/workflows/ios_ci.yml
+      - apps/ios
+      - taskodoro
+      - build.gradle.kts
+      - settings.gradle.kts
+
+env:
+  XCODE_VERSION: /Applications/Xcode_14.3.app
+  IOS_DEVICE: iPhone 14
+  IOS_VERSION: 16.4
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    name: Build and Test
-    runs-on: macos-12
-
-    timeout-minutes: 15
+    name: Build
+    runs-on: macos-13
+    timeout-minutes: 10
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle_setup
 
       - name: Select Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_13.3.app
+        run: sudo xcode-select -switch ${{ env.XCODE_VERSION }}
         
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
 
-      - name: Build and Test
-        run: sudo xcodebuild clean build test -workspace apps/ios/Taskodoro.xcworkspace -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 13,OS=15.4" ONLY_ACTIVE_ARCH=YES
+      - name: Build
+        run: sudo xcodebuild clean build -workspace apps/ios/Taskodoro.xcworkspace -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=${{ env.IOS_DEVICE }},OS=${{ env.IOS_VERSION }}" ONLY_ACTIVE_ARCH=YES
+
+  unit-tests:
+    name: Unit Tests
+    needs: build
+    runs-on: macos-13
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle_setup
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch ${{ env.XCODE_VERSION }}
+
+      - name: Xcode version
+        run: /usr/bin/xcodebuild -version
+
+      - name: Test
+        run: sudo xcodebuild clean test -workspace apps/ios/Taskodoro.xcworkspace -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=${{ env.IOS_DEVICE }},OS=${{ env.IOS_VERSION }}" ONLY_ACTIVE_ARCH=YES
