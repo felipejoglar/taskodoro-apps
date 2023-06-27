@@ -15,8 +15,6 @@
  */
 
 buildscript {
-    apply(from = "gradle/scripts/ci_tasks.gradle.kts")
-
     repositories {
         gradlePluginPortal()
         google()
