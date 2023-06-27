@@ -17,6 +17,10 @@ on:
       - build.gradle.kts
       - settings.gradle.kts
 
+concurrency:
+  group: multiplatform-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build

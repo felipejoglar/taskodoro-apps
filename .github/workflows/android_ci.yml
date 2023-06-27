@@ -20,7 +20,7 @@ on:
       - settings.gradle.kts
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: android-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

@@ -24,7 +24,7 @@ env:
   IOS_VERSION: 16.4
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: ios-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
