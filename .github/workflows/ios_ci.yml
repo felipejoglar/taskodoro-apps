@@ -48,7 +48,7 @@ jobs:
 
   unit-tests:
     name: Unit Tests
-    needs: build
+    needs: [build]
     runs-on: macos-13
     timeout-minutes: 15
 
@@ -62,5 +62,5 @@ jobs:
       - name: Setup Xcode
         uses: ./.github/actions/xcode-setup
 
-      - name: Test
+      - name: Run Unit Tests
         run: sudo xcodebuild clean test -workspace apps/ios/Taskodoro.xcworkspace -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=${{ env.IOS_DEVICE }},OS=${{ env.IOS_VERSION }}" ONLY_ACTIVE_ARCH=YES

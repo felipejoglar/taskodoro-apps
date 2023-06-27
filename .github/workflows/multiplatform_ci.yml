@@ -24,7 +24,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: macos-13
+    runs-on: macos-latest
     timeout-minutes: 15
 
     steps:
@@ -35,13 +35,13 @@ jobs:
         uses: ./.github/actions/gradle-setup
 
       - name: Build
-        run: ./gradlew taskodoro:clean taskodoro:assemble
+        run: ./gradlew taskodoro:clean taskodoro:assemble --scan
 
   unit-tests:
     name: Unit Tests
-    needs: build
-    runs-on: macos-13
-    timeout-minutes: 15
+    needs: [build]
+    runs-on: macos-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout Code
@@ -50,5 +50,5 @@ jobs:
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
 
-      - name: Run Unit tests
-        run: ./gradlew taskodoro:clean taskodoro:allTests
+      - name: Run Unit Tests
+        run: ./gradlew taskodoro:clean taskodoro:allTests --scan
