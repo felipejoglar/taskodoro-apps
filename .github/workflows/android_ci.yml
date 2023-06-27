@@ -1,38 +1,75 @@
-#name: Android CI
-#
-#on:
-#  push:
-#    branches: [ main ]
-#  pull_request:
-#
-#jobs:
-#  build:
-#    name: Build and Test
-#    runs-on: macos-12
-#
-#    timeout-minutes: 15
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
-#      - name: Set up JDK 11
-#        uses: actions/setup-java@v2
-#        with:
-#          java-version: '11'
-#          distribution: 'adopt'
-#
-#      - name: Grant execute permission for gradlew
-#        run: chmod +x gradlew
-#
-#      - name: Build
-#        run: ./gradlew androidBuild
-#
-#      - name: Run Unit tests
-#        run: ./gradlew androidTest
-#
-#      - name: Run UI Tests
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          api-level: 29
-#          script: ./gradlew androidUiTest
+name: Android CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - .github/workflows/android_ci.yml
+      - apps/android
+      - taskodoro
+      - build.gradle.kts
+      - settings.gradle.kts
+  pull_request:
+    types: [ opened, synchronize, ready_for_review, reopened ]
+    branches: [ main ]
+    paths:
+      - .github/workflows/android_ci.yml
+      - apps/android
+      - taskodoro
+      - build.gradle.kts
+      - settings.gradle.kts
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle-setup
+
+      - name: Build
+        run: ./gradlew apps:android:app:clean apps:android:app:assemble
+
+  unit-tests:
+    name: Unit Tests
+    needs: build
+    runs-on: macos-13
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle-setup
+
+      - name: Run Unit tests
+        run: ./gradlew apps:android:app:clean apps:android:app:test
+
+  ui-tests:
+    name: UI Tests
+    needs: unit-tests
+    runs-on: macos-13
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle-setup
+
+      - name: Run UI Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          script: ./gradlew apps:android:app:clean apps:android:app:connectedAndroidTest
