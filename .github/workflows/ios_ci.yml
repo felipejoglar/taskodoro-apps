@@ -39,8 +39,6 @@ jobs:
 
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
-        with:
-          cache-key: ${{ runner.os }}
 
       - name: Setup Xcode
         uses: ./.github/actions/xcode-setup
@@ -60,8 +58,6 @@ jobs:
 
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
-        with:
-          cache-key: ${{ runner.os }}
 
       - name: Setup Xcode
         uses: ./.github/actions/xcode-setup

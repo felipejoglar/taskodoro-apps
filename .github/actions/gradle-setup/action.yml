@@ -1,11 +1,6 @@
 name: Setup Gradle and JDK
 description: Setup Gradle and JDK
 
-inputs:
-  cache-key:
-    description: Key for managing the Gradle cache
-    required: true
-
 runs:
   using: "composite"
   steps:
