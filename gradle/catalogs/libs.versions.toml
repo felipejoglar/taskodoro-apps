@@ -19,6 +19,7 @@ kotlin = "1.8.22"
 
 androidGradlePlugin = "8.0.2"
 spotlessGradlePlugin = "6.19.0"
+detektGradlePlugin = "1.23.0"
 
 desugar = "2.0.3"
 activity-compose = "1.7.2"
@@ -79,6 +80,9 @@ sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight"}
 
 # Spotless - https://github.com/diffplug/spotless
 spotless = { id = "com.diffplug.spotless", version.ref = "spotlessGradlePlugin"}
+
+# Detekt - https://detekt.dev/
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektGradlePlugin"}
 
 [bundles]
 androidx-compose = [

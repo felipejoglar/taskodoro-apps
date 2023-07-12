@@ -30,6 +30,7 @@ plugins {
     alias(libs.plugins.sqlDelight).apply(false)
 
     alias(libs.plugins.spotless).apply(true)
+    alias(libs.plugins.detekt).apply(true)
 }
 
 allprojects {
@@ -39,6 +40,7 @@ allprojects {
     }
 }
 
+// Spotless configuration
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     val ktlintVersion = "0.48.2"
 
@@ -54,5 +56,28 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         target("*.gradle.kts")
 
         ktlint(ktlintVersion)
+    }
+}
+
+allprojects {
+
+    // Detekt configuration
+    apply(plugin = "io.gitlab.arturbosch.detekt").also {
+
+        detekt {
+            config.from(rootProject.files("scripts/detekt.yml"))
+        }
+
+        tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+            setSource(files(project.projectDir))
+            exclude("**/build/**")
+            exclude {
+                it.file.relativeTo(projectDir).startsWith(project.buildDir.relativeTo(projectDir))
+            }
+
+            reports {
+                sarif.required.set(true)
+            }
+        }
     }
 }
