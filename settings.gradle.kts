@@ -20,15 +20,8 @@ pluginManagement {
         google()
         mavenCentral()
     }
+
 }
-
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-
-include(":taskodoro")
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -40,3 +33,10 @@ dependencyResolutionManagement {
         }
     }
 }
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "Taskodoro_App"
+
+include(":apps:android:app")
+include(":taskodoro")

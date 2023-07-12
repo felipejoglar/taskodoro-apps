@@ -15,9 +15,9 @@
  */
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("com.squareup.sqldelight")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -118,8 +118,10 @@ android {
 }
 
 sqldelight {
-    database("TaskodoroDB") {
-        packageName = "com.taskodoro.storage.db"
+    databases {
+        create("TaskodoroDB") {
+            packageName.set("com.taskodoro.storage.db")
+        }
     }
 }
 

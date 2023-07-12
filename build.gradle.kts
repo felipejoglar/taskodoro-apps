@@ -20,17 +20,14 @@ buildscript {
         google()
         mavenCentral()
     }
+}
 
-    dependencies {
-        // Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
-
-        // Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
-        classpath("com.android.tools.build:gradle:8.0.2")
-
-        // SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
-        classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqlDelight.get()}")
-    }
+plugins {
+    alias(libs.plugins.android.application).apply(false)
+    alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.kotlin.android).apply(false)
+    alias(libs.plugins.kotlin.multiplatform).apply(false)
+    alias(libs.plugins.sqlDelight).apply(false)
 }
 
 allprojects {

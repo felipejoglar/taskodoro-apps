@@ -16,21 +16,19 @@
 
 package com.taskodoro.storage.db
 
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import app.cash.sqldelight.driver.native.wrapConnection
 import co.touchlab.sqliter.DatabaseConfiguration
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
-import com.squareup.sqldelight.drivers.native.wrapConnection
 
 actual class DriverFactory {
     actual fun createDriver(): SqlDriver {
         val schema = TaskodoroDB.Schema
         return NativeSqliteDriver(
             DatabaseConfiguration(
-                name = "TaskodoroDB",
-                version = schema.version,
-                create = { connection ->
-                    wrapConnection(connection) { schema.create(it) }
-                },
+                name = null,
+                version = schema.version.toInt(),
+                create = { connection -> wrapConnection(connection) { schema.create(it) } },
                 inMemory = true
             )
         )
