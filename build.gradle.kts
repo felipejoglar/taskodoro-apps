@@ -28,11 +28,31 @@ plugins {
     alias(libs.plugins.kotlin.android).apply(false)
     alias(libs.plugins.kotlin.multiplatform).apply(false)
     alias(libs.plugins.sqlDelight).apply(false)
+
+    alias(libs.plugins.spotless).apply(true)
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    val ktlintVersion = "0.48.2"
+
+    kotlin {
+        target("**/*.kt")
+        targetExclude("$buildDir/**/*.kt")
+        targetExclude("bin/**/*.kt")
+
+        ktlint(ktlintVersion)
+    }
+
+    kotlinGradle {
+        target("*.gradle.kts")
+
+        ktlint(ktlintVersion)
     }
 }

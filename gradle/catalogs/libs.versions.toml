@@ -18,6 +18,7 @@
 kotlin = "1.8.22"
 
 androidGradlePlugin = "8.0.2"
+spotlessGradlePlugin = "6.19.0"
 
 desugar = "2.0.3"
 activity-compose = "1.7.2"
@@ -75,6 +76,9 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 
 # SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight"}
+
+# Spotless - https://github.com/diffplug/spotless
+spotless = { id = "com.diffplug.spotless", version.ref = "spotlessGradlePlugin"}
 
 [bundles]
 androidx-compose = [
