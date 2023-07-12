@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ fun SegmentedButton(
 
                     items.lastIndex -> RoundedCornerShape(
                         topEndPercent = 50,
-                        bottomEndPercent = 50
+                        bottomEndPercent = 50,
                     )
 
                     else -> RoundedCornerShape(0)
@@ -83,7 +83,7 @@ fun SegmentedButton(
                 colors = if (selectedItemIndex == index) {
                     ButtonDefaults.outlinedButtonColors(
                         containerColor = MaterialTheme.colorScheme.primary
-                            .copy( alpha = 0.4f)
+                            .copy(alpha = 0.4f),
                     )
                 } else {
                     ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent)
@@ -122,7 +122,7 @@ private fun SegmentedButtonPreview() {
             onSelectedItemChange = {},
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }

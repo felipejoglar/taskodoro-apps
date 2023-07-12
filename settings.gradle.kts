@@ -20,7 +20,6 @@ pluginManagement {
         google()
         mavenCentral()
     }
-
 }
 
 dependencyResolutionManagement {

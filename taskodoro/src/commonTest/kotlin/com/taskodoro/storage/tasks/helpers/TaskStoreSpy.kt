@@ -21,7 +21,7 @@ import com.taskodoro.tasks.model.Task
 
 internal class TaskStoreSpy : TaskStore {
     enum class Message {
-        SAVE
+        SAVE,
     }
 
     var messages = mutableListOf<Message>()

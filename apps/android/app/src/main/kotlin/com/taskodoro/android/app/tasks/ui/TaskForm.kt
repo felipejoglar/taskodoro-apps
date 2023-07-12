@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -75,7 +75,8 @@ fun TaskForm(
             placeholder = { Text(titleLabel) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Sentences, imeAction = ImeAction.Next
+                capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Next,
             ),
             isError = isTitleError,
             supportingText = {
@@ -83,11 +84,11 @@ fun TaskForm(
                     val label = titleErrorLabel?.let { stringResource(it) } ?: ""
                     Text(
                         text = label,
-                        color = MaterialTheme.colorScheme.error
+                        color = MaterialTheme.colorScheme.error,
                     )
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -99,24 +100,25 @@ fun TaskForm(
             label = { Text(descriptionLabel) },
             placeholder = { Text(descriptionLabel) },
             keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Sentences, imeAction = ImeAction.Done
+                capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Done,
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(128.dp)
+                .height(128.dp),
         )
 
         Text(
             text = stringResource(id = R.string.task_form_priority),
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.paddingFromBaseline(top = 32.dp, bottom = 8.dp)
+            modifier = Modifier.paddingFromBaseline(top = 32.dp, bottom = 8.dp),
         )
 
         SegmentedButton(
             items = getPriorityLabels(),
             selectedItemIndex = priority,
             onSelectedItemChange = onPriorityChanged,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -133,9 +135,9 @@ fun TaskForm(
                     .padding(top = 8.dp)
                     .background(
                         color = MaterialTheme.colorScheme.errorContainer,
-                        shape = RoundedCornerShape(4.dp)
+                        shape = RoundedCornerShape(4.dp),
                     )
-                    .padding(12.dp)
+                    .padding(12.dp),
             )
         }
 
@@ -144,13 +146,11 @@ fun TaskForm(
             loading = loading,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
-        )
-        {
+                .padding(top = 16.dp),
+        ) {
             Text(stringResource(id = submitLabel))
         }
     }
-
 }
 
 @Composable
@@ -186,7 +186,7 @@ private fun TaskFormPreview() {
             onSubmitClicked = {},
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }
@@ -219,7 +219,7 @@ private fun TaskFormWithErrorsPreview() {
             errorLabel = R.string.create_new_task_unknown_error,
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }

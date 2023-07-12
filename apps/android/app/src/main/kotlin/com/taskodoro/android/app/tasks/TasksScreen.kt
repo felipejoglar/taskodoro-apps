@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import com.taskodoro.tasks.model.Task
 
 @Composable
 fun TasksScreen(
-    viewModel: TasksViewModel = TasksUIComposer.tasksViewModel()
+    viewModel: TasksViewModel = TasksUIComposer.tasksViewModel(),
 ) {
     val tasks = viewModel.tasks.collectAsState()
 
@@ -50,11 +50,11 @@ fun TasksScreen(
 @Composable
 fun TasksContent(
     tasks: List<Task>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier
-            .systemBarsPadding()
+            .systemBarsPadding(),
     ) {
         items(tasks) { task ->
             TaskItem(task)
@@ -69,7 +69,7 @@ fun TaskItem(task: Task) {
         style = MaterialTheme.typography.headlineMedium,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
     )
 }
 

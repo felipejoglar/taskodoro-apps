@@ -71,7 +71,7 @@ class TaskValidatorTest {
         Task(
             id = "An id",
             title = title,
-            createdAt = 0
+            createdAt = 0,
         )
 
     // endregion

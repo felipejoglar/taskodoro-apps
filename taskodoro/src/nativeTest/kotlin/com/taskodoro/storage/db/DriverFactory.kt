@@ -29,8 +29,8 @@ actual class DriverFactory {
                 name = null,
                 version = schema.version.toInt(),
                 create = { connection -> wrapConnection(connection) { schema.create(it) } },
-                inMemory = true
-            )
+                inMemory = true,
+            ),
         )
     }
 }

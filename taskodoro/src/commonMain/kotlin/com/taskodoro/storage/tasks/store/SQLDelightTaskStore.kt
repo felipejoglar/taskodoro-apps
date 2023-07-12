@@ -21,7 +21,7 @@ import com.taskodoro.storage.tasks.TaskStore
 import com.taskodoro.tasks.model.Task
 
 class SQLDelightTaskStore(
-    database: TaskodoroDB
+    database: TaskodoroDB,
 ) : TaskStore {
 
     internal val tasksQueries = database.localTaskQueries

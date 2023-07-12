@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ class CreateTaskViewModel(
             title = state.value.title,
             description = state.value.description,
             priority = Task.Priority.fromValue(state.value.priority),
-            createdAt = Instant.now().epochSecond
+            createdAt = Instant.now().epochSecond,
         )
 
         createTask(task)
@@ -91,7 +91,7 @@ class CreateTaskViewModel(
                 loading = loading,
                 isTaskCreated = isTaskSaved,
                 titleError = null,
-                error = null
+                error = null,
             )
         }
     }
