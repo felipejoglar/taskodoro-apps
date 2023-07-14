@@ -26,15 +26,15 @@ data class Task(
     val updatedAt: Long = 0,
 ) {
 
-    enum class Priority{
+    enum class Priority {
         LOW, MEDIUM, HIGH;
 
         companion object {
-            fun fromValue(value: Int)=
+            fun fromValue(value: Int) =
                 when {
-                 value < 1 -> LOW
-                 value == 1 -> MEDIUM
-                 else ->   HIGH
+                    value < 1 -> LOW
+                    value == 1 -> MEDIUM
+                    else -> HIGH
                 }
         }
     }

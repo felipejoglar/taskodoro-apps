@@ -21,5 +21,5 @@ import com.taskodoro.tasks.model.Task
 internal fun anyTask() = Task(
     id = "An id",
     title = "A task title",
-    createdAt = 0L
+    createdAt = 0L,
 )

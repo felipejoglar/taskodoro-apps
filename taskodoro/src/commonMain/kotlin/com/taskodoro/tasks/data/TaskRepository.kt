@@ -24,4 +24,3 @@ class TaskRepository(
 
     fun getTasks(): List<Task> = localDataSource.getAllTasks()
 }
-

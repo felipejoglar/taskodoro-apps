@@ -26,8 +26,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Gradle
+        uses: ./.github/actions/gradle-setup
+
+      - name: Run Spotless
+        run: ./gradlew spotlessCheck --scan
+
+      - name: Run Detekt
+        run: ./gradlew apps:android:app:detekt --scan
+
   build:
     name: Build
+    needs: [static-analysis]
     runs-on: ubuntu-latest
     timeout-minutes: 15
 

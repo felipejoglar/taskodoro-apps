@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -36,7 +37,7 @@ import com.taskodoro.tasks.model.Task
 
 @Composable
 fun TasksScreen(
-    viewModel: TasksViewModel = TasksUIComposer.tasksViewModel()
+    viewModel: TasksViewModel = TasksUIComposer.tasksViewModel(),
 ) {
     val tasks = viewModel.tasks.collectAsState()
 
@@ -44,34 +45,42 @@ fun TasksScreen(
         viewModel.getTasks()
     }
 
-    TasksContent(tasks.value)
+    TasksContent(TasksList(tasks.value))
 }
 
 @Composable
 fun TasksContent(
-    tasks: List<Task>,
-    modifier: Modifier = Modifier
+    tasks: TasksList,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier
-            .systemBarsPadding()
+            .systemBarsPadding(),
     ) {
-        items(tasks) { task ->
+        items(tasks.items) { task ->
             TaskItem(task)
         }
     }
 }
 
 @Composable
-fun TaskItem(task: Task) {
+fun TaskItem(
+    task: Task,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = task.title,
         style = MaterialTheme.typography.headlineMedium,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
     )
 }
+
+@Immutable
+data class TasksList(
+    val items: List<Task>,
+)
 
 @Preview(
     name = "Day Mode",
@@ -95,6 +104,6 @@ private fun TasksScreenPreview() {
                 createdAt = it.toLong(),
             )
         }
-        TasksContent(tasks = tasks)
+        TasksContent(tasks = TasksList(tasks))
     }
 }

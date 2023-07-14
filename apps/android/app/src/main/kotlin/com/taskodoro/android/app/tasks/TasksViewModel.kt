@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
 class TasksViewModel(
-    private val getTasks: Flow<List<Task>>
+    private val getTasks: Flow<List<Task>>,
 ) : ViewModel() {
 
     private val _tasks = MutableStateFlow(emptyList<Task>())

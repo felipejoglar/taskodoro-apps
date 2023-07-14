@@ -22,14 +22,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-
-include(":taskodoro")
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 dependencyResolutionManagement {
     versionCatalogs {
         create("config") {
@@ -40,3 +32,10 @@ dependencyResolutionManagement {
         }
     }
 }
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "Taskodoro_App"
+
+include(":apps:android:app")
+include(":taskodoro")

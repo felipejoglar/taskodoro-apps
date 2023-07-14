@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.flow
 import org.junit.Assert
 import org.junit.Test
 
-
 class CreateTaskViewModelTest {
 
     @Test
@@ -43,7 +42,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(title = "Hello"),
-            CreateTaskUIState(title = "Hello, World!")
+            CreateTaskUIState(title = "Hello, World!"),
         )
 
         expectEquals(
@@ -53,7 +52,7 @@ class CreateTaskViewModelTest {
                 sut.onTitleChanged("Hello")
             }, {
                 sut.onTitleChanged("Hello, World!")
-            })
+            }),
         )
     }
 
@@ -63,7 +62,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(description = "Hello"),
-            CreateTaskUIState(description = "Hello, World!")
+            CreateTaskUIState(description = "Hello, World!"),
         )
 
         expectEquals(
@@ -73,7 +72,7 @@ class CreateTaskViewModelTest {
                 sut.onDescriptionChanged("Hello")
             }, {
                 sut.onDescriptionChanged("Hello, World!")
-            })
+            }),
         )
     }
 
@@ -84,7 +83,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(),
             CreateTaskUIState(priority = 0),
             CreateTaskUIState(priority = 1),
-            CreateTaskUIState(priority = 2)
+            CreateTaskUIState(priority = 2),
         )
 
         expectEquals(
@@ -96,7 +95,7 @@ class CreateTaskViewModelTest {
                 sut.onPriorityChanged(1)
             }, {
                 sut.onPriorityChanged(2)
-            })
+            }),
         )
     }
 
@@ -106,7 +105,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(isTaskCreated = true)
+            CreateTaskUIState(isTaskCreated = true),
         )
 
         expectEquals(
@@ -115,7 +114,7 @@ class CreateTaskViewModelTest {
             actions = listOf {
                 repository.completeSuccessfully()
                 sut.create()
-            }
+            },
         )
     }
 
@@ -125,7 +124,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error)
+            CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error),
         )
 
         expectEquals(
@@ -134,7 +133,7 @@ class CreateTaskViewModelTest {
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
                 sut.create()
-            }
+            },
         )
     }
 
@@ -144,7 +143,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(titleError = R.string.create_new_task_invalid_title_error)
+            CreateTaskUIState(titleError = R.string.create_new_task_invalid_title_error),
         )
 
         expectEquals(
@@ -153,7 +152,7 @@ class CreateTaskViewModelTest {
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
                 sut.create()
-            }
+            },
         )
     }
 
@@ -163,7 +162,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_unknown_error)
+            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
         )
 
         expectEquals(
@@ -172,7 +171,7 @@ class CreateTaskViewModelTest {
             actions = listOf {
                 repository.completeWithError(TaskRepository.TaskException.SaveFailed)
                 sut.create()
-            }
+            },
         )
     }
 
@@ -182,7 +181,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_unknown_error)
+            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
         )
 
         expectEquals(
@@ -191,7 +190,7 @@ class CreateTaskViewModelTest {
             actions = listOf {
                 repository.throwError()
                 sut.create()
-            }
+            },
         )
     }
 
@@ -205,7 +204,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(loading = true),
             CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(isTaskCreated = true)
+            CreateTaskUIState(isTaskCreated = true),
         )
 
         expectEquals(
@@ -220,7 +219,7 @@ class CreateTaskViewModelTest {
             }, {
                 repository.completeSuccessfully()
                 sut.create()
-            })
+            }),
         )
     }
 
@@ -230,16 +229,11 @@ class CreateTaskViewModelTest {
         val repository = RepositoryStub()
         val sut = CreateTaskViewModel(
             createTask = { repository.save() },
-            scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+            scope = CoroutineScope(Dispatchers.Main + SupervisorJob()),
         )
 
         return sut to repository
     }
-
-    private fun anyTitle() = "any title"
-    private fun anyDescription() = "any description"
-    private fun anyPriority() = 1
-
 
     private class RepositoryStub {
 

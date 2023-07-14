@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 
@@ -34,6 +35,7 @@ import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 fun TaskodoroLargeTopBar(
     title: @Composable () -> Unit,
     onNavigationClick: () -> Unit,
+    modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     LargeTopAppBar(
@@ -43,10 +45,11 @@ fun TaskodoroLargeTopBar(
             IconButton(onClick = onNavigationClick) {
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
-        }
+        },
+        modifier = modifier,
     )
 }
 
@@ -64,6 +67,7 @@ private fun TaskodoroLargeTopBarPreview() {
     TaskodoroTheme {
         TaskodoroLargeTopBar(
             title = { Text("Taskodoro LargeAppBar") },
-            onNavigationClick = { })
+            onNavigationClick = { },
+        )
     }
 }

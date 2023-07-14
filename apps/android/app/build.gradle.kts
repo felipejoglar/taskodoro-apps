@@ -15,15 +15,14 @@
  */
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
     namespace = "com.taskodoro.android"
 
     compileSdk = config.versions.compileSdk.get().toInt()
-    buildToolsVersion = config.versions.buildTools.get()
 
     defaultConfig {
         applicationId = "com.taskodoro.android"
@@ -44,6 +43,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            @Suppress("UnstableApiUsage")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -58,6 +58,7 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
+    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
     }

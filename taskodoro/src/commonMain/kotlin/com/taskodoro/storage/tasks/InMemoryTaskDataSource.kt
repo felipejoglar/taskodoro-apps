@@ -21,12 +21,15 @@ import com.taskodoro.tasks.model.Task
 
 class InMemoryTaskDataSource : TaskLocalDataSource {
 
+    companion object {
+        private const val TASK_COUNT = 20
+    }
     override fun getAllTasks(): List<Task> =
-        List(20) {
+        List(TASK_COUNT) {
             Task(
                 id = it.toString(),
                 title = "Task $it title",
-                createdAt = it.toLong()
+                createdAt = it.toLong(),
             )
         }
 }

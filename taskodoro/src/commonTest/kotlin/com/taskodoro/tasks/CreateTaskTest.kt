@@ -72,7 +72,7 @@ class CreateTaskTest {
     private lateinit var repository: TaskRepositoryStub
 
     @BeforeTest
-    fun setupDependencies(){
+    fun setupDependencies() {
         validator = TaskValidatorStub()
         repository = TaskRepositoryStub()
     }
@@ -82,7 +82,7 @@ class CreateTaskTest {
     private fun anyTask() = Task(
         id = "An id",
         title = "A task title",
-        createdAt = 0L
+        createdAt = 0L,
     )
 
     private class TaskRepositoryStub : TaskRepository {
@@ -93,7 +93,7 @@ class CreateTaskTest {
         override fun save(task: Task): Result<Unit> {
             if (shouldThrow) {
                 shouldThrow = false
-                throw Exception()
+                throw TaskRepository.TaskException.SaveFailed
             }
             return result!!
         }

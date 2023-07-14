@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ fun TaskodoroButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     loading: Boolean = false,
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
     Button(
         enabled = !loading,
@@ -59,13 +59,13 @@ fun TaskodoroButton(
         modifier = modifier
             .defaultMinSize(
                 minWidth = ButtonDefaults.MinWidth,
-                minHeight = 48.dp
-            )
+                minHeight = 48.dp,
+            ),
     ) {
         if (loading) {
             CircularProgressIndicator(
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(32.dp),
             )
         } else {
             content()
@@ -88,16 +88,16 @@ private fun TaskodoroButtonPreview() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
             TaskodoroButton(
-                onClick = {}
+                onClick = {},
             ) {
                 Text("Taskodoro button")
             }
             TaskodoroButton(
                 onClick = {},
-                loading = true
+                loading = true,
             ) {
                 Text("Taskodoro button")
             }

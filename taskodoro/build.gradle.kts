@@ -15,9 +15,9 @@
  */
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("com.squareup.sqldelight")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -100,16 +100,12 @@ android {
     namespace = "com.taskodoro"
 
     compileSdk = config.versions.compileSdk.get().toInt()
-    buildToolsVersion = config.versions.buildTools.get()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-
         minSdk = config.versions.minSdk.get().toInt()
-        targetSdk = config.versions.targetSdk.get().toInt()
     }
-
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -118,17 +114,9 @@ android {
 }
 
 sqldelight {
-    database("TaskodoroDB") {
-        packageName = "com.taskodoro.storage.db"
+    databases {
+        create("TaskodoroDB") {
+            packageName.set("com.taskodoro.storage.db")
+        }
     }
-}
-
-// As of today `allTest` task does not launches android unit tests.
-tasks.register("allTestsWithAndroid") {
-    group = "verification"
-    description = "Runs the tests for all targets in this module."
-
-    dependsOn("iosX64Test")
-    dependsOn("testDebugUnitTest")
-    dependsOn("testReleaseUnitTest")
 }

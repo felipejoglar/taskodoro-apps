@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package com.taskodoro.android.app.tasks.create
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumedWindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
@@ -61,7 +61,7 @@ fun CreateTaskScreen(
         modifier = modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
             .fillMaxSize()
-            .consumedWindowInsets(WindowInsets.navigationBars)
+            .consumeWindowInsets(WindowInsets.navigationBars)
             .imePadding(),
         topBar = {
             TaskodoroLargeTopBar(
@@ -69,13 +69,13 @@ fun CreateTaskScreen(
                     Text(
                         stringResource(id = R.string.create_new_task_screen_title),
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 onNavigationClick = onBackClicked,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
             )
-        }
+        },
     ) { paddingValues ->
         TaskForm(
             title = state.title,
@@ -93,7 +93,7 @@ fun CreateTaskScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }
@@ -120,7 +120,7 @@ private fun CreateTaskScreenPreview() {
             onPriorityChanged = {},
             onCreateTaskClicked = {},
             onTaskCreated = {},
-            onBackClicked = {}
+            onBackClicked = {},
         )
     }
 }
@@ -143,14 +143,14 @@ private fun CreateTaskScreenWithErrorsPreview() {
         CreateTaskScreen(
             state = CreateTaskUIState(
                 titleError = R.string.create_new_task_empty_title_error,
-                error = R.string.create_new_task_unknown_error
+                error = R.string.create_new_task_unknown_error,
             ),
             onTitleChanged = {},
             onDescriptionChanged = {},
             onPriorityChanged = {},
             onCreateTaskClicked = {},
             onTaskCreated = {},
-            onBackClicked = {}
+            onBackClicked = {},
         )
     }
 }

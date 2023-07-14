@@ -20,22 +20,69 @@ buildscript {
         google()
         mavenCentral()
     }
+}
 
-    dependencies {
-        // Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
+plugins {
+    alias(libs.plugins.android.application).apply(false)
+    alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.kotlin.android).apply(false)
+    alias(libs.plugins.kotlin.multiplatform).apply(false)
+    alias(libs.plugins.sqlDelight).apply(false)
 
-        // Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
-        classpath("com.android.tools.build:gradle:8.0.2")
-
-        // SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
-        classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqlDelight.get()}")
-    }
+    alias(libs.plugins.spotless).apply(true)
+    alias(libs.plugins.detekt).apply(true)
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+// Spotless configuration
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    val ktlintVersion = "0.48.2"
+
+    kotlin {
+        target("**/*.kt")
+        targetExclude("$buildDir/**/*.kt")
+        targetExclude("bin/**/*.kt")
+
+        ktlint(ktlintVersion)
+    }
+
+    kotlinGradle {
+        target("*.gradle.kts")
+
+        ktlint(ktlintVersion)
+    }
+}
+
+allprojects {
+
+    // Detekt configuration
+    apply(plugin = "io.gitlab.arturbosch.detekt").also {
+
+        detekt {
+            config.from(rootProject.files("scripts/detekt.yml"))
+        }
+
+        tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+            setSource(files(project.projectDir))
+            exclude("**/build/**")
+            exclude {
+                it.file.relativeTo(projectDir).startsWith(project.buildDir.relativeTo(projectDir))
+            }
+
+            reports {
+                sarif.required.set(true)
+            }
+        }
+
+        dependencies {
+            // https://mrmans0n.github.io/compose-rules/
+            detektPlugins("io.nlopez.compose.rules:detekt:0.1.12")
+        }
     }
 }

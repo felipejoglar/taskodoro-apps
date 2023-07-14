@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Felipe Joglar
+ *    Copyright 2023 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                     flowOf(save(task, repository, TaskValidator::validate))
                         .flowOn(Dispatchers.Default)
                 },
-                scope = scope
+                scope = scope,
             )
 
             val state by viewModel.state.collectAsState()
@@ -74,11 +74,11 @@ class MainActivity : ComponentActivity() {
                     onTaskCreated = {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
                     },
-                    onBackClicked = ::finish
+                    onBackClicked = ::finish,
                 )
             }
 
-            DisposableEffect(Unit) { onDispose { scope.cancel() }}
+            DisposableEffect(Unit) { onDispose { scope.cancel() } }
         }
     }
 }

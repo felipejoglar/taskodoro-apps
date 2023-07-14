@@ -63,7 +63,7 @@ class SQLDelightTaskStoreTest {
             Task(
                 id = it.id,
                 title = it.title,
-                createdAt = it.createdAt
+                createdAt = it.createdAt,
             )
         }
 
