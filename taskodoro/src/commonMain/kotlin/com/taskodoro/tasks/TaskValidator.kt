@@ -19,18 +19,15 @@ package com.taskodoro.tasks
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.model.TaskValidationResult
 
-class TaskValidator {
+object TaskValidator {
+    private const val MINIMUM_TITLE_LENGTH = 4
 
-    companion object {
-        private const val MINIMUM_TITLE_LENGTH = 4
-
-        fun validate(task: Task): TaskValidationResult =
-            if (task.title.isBlank()) {
-                TaskValidationResult.EMPTY_TITLE
-            } else if (task.title.trim().length < MINIMUM_TITLE_LENGTH) {
-                TaskValidationResult.INVALID_TITLE
-            } else {
-                TaskValidationResult.SUCCESS
-            }
-    }
+    fun validate(task: Task): TaskValidationResult =
+        if (task.title.isBlank()) {
+            TaskValidationResult.EMPTY_TITLE
+        } else if (task.title.trim().length < MINIMUM_TITLE_LENGTH) {
+            TaskValidationResult.INVALID_TITLE
+        } else {
+            TaskValidationResult.SUCCESS
+        }
 }

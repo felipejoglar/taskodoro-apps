@@ -76,9 +76,14 @@ class CreateTaskViewModel(
 
     private fun handleError(error: TaskRepository.TaskException?) {
         when (error) {
-            TaskRepository.TaskException.EmptyTitle -> updateWithTitleError(R.string.create_new_task_empty_title_error)
-            TaskRepository.TaskException.InvalidTitle -> updateWithTitleError(R.string.create_new_task_invalid_title_error)
-            TaskRepository.TaskException.SaveFailed, null -> updateWithError(R.string.create_new_task_unknown_error)
+            TaskRepository.TaskException.EmptyTitle ->
+                updateWithTitleError(R.string.create_new_task_empty_title_error)
+
+            TaskRepository.TaskException.InvalidTitle ->
+                updateWithTitleError(R.string.create_new_task_invalid_title_error)
+
+            TaskRepository.TaskException.SaveFailed, null ->
+                updateWithError(R.string.create_new_task_unknown_error)
         }
     }
 

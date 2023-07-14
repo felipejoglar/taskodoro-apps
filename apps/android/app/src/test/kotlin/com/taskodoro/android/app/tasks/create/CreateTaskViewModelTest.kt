@@ -235,10 +235,6 @@ class CreateTaskViewModelTest {
         return sut to repository
     }
 
-    private fun anyTitle() = "any title"
-    private fun anyDescription() = "any description"
-    private fun anyPriority() = 1
-
     private class RepositoryStub {
 
         private var result: Result<Unit>? = null

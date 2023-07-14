@@ -26,12 +26,16 @@ fun save(
 ): Result<Unit> =
     try {
         when (validate(task)) {
-            TaskValidationResult.EMPTY_TITLE -> Result.failure(TaskRepository.TaskException.EmptyTitle)
-            TaskValidationResult.INVALID_TITLE -> Result.failure(TaskRepository.TaskException.InvalidTitle)
+            TaskValidationResult.EMPTY_TITLE ->
+                Result.failure(TaskRepository.TaskException.EmptyTitle)
+
+            TaskValidationResult.INVALID_TITLE ->
+                Result.failure(TaskRepository.TaskException.InvalidTitle)
+
             TaskValidationResult.SUCCESS -> insert(task, repository)
         }
-    } catch (exception: Exception) {
-        Result.failure(TaskRepository.TaskException.SaveFailed)
+    } catch (exception: TaskRepository.TaskException) {
+        Result.failure(exception)
     }
 
 private fun insert(task: Task, repository: TaskRepository) =

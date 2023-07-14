@@ -93,7 +93,7 @@ class CreateTaskTest {
         override fun save(task: Task): Result<Unit> {
             if (shouldThrow) {
                 shouldThrow = false
-                throw Exception()
+                throw TaskRepository.TaskException.SaveFailed
             }
             return result!!
         }
