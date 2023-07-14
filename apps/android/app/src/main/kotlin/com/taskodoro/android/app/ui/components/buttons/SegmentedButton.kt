@@ -28,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
@@ -54,13 +55,13 @@ import com.taskodoro.android.app.ui.theme.TaskodoroTheme
  */
 @Composable
 fun SegmentedButton(
-    items: List<String>,
+    items: ItemsList,
     selectedItemIndex: Int,
     onSelectedItemChange: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(modifier = modifier) {
-        items.forEachIndexed { index, item ->
+        items.value.forEachIndexed { index, item ->
             OutlinedButton(
                 modifier = Modifier
                     .weight(1f)
@@ -72,7 +73,7 @@ fun SegmentedButton(
                         bottomStartPercent = 50,
                     )
 
-                    items.lastIndex -> RoundedCornerShape(
+                    items.value.lastIndex -> RoundedCornerShape(
                         topEndPercent = 50,
                         bottomEndPercent = 50,
                     )
@@ -105,6 +106,11 @@ fun SegmentedButton(
     }
 }
 
+@Immutable
+data class ItemsList(
+    val value: List<String>,
+)
+
 @Preview(
     name = "Day Mode",
     uiMode = Configuration.UI_MODE_NIGHT_NO,
@@ -117,7 +123,7 @@ fun SegmentedButton(
 private fun SegmentedButtonPreview() {
     TaskodoroTheme {
         SegmentedButton(
-            items = listOf("One", "Two Bigger", "Three", "Four"),
+            items = ItemsList(listOf("One", "Two Bigger", "Three", "Four")),
             selectedItemIndex = 1,
             onSelectedItemChange = {},
             modifier = Modifier

@@ -32,6 +32,7 @@ import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 
 @Composable
 fun TaskodoroTemplate(
+    modifier: Modifier = Modifier,
     useDarkIcons: Boolean = !isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
@@ -49,7 +50,7 @@ fun TaskodoroTemplate(
 
         Surface(
             color = MaterialTheme.colorScheme.background,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize(),
         ) {
             content()

@@ -79,5 +79,10 @@ allprojects {
                 sarif.required.set(true)
             }
         }
+
+        dependencies {
+            // https://mrmans0n.github.io/compose-rules/
+            detektPlugins("io.nlopez.compose.rules:detekt:0.1.12")
+        }
     }
 }

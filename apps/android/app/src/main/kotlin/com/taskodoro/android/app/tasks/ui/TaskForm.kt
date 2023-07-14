@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
+import com.taskodoro.android.app.ui.components.buttons.ItemsList
 import com.taskodoro.android.app.ui.components.buttons.SegmentedButton
 import com.taskodoro.android.app.ui.components.buttons.TaskodoroButton
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
@@ -182,10 +183,12 @@ private fun ErrorLabel(errorLabel: Int?) {
 }
 
 @Composable
-private fun getPriorityLabels(): List<String> = listOf(
-    stringResource(id = R.string.task_form_priority_low),
-    stringResource(id = R.string.task_form_priority_medium),
-    stringResource(id = R.string.task_form_priority_high),
+private fun getPriorityLabels() = ItemsList(
+    value = listOf(
+        stringResource(id = R.string.task_form_priority_low),
+        stringResource(id = R.string.task_form_priority_medium),
+        stringResource(id = R.string.task_form_priority_high),
+    ),
 )
 
 @Preview(
