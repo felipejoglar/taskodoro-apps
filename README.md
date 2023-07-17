@@ -1,14 +1,14 @@
 # Taskodoro
-[![Android CI](https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml/badge.svg)](https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml)
-[![iOS CI](https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml/badge.svg)](https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml)
-[![Multiplatform CI](https://github.com/felipejoglar/taskodoro/actions/workflows/multiplatform_ci.yml/badge.svg)](https://github.com/felipejoglar/taskodoro/actions/workflows/multiplatform_ci.yml)
+[![Android CI](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml/badge.svg)](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml)
+[![iOS CI](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml/badge.svg)](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml)
+[![Multiplatform CI](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml/badge.svg)](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml)
 
 A productivity app made with Kotlin Multiplatform
 
 ## License
 
 ```
-Copyright 2022-2023 Felipe Joglar
+Copyright 2022-2023 Green Peaks Studio
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

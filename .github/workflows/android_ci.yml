@@ -6,8 +6,8 @@ on:
     paths:
       - .github/actions/*
       - .github/workflows/android_ci.yml
-      - apps/android
-      - taskodoro
+      - apps/android/*
+      - taskodoro/*
       - build.gradle.kts
       - settings.gradle.kts
   pull_request:
@@ -16,8 +16,8 @@ on:
     paths:
       - .github/actions/*
       - .github/workflows/android_ci.yml
-      - apps/android
-      - taskodoro
+      - apps/android/*
+      - taskodoro/*
       - build.gradle.kts
       - settings.gradle.kts
 

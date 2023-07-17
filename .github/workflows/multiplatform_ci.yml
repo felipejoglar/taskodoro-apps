@@ -6,7 +6,7 @@ on:
     paths:
       - .github/actions/*
       - .github/workflows/multiplatform_ci.yml
-      - taskodoro
+      - taskodoro/*
       - build.gradle.kts
       - settings.gradle.kts
   pull_request:
@@ -15,7 +15,7 @@ on:
     paths:
       - .github/actions/*
       - .github/workflows/multiplatform_ci.yml
-      - taskodoro
+      - taskodoro/*
       - build.gradle.kts
       - settings.gradle.kts
 
