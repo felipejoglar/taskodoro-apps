@@ -14,20 +14,27 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks
+package com.taskodoro.tasks.validator
 
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidationResult
 
-object TaskValidator {
-    private const val MINIMUM_TITLE_LENGTH = 4
+class TaskValidator(
+    private val validators: List<Validator<Task>>,
+) {
 
-    fun validate(task: Task): TaskValidationResult =
-        if (task.title.isBlank()) {
-            TaskValidationResult.EMPTY_TITLE
-        } else if (task.title.trim().length < MINIMUM_TITLE_LENGTH) {
-            TaskValidationResult.INVALID_TITLE
-        } else {
-            TaskValidationResult.SUCCESS
+    fun validate(task: Task): List<ValidatorError> {
+        return buildList {
+            validators.forEach { validator ->
+                validator.validate(task)?.let { add(it) }
+            }
         }
+    }
+}
+
+sealed class TaskValidatorError : ValidatorError() {
+
+    sealed class Title: TaskValidatorError() {
+        object Empty: Title()
+        object Invalid: Title()
+    }
 }
