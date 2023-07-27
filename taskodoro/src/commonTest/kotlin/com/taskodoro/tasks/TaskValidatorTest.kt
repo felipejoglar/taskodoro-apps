@@ -69,7 +69,6 @@ class TaskValidatorTest {
 
     private fun makeTaskWithTitle(title: String): Task =
         Task(
-            id = "An id",
             title = title,
             createdAt = 0,
         )

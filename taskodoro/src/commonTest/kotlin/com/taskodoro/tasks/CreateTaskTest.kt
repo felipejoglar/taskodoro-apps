@@ -16,6 +16,7 @@
 
 package com.taskodoro.tasks
 
+import com.taskodoro.helpers.anyTask
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.model.TaskValidationResult
 import kotlin.test.BeforeTest
@@ -79,14 +80,7 @@ class CreateTaskTest {
 
     private fun save(task: Task) = save(task, repository) { validator.validate() }
 
-    private fun anyTask() = Task(
-        id = "An id",
-        title = "A task title",
-        createdAt = 0L,
-    )
-
     private class TaskRepositoryStub : TaskRepository {
-
         private var result: Result<Unit>? = null
         private var shouldThrow = false
 

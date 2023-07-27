@@ -16,8 +16,10 @@
 
 package com.taskodoro.tasks.model
 
+import com.taskodoro.model.Uuid
+
 data class Task(
-    val id: String,
+    val id: Uuid = Uuid(),
     val title: String,
     val description: String? = null,
     val priority: Priority = Priority.MEDIUM,

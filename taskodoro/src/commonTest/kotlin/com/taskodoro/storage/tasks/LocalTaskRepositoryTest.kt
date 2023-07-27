@@ -16,8 +16,8 @@
 
 package com.taskodoro.storage.tasks
 
+import com.taskodoro.helpers.anyTask
 import com.taskodoro.storage.tasks.helpers.TaskStoreSpy
-import com.taskodoro.storage.tasks.helpers.anyTask
 import com.taskodoro.tasks.TaskRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals

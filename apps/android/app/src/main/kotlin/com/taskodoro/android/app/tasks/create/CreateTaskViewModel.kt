@@ -54,7 +54,6 @@ class CreateTaskViewModel(
 
     fun create() {
         val task = Task(
-            id = UUID.randomUUID().toString(),
             title = state.value.title,
             description = state.value.description,
             priority = Task.Priority.fromValue(state.value.priority),

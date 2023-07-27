@@ -14,12 +14,11 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks.helpers
+package com.taskodoro.helpers
 
 import com.taskodoro.tasks.model.Task
 
-internal fun anyTask() = Task(
-    id = "An id",
-    title = "A task title",
+internal fun anyTask(title: String = "A task title") = Task(
+    title = title,
     createdAt = 0L,
 )
