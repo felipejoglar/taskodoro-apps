@@ -17,8 +17,8 @@
 package com.taskodoro.storage.tasks
 
 import com.taskodoro.helpers.anyTask
-import com.taskodoro.storage.tasks.helpers.TaskStoreSpy
 import com.taskodoro.tasks.TaskRepository
+import com.taskodoro.tasks.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -60,6 +60,34 @@ class LocalTaskRepositoryTest {
         val sut = LocalTaskRepository(store = store)
 
         return sut to store
+    }
+
+    private class TaskStoreSpy : TaskStore {
+        enum class Message {
+            SAVE,
+        }
+
+        var messages = mutableListOf<Message>()
+            private set
+        var savedTasks = mutableListOf<Task>()
+            private set
+
+        private var insertionSuccessful = true
+
+        override fun save(task: Task) {
+            messages.add(Message.SAVE)
+            savedTasks.add(task)
+
+            if (!insertionSuccessful) throw Exception()
+        }
+
+        fun completeInsertionSuccessfully() {
+            insertionSuccessful = true
+        }
+
+        fun completeInsertionWithFailure() {
+            insertionSuccessful = false
+        }
     }
 
     // endregion
