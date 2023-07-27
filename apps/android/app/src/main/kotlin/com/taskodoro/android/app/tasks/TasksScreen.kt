@@ -99,7 +99,6 @@ private fun TasksScreenPreview() {
     TaskodoroTemplate {
         val tasks = List(20) {
             Task(
-                id = it.toString(),
                 title = "Task $it title",
                 createdAt = it.toLong(),
             )

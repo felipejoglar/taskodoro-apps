@@ -19,66 +19,65 @@ package com.taskodoro.tasks
 import com.taskodoro.helpers.anyTask
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.model.TaskValidationResult
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class CreateTaskTest {
+class CreateTaskUseCaseTest {
 
     @Test
     fun save_failsWithInvalidTitleTaskExceptionOnInvalidTitleFailure() {
-        val task = anyTask()
+        val (sut, _, validator) = makeSUT()
 
         validator.completeWithInvalidTitleFailure()
-        val result = save(task)
+        val result = sut.invoke(anyTask())
 
         assertEquals(Result.failure(TaskRepository.TaskException.InvalidTitle), result)
     }
 
     @Test
     fun save_failsWithEmptyTitleTaskExceptionOnEmptyTitleFailure() {
-        val task = anyTask()
+        val (sut, _, validator) = makeSUT()
 
         validator.completeWithEmptyTitleFailure()
-        val result = save(task)
+        val result = sut.invoke(anyTask())
 
         assertEquals(Result.failure(TaskRepository.TaskException.EmptyTitle), result)
     }
 
     @Test
     fun save_failsWithSaveFailedExceptionOnInsertionFailure() {
-        val task = anyTask()
+        val (sut, repository, validator) = makeSUT()
 
         validator.completeSuccessfully()
         repository.completeSavingWithFailure()
-        val result = save(task)
+        val result = sut.invoke(anyTask())
 
         assertEquals(Result.failure(TaskRepository.TaskException.SaveFailed), result)
     }
 
     @Test
-    fun save_succeedsWithTrimmedValuesOnSuccessfulInsertion() {
-        val task = anyTask().copy(title = "   A title   ")
+    fun save_succeedsOnSuccessfulInsertion() {
+        val (sut, repository, validator) = makeSUT()
 
         validator.completeSuccessfully()
         repository.completeSavingSuccessfully()
-        val result = save(task)
+        val result = sut.invoke(anyTask())
 
         assertEquals(Result.success(Unit), result)
     }
 
     // region Helpers
 
-    private lateinit var validator: TaskValidatorStub
-    private lateinit var repository: TaskRepositoryStub
+    private fun makeSUT(): Triple<CreateTaskUseCase, TaskRepositoryStub, TaskValidatorStub> {
+        val validator = TaskValidatorStub()
+        val repository = TaskRepositoryStub()
+        val sut = CreateTaskUseCase(
+            repository = repository,
+            validate = { validator.validate() }
+        )
 
-    @BeforeTest
-    fun setupDependencies() {
-        validator = TaskValidatorStub()
-        repository = TaskRepositoryStub()
+        return Triple(sut, repository, validator)
     }
-
-    private fun save(task: Task) = save(task, repository) { validator.validate() }
 
     private class TaskRepositoryStub : TaskRepository {
         private var result: Result<Unit>? = null

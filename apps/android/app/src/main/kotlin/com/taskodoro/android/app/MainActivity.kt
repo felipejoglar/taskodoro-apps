@@ -31,8 +31,8 @@ import com.taskodoro.storage.db.DriverFactory
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
+import com.taskodoro.tasks.CreateTaskUseCase
 import com.taskodoro.tasks.TaskValidator
-import com.taskodoro.tasks.save
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -51,12 +51,13 @@ class MainActivity : ComponentActivity() {
         val database = TaskodoroDB(sqlDriver).apply { taskdoroDBQueries.clearDB() }
         val store = SQLDelightTaskStore(database)
         val repository = LocalTaskRepository(store)
+        val createTask = CreateTaskUseCase(repository, TaskValidator::validate)
 
         setContent {
             val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
             val viewModel = CreateTaskViewModel(
                 createTask = { task ->
-                    flowOf(save(task, repository, TaskValidator::validate))
+                    flowOf(createTask(task))
                         .flowOn(Dispatchers.Default)
                 },
                 scope = scope,
