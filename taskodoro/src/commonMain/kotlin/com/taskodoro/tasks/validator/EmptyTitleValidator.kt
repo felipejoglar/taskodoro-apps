@@ -19,9 +19,9 @@ package com.taskodoro.tasks.validator
 import com.taskodoro.tasks.model.Task
 
 internal class EmptyTitleValidator : Validator<Task> {
-    override fun validate(value: Task): ValidatorError? =
-        if (value.title.isBlank())
-            TaskValidatorError.Title.Empty
-        else
-            null
+    override fun validate(value: Task): List<ValidatorError> = buildList {
+        if (value.title.isBlank()) {
+            add(TaskValidatorError.Title.Empty)
+        }
+    }
 }

@@ -20,21 +20,19 @@ import com.taskodoro.tasks.model.Task
 
 class TaskValidator(
     private val validators: List<Validator<Task>>,
-) {
+): Validator<Task> {
 
-    fun validate(task: Task): List<ValidatorError> {
-        return buildList {
-            validators.forEach { validator ->
-                validator.validate(task)?.let { add(it) }
-            }
+    override fun validate(value: Task): List<ValidatorError> = buildList {
+        validators.forEach { validator ->
+            addAll(validator.validate(value))
         }
     }
 }
 
 sealed class TaskValidatorError : ValidatorError() {
 
-    sealed class Title: TaskValidatorError() {
-        object Empty: Title()
-        object Invalid: Title()
+    sealed class Title : TaskValidatorError() {
+        object Empty : Title()
+        object Invalid : Title()
     }
 }

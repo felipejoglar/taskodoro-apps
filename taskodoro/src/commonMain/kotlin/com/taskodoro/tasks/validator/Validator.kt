@@ -17,7 +17,7 @@
 package com.taskodoro.tasks.validator
 
 interface Validator<T> {
-    fun validate(value: T): ValidatorError?
+    fun validate(value: T): List<ValidatorError>
 }
 
-sealed class ValidatorError: Exception()
+sealed class ValidatorError : Exception()

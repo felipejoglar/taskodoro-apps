@@ -17,11 +17,6 @@
 package com.taskodoro.tasks.validator
 
 import com.taskodoro.helpers.anyTask
-import com.taskodoro.tasks.validator.EmptyTitleValidator
-import com.taskodoro.tasks.validator.TaskValidator
-import com.taskodoro.tasks.validator.TaskValidatorError
-import com.taskodoro.tasks.validator.TitleLengthValidator
-import com.taskodoro.tasks.validator.ValidatorError
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
