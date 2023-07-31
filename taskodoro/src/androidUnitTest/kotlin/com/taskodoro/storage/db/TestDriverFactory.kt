@@ -17,7 +17,9 @@
 package com.taskodoro.storage.db
 
 import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 
-expect class DriverFactory {
-    fun createDriver(): SqlDriver
+actual object TestDriverFactory {
+    actual fun create(): SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        .also { TaskodoroDB.Schema.create(it) }
 }
