@@ -18,6 +18,7 @@ package com.taskodoro.storage.tasks.store
 
 import com.taskodoro.helpers.anyTask
 import com.taskodoro.model.Uuid
+import com.taskodoro.storage.db.DatabaseFactory
 import com.taskodoro.storage.db.DriverFactory
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.tasks.model.Task

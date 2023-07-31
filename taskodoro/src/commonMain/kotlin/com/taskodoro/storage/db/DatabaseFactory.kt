@@ -18,6 +18,8 @@ package com.taskodoro.storage.db
 
 import app.cash.sqldelight.db.SqlDriver
 
-expect class DriverFactory {
-    fun createDriver(): SqlDriver
+internal const val DB_NAME = "TaskodoroDB"
+
+expect class DatabaseFactory {
+    fun create(): TaskodoroDB
 }

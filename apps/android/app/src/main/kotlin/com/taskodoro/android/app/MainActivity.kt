@@ -27,8 +27,7 @@ import androidx.core.view.WindowCompat
 import com.taskodoro.android.app.tasks.create.CreateTaskScreen
 import com.taskodoro.android.app.tasks.create.CreateTaskViewModel
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
-import com.taskodoro.storage.db.DriverFactory
-import com.taskodoro.storage.db.TaskodoroDB
+import com.taskodoro.storage.db.DatabaseFactory
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
 import com.taskodoro.tasks.CreateTask
@@ -45,8 +44,9 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val sqlDriver = DriverFactory(applicationContext).createDriver()
-        val database = TaskodoroDB(sqlDriver).apply { taskdoroDBQueries.clearDB() }
+        val database = DatabaseFactory(applicationContext).create().apply {
+            taskdoroDBQueries.clearDB()
+        }
         val store = SQLDelightTaskStore(database)
         val repository = LocalTaskRepository(store)
         val validator = ValidatorFactory.create()

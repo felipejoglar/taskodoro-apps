@@ -16,12 +16,12 @@
 
 package com.taskodoro.storage.db
 
-import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 
-actual class DriverFactory(private val context: Context) {
-    actual fun createDriver(): SqlDriver {
-        return AndroidSqliteDriver(TaskodoroDB.Schema, context, "TaskodoroDB")
+actual class DatabaseFactory {
+    actual fun create(): TaskodoroDB {
+        val driver = NativeSqliteDriver(TaskodoroDB.Schema, DB_NAME)
+        return TaskodoroDB(driver)
     }
 }
