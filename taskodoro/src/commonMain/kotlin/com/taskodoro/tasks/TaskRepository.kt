@@ -19,11 +19,7 @@ package com.taskodoro.tasks
 import com.taskodoro.tasks.model.Task
 
 interface TaskRepository {
-    sealed class TaskException : Exception() {
-        object EmptyTitle : TaskException()
-        object InvalidTitle : TaskException()
-        object SaveFailed : TaskException()
-    }
+    object SaveFailed : Exception()
 
     fun save(task: Task): Result<Unit>
 }

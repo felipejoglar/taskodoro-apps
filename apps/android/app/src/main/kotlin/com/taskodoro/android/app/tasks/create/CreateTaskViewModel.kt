@@ -17,25 +17,29 @@
 package com.taskodoro.android.app.tasks.create
 
 import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.taskodoro.android.R
-import com.taskodoro.tasks.TaskRepository
+import com.taskodoro.tasks.CreateTaskUseCase
 import com.taskodoro.tasks.model.Task
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
+import com.taskodoro.tasks.validator.TaskValidatorError
+import com.taskodoro.tasks.validator.ValidatorError
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import java.time.Instant
-import java.util.UUID
 
 class CreateTaskViewModel(
-    private val createTask: (Task) -> Flow<Result<Unit>>,
-    private val scope: CoroutineScope,
-) {
+    private val createTask: CreateTaskUseCase,
+    private val dispatcher: CoroutineDispatcher,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(CreateTaskUIState())
     internal val state = _state.asStateFlow()
@@ -52,7 +56,7 @@ class CreateTaskViewModel(
         _state.update { it.copy(priority = priority) }
     }
 
-    fun create() {
+    fun onCreateTaskClicked() {
         val task = Task(
             title = state.value.title,
             description = state.value.description,
@@ -60,29 +64,29 @@ class CreateTaskViewModel(
             createdAt = Instant.now().epochSecond,
         )
 
-        createTask(task)
+        flow { emit(createTask(task)) }
+            .flowOn(dispatcher)
             .onStart { updateWith(loading = true) }
             .onEach(::handleResult)
             .catch { updateWithError(R.string.create_new_task_unknown_error) }
-            .launchIn(scope)
+            .launchIn(viewModelScope)
     }
 
-    private fun handleResult(result: Result<Unit>) {
+    private fun handleResult(result: CreateTaskUseCase.Result) {
         result
             .onSuccess { updateWith(isTaskSaved = true) }
-            .onFailure { handleError(it as? TaskRepository.TaskException) }
+            .onFailure { handleErrors(it) }
     }
 
-    private fun handleError(error: TaskRepository.TaskException?) {
-        when (error) {
-            TaskRepository.TaskException.EmptyTitle ->
+    private fun handleErrors(errors: List<ValidatorError>) {
+        val titleErrors = errors.filterIsInstance<TaskValidatorError.Title>()
+
+        when (titleErrors.first()) {
+            TaskValidatorError.Title.Empty ->
                 updateWithTitleError(R.string.create_new_task_empty_title_error)
 
-            TaskRepository.TaskException.InvalidTitle ->
+            TaskValidatorError.Title.Invalid ->
                 updateWithTitleError(R.string.create_new_task_invalid_title_error)
-
-            TaskRepository.TaskException.SaveFailed, null ->
-                updateWithError(R.string.create_new_task_unknown_error)
         }
     }
 
@@ -107,4 +111,12 @@ class CreateTaskViewModel(
     private fun updateWithTitleError(@StringRes titleError: Int) {
         _state.update { it.copy(loading = false, titleError = titleError) }
     }
+}
+
+private fun CreateTaskUseCase.Result.onSuccess(action: () -> Unit) = apply {
+    if (this is CreateTaskUseCase.Result.Success) action()
+}
+
+private fun CreateTaskUseCase.Result.onFailure(action: (List<ValidatorError>) -> Unit) = apply {
+    if (this is CreateTaskUseCase.Result.Failure) action(errors)
 }

@@ -20,7 +20,7 @@ import com.taskodoro.tasks.model.Task
 
 class TaskValidator(
     private val validators: List<Validator<Task>>,
-): Validator<Task> {
+) : Validator<Task> {
 
     override fun validate(value: Task): List<ValidatorError> = buildList {
         validators.forEach { validator ->

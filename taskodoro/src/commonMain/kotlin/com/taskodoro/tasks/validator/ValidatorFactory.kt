@@ -14,10 +14,19 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.model
+package com.taskodoro.tasks.validator
 
-enum class TaskValidationResult {
-    SUCCESS,
-    EMPTY_TITLE,
-    INVALID_TITLE,
+import com.taskodoro.tasks.model.Task
+
+object ValidatorFactory {
+
+    private const val MINIMUM_TITLE_LENGTH = 4
+
+    fun create(): Validator<Task> {
+        val validators = listOf(
+            EmptyTitleValidator(),
+            TitleLengthValidator(MINIMUM_TITLE_LENGTH),
+        )
+        return TaskValidator(validators)
+    }
 }

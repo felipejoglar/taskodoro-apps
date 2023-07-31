@@ -18,9 +18,13 @@ package com.taskodoro.tasks
 
 import com.taskodoro.helpers.anyTask
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidationResult
+import com.taskodoro.tasks.validator.TaskValidatorError
+import com.taskodoro.tasks.validator.Validator
+import com.taskodoro.tasks.validator.ValidatorError
+import kotlin.Result
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class CreateTaskUseCaseTest {
 
@@ -31,7 +35,10 @@ class CreateTaskUseCaseTest {
         validator.completeWithInvalidTitleFailure()
         val result = sut.invoke(anyTask())
 
-        assertEquals(Result.failure(TaskRepository.TaskException.InvalidTitle), result)
+        val expectedResult = CreateTaskUseCase.Result.Failure(
+            errors = listOf(TaskValidatorError.Title.Invalid),
+        )
+        assertEquals(expectedResult, result)
     }
 
     @Test
@@ -41,7 +48,10 @@ class CreateTaskUseCaseTest {
         validator.completeWithEmptyTitleFailure()
         val result = sut.invoke(anyTask())
 
-        assertEquals(Result.failure(TaskRepository.TaskException.EmptyTitle), result)
+        val expectedResult = CreateTaskUseCase.Result.Failure(
+            errors = listOf(TaskValidatorError.Title.Empty),
+        )
+        assertEquals(expectedResult, result)
     }
 
     @Test
@@ -50,9 +60,10 @@ class CreateTaskUseCaseTest {
 
         validator.completeSuccessfully()
         repository.completeSavingWithFailure()
-        val result = sut.invoke(anyTask())
 
-        assertEquals(Result.failure(TaskRepository.TaskException.SaveFailed), result)
+        assertFailsWith(CreateTaskUseCase.SaveFailed::class) {
+            sut.invoke(anyTask())
+        }
     }
 
     @Test
@@ -63,7 +74,7 @@ class CreateTaskUseCaseTest {
         repository.completeSavingSuccessfully()
         val result = sut.invoke(anyTask())
 
-        assertEquals(Result.success(Unit), result)
+        assertEquals(CreateTaskUseCase.Result.Success, result)
     }
 
     // region Helpers
@@ -71,9 +82,9 @@ class CreateTaskUseCaseTest {
     private fun makeSUT(): Triple<CreateTaskUseCase, TaskRepositoryStub, TaskValidatorStub> {
         val validator = TaskValidatorStub()
         val repository = TaskRepositoryStub()
-        val sut = CreateTaskUseCase(
+        val sut = CreateTask(
             repository = repository,
-            validate = { validator.validate() }
+            validator = validator,
         )
 
         return Triple(sut, repository, validator)
@@ -86,7 +97,7 @@ class CreateTaskUseCaseTest {
         override fun save(task: Task): Result<Unit> {
             if (shouldThrow) {
                 shouldThrow = false
-                throw TaskRepository.TaskException.SaveFailed
+                throw TaskRepository.SaveFailed
             }
             return result!!
         }
@@ -100,21 +111,23 @@ class CreateTaskUseCaseTest {
         }
     }
 
-    private class TaskValidatorStub {
-        private var validationResult: TaskValidationResult? = null
+    private class TaskValidatorStub : Validator<Task> {
+        private var validatorErrors: MutableList<ValidatorError> = mutableListOf()
 
-        fun validate(): TaskValidationResult = validationResult!!
+        override fun validate(value: Task): List<ValidatorError> {
+            return validatorErrors
+        }
 
         fun completeSuccessfully() {
-            validationResult = TaskValidationResult.SUCCESS
+            validatorErrors.clear()
         }
 
         fun completeWithEmptyTitleFailure() {
-            validationResult = TaskValidationResult.EMPTY_TITLE
+            validatorErrors.add(TaskValidatorError.Title.Empty)
         }
 
         fun completeWithInvalidTitleFailure() {
-            validationResult = TaskValidationResult.INVALID_TITLE
+            validatorErrors.add(TaskValidatorError.Title.Invalid)
         }
     }
 

@@ -18,12 +18,11 @@ package com.taskodoro.android.app.tasks.create
 
 import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
-import com.taskodoro.tasks.TaskRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.taskodoro.tasks.CreateTaskUseCase
+import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.validator.TaskValidatorError
+import com.taskodoro.tasks.validator.ValidatorError
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Assert
 import org.junit.Test
 
@@ -100,8 +99,8 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun save_emitsCorrectStatesOnSuccessfulSave() {
-        val (sut, repository) = makeSUT()
+    fun onCreateTaskClicked_emitsCorrectStatesOnSuccessfulSave() {
+        val (sut, createTask) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
@@ -112,15 +111,15 @@ class CreateTaskViewModelTest {
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf {
-                repository.completeSuccessfully()
-                sut.create()
+                createTask.completeSuccessfully()
+                sut.onCreateTaskClicked()
             },
         )
     }
 
     @Test
-    fun save_emitsEmptyTitleErrorOnEmptyTitleValidationError() {
-        val (sut, repository) = makeSUT()
+    fun onCreateTaskClicked_emitsEmptyTitleErrorOnEmptyTitleValidationError() {
+        val (sut, createTask) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
@@ -131,15 +130,16 @@ class CreateTaskViewModelTest {
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf {
-                repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.create()
+                val validatorErrors = listOf(TaskValidatorError.Title.Empty)
+                createTask.completeWithValidatorErrors(validatorErrors)
+                sut.onCreateTaskClicked()
             },
         )
     }
 
     @Test
-    fun save_emitsInvalidTitleErrorOnInvalidTitleValidationError() {
-        val (sut, repository) = makeSUT()
+    fun onCreateTaskClicked_emitsInvalidTitleErrorOnInvalidTitleValidationError() {
+        val (sut, createTask) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
@@ -150,15 +150,16 @@ class CreateTaskViewModelTest {
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf {
-                repository.completeWithError(TaskRepository.TaskException.InvalidTitle)
-                sut.create()
+                val validatorErrors = listOf(TaskValidatorError.Title.Invalid)
+                createTask.completeWithValidatorErrors(validatorErrors)
+                sut.onCreateTaskClicked()
             },
         )
     }
 
     @Test
-    fun save_emitsUnknownErrorOnSaveFailedError() {
-        val (sut, repository) = makeSUT()
+    fun onCreateTaskClicked_emitsUnknownErrorOnCaughtError() {
+        val (sut, createTask) = makeSUT()
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
@@ -169,34 +170,15 @@ class CreateTaskViewModelTest {
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf {
-                repository.completeWithError(TaskRepository.TaskException.SaveFailed)
-                sut.create()
+                createTask.throwError()
+                sut.onCreateTaskClicked()
             },
         )
     }
 
     @Test
-    fun save_emitsUnknownErrorOnCaughtError() {
-        val (sut, repository) = makeSUT()
-        val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
-        )
-
-        expectEquals(
-            flow = sut.state,
-            expectedValues = expectedStates,
-            actions = listOf {
-                repository.throwError()
-                sut.create()
-            },
-        )
-    }
-
-    @Test
-    fun save_clearsErrorWhenSavingCorrectlyAfterError() {
-        val (sut, repository) = makeSUT()
+    fun onCreateTaskClicked_clearsErrorWhenSavingCorrectlyAfterError() {
+        val (sut, createTask) = makeSUT()
         val expectedStatesForUnknownError = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
@@ -211,53 +193,48 @@ class CreateTaskViewModelTest {
             flow = sut.state,
             expectedValues = expectedStatesForUnknownError,
             actions = listOf({
-                repository.throwError()
-                sut.create()
+                createTask.throwError()
+                sut.onCreateTaskClicked()
             }, {
-                repository.completeWithError(TaskRepository.TaskException.EmptyTitle)
-                sut.create()
+                val validatorErrors = listOf(TaskValidatorError.Title.Empty)
+                createTask.completeWithValidatorErrors(validatorErrors)
+                sut.onCreateTaskClicked()
             }, {
-                repository.completeSuccessfully()
-                sut.create()
+                createTask.completeSuccessfully()
+                sut.onCreateTaskClicked()
             }),
         )
     }
 
     // region Helpers
 
-    private fun makeSUT(): Pair<CreateTaskViewModel, RepositoryStub> {
-        val repository = RepositoryStub()
+    private fun makeSUT(): Pair<CreateTaskViewModel, CreateTaskUseCaseStub> {
+        val createTask = CreateTaskUseCaseStub()
         val sut = CreateTaskViewModel(
-            createTask = { repository.save() },
-            scope = CoroutineScope(Dispatchers.Main + SupervisorJob()),
+            createTask = createTask,
+            dispatcher = UnconfinedTestDispatcher(),
         )
 
-        return sut to repository
+        return sut to createTask
     }
 
-    private class RepositoryStub {
+    private class CreateTaskUseCaseStub : CreateTaskUseCase {
+        private var result: CreateTaskUseCase.Result? = null
 
-        private var result: Result<Unit>? = null
-        private var shouldThrowError = false
-
-        fun save(): Flow<Result<Unit>> = flow {
-            if (shouldThrowError) {
-                shouldThrowError = false
-                throw Exception()
-            }
-            emit(result!!)
+        override fun invoke(task: Task): CreateTaskUseCase.Result {
+            return result!!
         }
 
         fun completeSuccessfully() {
-            result = Result.success(Unit)
+            result = CreateTaskUseCase.Result.Success
         }
 
-        fun completeWithError(error: Throwable) {
-            result = Result.failure(error)
+        fun completeWithValidatorErrors(validatorErrors: List<ValidatorError>) {
+            result = CreateTaskUseCase.Result.Failure(validatorErrors)
         }
 
         fun throwError() {
-            shouldThrowError = true
+            result = null
         }
     }
 

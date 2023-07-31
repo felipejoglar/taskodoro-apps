@@ -39,7 +39,7 @@ class LocalTaskRepositoryTest {
         store.completeInsertionWithFailure()
         val result = sut.save(task)
 
-        assertEquals(Result.failure(TaskRepository.TaskException.SaveFailed), result)
+        assertEquals(Result.failure(TaskRepository.SaveFailed), result)
     }
 
     @Test

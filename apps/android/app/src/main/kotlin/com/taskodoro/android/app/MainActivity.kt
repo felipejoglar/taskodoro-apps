@@ -31,14 +31,12 @@ import com.taskodoro.storage.db.DriverFactory
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
-import com.taskodoro.tasks.CreateTaskUseCase
-import com.taskodoro.tasks.TaskValidator
+import com.taskodoro.tasks.CreateTask
+import com.taskodoro.tasks.validator.ValidatorFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
 
 class MainActivity : ComponentActivity() {
 
@@ -51,16 +49,14 @@ class MainActivity : ComponentActivity() {
         val database = TaskodoroDB(sqlDriver).apply { taskdoroDBQueries.clearDB() }
         val store = SQLDelightTaskStore(database)
         val repository = LocalTaskRepository(store)
-        val createTask = CreateTaskUseCase(repository, TaskValidator::validate)
+        val validator = ValidatorFactory.create()
+        val createTask = CreateTask(repository, validator)
 
         setContent {
             val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
             val viewModel = CreateTaskViewModel(
-                createTask = { task ->
-                    flowOf(createTask(task))
-                        .flowOn(Dispatchers.Default)
-                },
-                scope = scope,
+                createTask = createTask,
+                dispatcher = Dispatchers.IO,
             )
 
             val state by viewModel.state.collectAsState()
@@ -71,7 +67,7 @@ class MainActivity : ComponentActivity() {
                     onTitleChanged = viewModel::onTitleChanged,
                     onDescriptionChanged = viewModel::onDescriptionChanged,
                     onPriorityChanged = viewModel::onPriorityChanged,
-                    onCreateTaskClicked = viewModel::create,
+                    onCreateTaskClicked = viewModel::onCreateTaskClicked,
                     onTaskCreated = {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
                     },

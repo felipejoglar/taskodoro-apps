@@ -17,27 +17,39 @@
 package com.taskodoro.tasks
 
 import com.taskodoro.tasks.model.Task
-import com.taskodoro.tasks.model.TaskValidationResult
+import com.taskodoro.tasks.validator.Validator
+import com.taskodoro.tasks.validator.ValidatorError
 
-class CreateTaskUseCase(
+interface CreateTaskUseCase {
+    sealed class Result {
+        object Success : Result()
+        data class Failure(val errors: List<ValidatorError>) : Result()
+    }
+
+    object SaveFailed : Exception()
+
+    operator fun invoke(task: Task): Result
+}
+
+class CreateTask(
     private val repository: TaskRepository,
-    private val validate: (Task) -> TaskValidationResult,
-) {
+    private val validator: Validator<Task>,
+) : CreateTaskUseCase {
 
-     operator fun invoke(task: Task): Result<Unit> =
+    override operator fun invoke(task: Task): CreateTaskUseCase.Result {
         try {
-            when (validate(task)) {
-                TaskValidationResult.EMPTY_TITLE ->
-                    Result.failure(TaskRepository.TaskException.EmptyTitle)
+            val errors = validator.validate(task.withTrimmedValues())
 
-                TaskValidationResult.INVALID_TITLE ->
-                    Result.failure(TaskRepository.TaskException.InvalidTitle)
-
-                TaskValidationResult.SUCCESS -> repository.save(task.withTrimmedValues())
+            return if (errors.isEmpty()) {
+                repository.save(task)
+                CreateTaskUseCase.Result.Success
+            } else {
+                CreateTaskUseCase.Result.Failure(errors)
             }
-        } catch (exception: TaskRepository.TaskException) {
-            Result.failure(exception)
+        } catch (exception: TaskRepository.SaveFailed) {
+            throw CreateTaskUseCase.SaveFailed
         }
+    }
 
     private fun Task.withTrimmedValues(): Task = copy(title = title.trim())
 }
