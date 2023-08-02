@@ -30,7 +30,7 @@ import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.storage.db.DatabaseFactory
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
-import com.taskodoro.tasks.CreateTask
+import com.taskodoro.tasks.create.CreateTask
 import com.taskodoro.tasks.validator.ValidatorFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

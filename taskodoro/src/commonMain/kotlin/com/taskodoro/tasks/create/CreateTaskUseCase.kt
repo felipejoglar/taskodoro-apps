@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks
+package com.taskodoro.tasks.create
 
+import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.validator.Validator
 import com.taskodoro.tasks.validator.ValidatorError

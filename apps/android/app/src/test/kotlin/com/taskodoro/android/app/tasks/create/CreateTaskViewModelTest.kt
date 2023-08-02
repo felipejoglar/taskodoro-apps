@@ -18,7 +18,7 @@ package com.taskodoro.android.app.tasks.create
 
 import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
-import com.taskodoro.tasks.CreateTaskUseCase
+import com.taskodoro.tasks.create.CreateTaskUseCase
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
