@@ -28,7 +28,7 @@ import kotlin.test.assertFailsWith
 class CreateTaskUseCaseTest {
 
     @Test
-    fun save_failsWithInvalidTitleTaskExceptionOnInvalidTitleFailure() {
+    fun save_failsWithInvalidTitleOnInvalidTitleFailure() {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithInvalidTitleFailure()
@@ -41,7 +41,7 @@ class CreateTaskUseCaseTest {
     }
 
     @Test
-    fun save_failsWithEmptyTitleTaskExceptionOnEmptyTitleFailure() {
+    fun save_failsWithEmptyTitleOnEmptyTitleFailure() {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithEmptyTitleFailure()
@@ -49,6 +49,19 @@ class CreateTaskUseCaseTest {
 
         val expectedResult = CreateTaskUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.Title.Empty),
+        )
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
+    fun save_failsWithInvalidDueDateOnInvalidDueDateFailure() {
+        val (sut, _, validator) = makeSUT()
+
+        validator.completeWithInvalidDueDateFailure()
+        val result = sut.invoke(anyTitle())
+
+        val expectedResult = CreateTaskUseCase.Result.Failure(
+            errors = listOf(TaskValidatorError.DueDate.Invalid),
         )
         assertEquals(expectedResult, result)
     }
@@ -130,6 +143,10 @@ class CreateTaskUseCaseTest {
 
         fun completeWithInvalidTitleFailure() {
             validatorErrors.add(TaskValidatorError.Title.Invalid)
+        }
+
+        fun completeWithInvalidDueDateFailure() {
+            validatorErrors.add(TaskValidatorError.DueDate.Invalid)
         }
     }
 

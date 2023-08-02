@@ -23,6 +23,7 @@ data class Task(
     val title: String,
     val description: String? = null,
     val priority: Priority = Priority.MEDIUM,
+    val dueDate: Long,
     val isCompleted: Boolean = false,
     val createdAt: Long,
     val updatedAt: Long = 0,

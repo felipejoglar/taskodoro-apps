@@ -6,6 +6,7 @@ CREATE TABLE LocalTask  (
     description TEXT,
     priority INTEGER DEFAULT 1,
     completed INTEGER AS Boolean NOT NULL DEFAULT 0,
+    dueDate INTEGER NOT NULL,
     createdAt INTEGER NOT NULL,
     updatedAt INTEGER
 );

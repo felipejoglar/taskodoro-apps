@@ -29,7 +29,11 @@ interface CreateTaskUseCase {
 
     object SaveFailed : Exception()
 
-    operator fun invoke(title: String, description: String? = null): Result
+    operator fun invoke(
+        title: String,
+        description: String? = null,
+        dueDate: Long? = null,
+    ): Result
 }
 
 class CreateTask(
@@ -38,12 +42,17 @@ class CreateTask(
     private val now: () -> Long,
 ) : CreateTaskUseCase {
 
-    override operator fun invoke(title: String, description: String?): CreateTaskUseCase.Result {
+    override operator fun invoke(
+        title: String,
+        description: String?,
+        dueDate: Long?
+    ): CreateTaskUseCase.Result {
         try {
             val task = Task(
                 title = title,
                 description = description,
-                createdAt = now()
+                dueDate = dueDate ?: now(),
+                createdAt = now(),
             )
             val errors = validator.validate(task.withTrimmedValues())
 

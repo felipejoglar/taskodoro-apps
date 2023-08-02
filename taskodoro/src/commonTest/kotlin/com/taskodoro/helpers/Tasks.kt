@@ -18,7 +18,11 @@ package com.taskodoro.helpers
 
 import com.taskodoro.tasks.model.Task
 
-internal fun anyTask(title: String = "A task title") = Task(
+internal fun anyTask(
+    title: String = "A task title",
+    dueDate: Long = 0,
+) = Task(
     title = title,
+    dueDate = dueDate,
     createdAt = 0L,
 )

@@ -17,16 +17,23 @@
 package com.taskodoro.tasks.validator
 
 import com.taskodoro.tasks.model.Task
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
-object ValidatorFactory {
+internal class DueDateValidator(
+    private val now: () -> Long
+) : Validator<Task> {
 
-    private const val MINIMUM_TITLE_LENGTH = 4
+    override fun validate(value: Task): List<ValidatorError> = buildList {
+        val dueDateDay = extractDayFrom(value.dueDate)
+        val currentDateDay = extractDayFrom(now())
 
-    fun create(): Validator<Task> {
-        val validators = listOf(
-            EmptyTitleValidator(),
-            TitleLengthValidator(MINIMUM_TITLE_LENGTH),
-        )
-        return TaskValidator(validators)
+        if (dueDateDay < currentDateDay) {
+            add(TaskValidatorError.DueDate.Invalid)
+        }
     }
+
+    private fun extractDayFrom(epoch: Long) =
+        Instant.fromEpochSeconds(epoch).toLocalDateTime(TimeZone.UTC).date.toEpochDays()
 }

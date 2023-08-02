@@ -28,6 +28,7 @@ class InMemoryTaskDataSource : TaskLocalDataSource {
         List(TASK_COUNT) {
             Task(
                 title = "Task $it title",
+                dueDate = it.toLong(),
                 createdAt = it.toLong(),
             )
         }

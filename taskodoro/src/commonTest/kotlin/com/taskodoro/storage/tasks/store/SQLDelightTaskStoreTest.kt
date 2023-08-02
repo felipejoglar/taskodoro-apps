@@ -64,6 +64,7 @@ class SQLDelightTaskStoreTest {
             Task(
                 id = Uuid.from(it.id)!!,
                 title = it.title,
+                dueDate = it.dueDate,
                 createdAt = it.createdAt,
             )
         }

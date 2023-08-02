@@ -17,6 +17,11 @@
 package com.taskodoro.tasks.validator
 
 import com.taskodoro.helpers.anyTask
+import com.taskodoro.tasks.model.Task
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -24,8 +29,8 @@ class TaskValidatorTest {
 
     @Test
     fun validate_failsWithEmptyAndInvalidTitleOnEmptyTitle() {
-        val emptyTitleTask = anyTask(title = "")
-        val blankTitleTask = anyTask(title = "    ")
+        val emptyTitleTask = taskWith(title = "")
+        val blankTitleTask = taskWith(title = "    ")
         val sut = makeSUT()
 
         val emptyValidation = sut.validate(emptyTitleTask)
@@ -41,9 +46,9 @@ class TaskValidatorTest {
 
     @Test
     fun validate_failsWithInvalidTitleOnInvalidTitle() {
-        val invalidTitleTask = anyTask(title = "12")
-        val invalidTitleTask1 = anyTask(title = "123")
-        val invalidTitleTask2 = anyTask(title = "   123   ")
+        val invalidTitleTask = taskWith(title = "12")
+        val invalidTitleTask1 = taskWith(title = "123")
+        val invalidTitleTask2 = taskWith(title = "   123   ")
         val sut = makeSUT()
 
         val validation = sut.validate(invalidTitleTask)
@@ -58,9 +63,9 @@ class TaskValidatorTest {
 
     @Test
     fun validate_succeedsOnValidTitle() {
-        val validTitleTask = anyTask(title = "1234")
-        val validTitleTask1 = anyTask(title = "A valid title")
-        val validTitleTask2 = anyTask(title = "    1234    ")
+        val validTitleTask = taskWith(title = "1234")
+        val validTitleTask1 = taskWith(title = "A valid title")
+        val validTitleTask2 = taskWith(title = "    1234    ")
         val sut = makeSUT()
 
         val validationResult = sut.validate(validTitleTask)
@@ -73,18 +78,79 @@ class TaskValidatorTest {
         assertEquals(expectedErrors, validationResult2)
     }
 
-    // region Helpers
+    @Test
+    fun validate_failsWithInvalidDueDateOnOneDayPreviousCurrentDay() {
+        val yesterdayDueDateTask = taskWith(dueDate = yesterday)
+        val sut = makeSUT()
 
-    private fun makeSUT(): TaskValidator {
-        val validators = listOf(
-            EmptyTitleValidator(),
-            TitleLengthValidator(minimumTitleLength),
-        )
+        val validation = sut.validate(yesterdayDueDateTask)
 
-        return TaskValidator(validators)
+        val expectedError = listOf(TaskValidatorError.DueDate.Invalid)
+        assertEquals(expectedError, validation)
     }
 
-    private val minimumTitleLength = 4
+    @Test
+    fun validate_succeedsOnCurrentDay() {
+        val nowDueDateTask = taskWith(dueDate = today)
+        val sut = makeSUT()
+
+        val validation = sut.validate(nowDueDateTask)
+
+        val expectedError = listOf<ValidatorError>()
+        assertEquals(expectedError, validation)
+    }
+
+    @Test
+    fun validate_succeedsOnOneDayPastCurrentDay() {
+        val tomorrowDueDateTask = taskWith(dueDate = tomorrow)
+        val sut = makeSUT()
+
+        val validation = sut.validate(tomorrowDueDateTask)
+
+        val expectedError = listOf<ValidatorError>()
+        assertEquals(expectedError, validation)
+    }
+
+    @Test
+    fun validate_failsAllValidations() {
+        val invalidTask = anyTask(title = "", dueDate = yesterday)
+        val sut = makeSUT()
+
+        val emptyValidation = sut.validate(invalidTask)
+
+        val expectedError = listOf(
+            TaskValidatorError.Title.Empty,
+            TaskValidatorError.Title.Invalid,
+            TaskValidatorError.DueDate.Invalid,
+        )
+        assertEquals(expectedError, emptyValidation)
+    }
+
+    // region Helpers
+
+    private fun makeSUT(): Validator<Task> {
+        return TaskValidatorFactory.create()
+    }
+
+    private fun taskWith(title: String) =
+        anyTask(title = title, dueDate = today)
+
+    private fun taskWith(dueDate: Long) =
+        anyTask(dueDate = dueDate)
+
+    private val today: Long = Clock.System
+        .now()
+        .epochSeconds
+
+    private val yesterday: Long = Clock.System
+        .now()
+        .minus(1, DateTimeUnit.DAY, TimeZone.UTC)
+        .epochSeconds
+
+    private val tomorrow: Long = Clock.System
+        .now()
+        .minus(-1, DateTimeUnit.DAY, TimeZone.UTC)
+        .epochSeconds
 
     // endregion
 }

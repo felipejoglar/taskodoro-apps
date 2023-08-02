@@ -221,7 +221,11 @@ class CreateTaskViewModelTest {
     private class CreateTaskUseCaseStub : CreateTaskUseCase {
         private var result: CreateTaskUseCase.Result? = null
 
-        override fun invoke(title: String, description: String?): CreateTaskUseCase.Result {
+        override fun invoke(
+            title: String,
+            description: String?,
+            dueDate: Long?
+        ): CreateTaskUseCase.Result {
             return result!!
         }
 

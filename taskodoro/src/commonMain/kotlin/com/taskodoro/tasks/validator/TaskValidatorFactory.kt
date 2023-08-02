@@ -17,26 +17,20 @@
 package com.taskodoro.tasks.validator
 
 import com.taskodoro.tasks.model.Task
+import kotlinx.datetime.Clock
 
-class TaskValidator(
-    private val validators: List<Validator<Task>>,
-) : Validator<Task> {
+object TaskValidatorFactory {
 
-    override fun validate(value: Task): List<ValidatorError> = buildList {
-        validators.forEach { validator ->
-            addAll(validator.validate(value))
-        }
-    }
-}
+    private const val MINIMUM_TITLE_LENGTH = 4
 
-sealed class TaskValidatorError : ValidatorError() {
+    fun create(): Validator<Task> {
+        val now = { Clock.System.now().epochSeconds }
 
-    sealed class Title : TaskValidatorError() {
-        object Empty : Title()
-        object Invalid : Title()
-    }
-
-    sealed class DueDate : TaskValidatorError() {
-        object Invalid : Title()
+        val validators = listOf(
+            EmptyTitleValidator(),
+            TitleLengthValidator(MINIMUM_TITLE_LENGTH),
+            DueDateValidator(now),
+        )
+        return TaskValidator(validators)
     }
 }

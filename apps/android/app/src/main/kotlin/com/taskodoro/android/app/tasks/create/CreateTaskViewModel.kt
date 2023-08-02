@@ -82,6 +82,8 @@ class CreateTaskViewModel(
 
             TaskValidatorError.Title.Invalid ->
                 updateWithTitleError(R.string.create_new_task_invalid_title_error)
+
+            TaskValidatorError.DueDate.Invalid -> TODO()
         }
     }
 

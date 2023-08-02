@@ -31,7 +31,7 @@ import com.taskodoro.storage.db.DatabaseFactory
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
 import com.taskodoro.tasks.create.CreateTask
-import com.taskodoro.tasks.validator.ValidatorFactory
+import com.taskodoro.tasks.validator.TaskValidatorFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
         }
         val store = SQLDelightTaskStore(database)
         val repository = LocalTaskRepository(store)
-        val validator = ValidatorFactory.create()
+        val validator = TaskValidatorFactory.create()
         val now = { System.currentTimeMillis() / 1000 }
         val createTask = CreateTask(repository, validator, now)
 

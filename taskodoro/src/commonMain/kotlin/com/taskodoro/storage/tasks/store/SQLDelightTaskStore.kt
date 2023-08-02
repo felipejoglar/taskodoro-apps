@@ -33,6 +33,7 @@ class SQLDelightTaskStore(
             description = task.description,
             priority = task.priority.ordinal.toLong(),
             completed = false,
+            dueDate = task.dueDate,
             createdAt = task.createdAt,
             updatedAt = 0,
         )

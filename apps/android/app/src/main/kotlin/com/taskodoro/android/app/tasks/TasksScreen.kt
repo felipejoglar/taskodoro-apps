@@ -100,6 +100,7 @@ private fun TasksScreenPreview() {
         val tasks = List(20) {
             Task(
                 title = "Task $it title",
+                dueDate = it.toLong(),
                 createdAt = it.toLong(),
             )
         }
