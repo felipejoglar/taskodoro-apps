@@ -57,20 +57,15 @@ class CreateTaskViewModel(
     }
 
     fun onCreateTaskClicked() {
-        val task = Task(
-            title = state.value.title,
-            description = state.value.description,
-            priority = Task.Priority.fromValue(state.value.priority),
-            createdAt = Instant.now().epochSecond,
-        )
-
-        flow { emit(createTask(task)) }
+        createTask()
             .flowOn(dispatcher)
             .onStart { updateWith(loading = true) }
             .onEach(::handleResult)
             .catch { updateWithError(R.string.create_new_task_unknown_error) }
             .launchIn(viewModelScope)
     }
+
+    private fun createTask() = flow { emit(createTask(state.value.title, state.value.description)) }
 
     private fun handleResult(result: CreateTaskUseCase.Result) {
         result

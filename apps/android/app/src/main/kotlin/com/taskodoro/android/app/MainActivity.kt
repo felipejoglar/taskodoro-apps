@@ -50,7 +50,8 @@ class MainActivity : ComponentActivity() {
         val store = SQLDelightTaskStore(database)
         val repository = LocalTaskRepository(store)
         val validator = ValidatorFactory.create()
-        val createTask = CreateTask(repository, validator)
+        val now = { System.currentTimeMillis() / 1000 }
+        val createTask = CreateTask(repository, validator, now)
 
         setContent {
             val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())

@@ -16,13 +16,11 @@
 
 package com.taskodoro.tasks.create
 
-import com.taskodoro.helpers.anyTask
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
 import com.taskodoro.tasks.validator.ValidatorError
-import kotlin.Result
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -34,7 +32,7 @@ class CreateTaskUseCaseTest {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithInvalidTitleFailure()
-        val result = sut.invoke(anyTask())
+        val result = sut.invoke(anyTitle())
 
         val expectedResult = CreateTaskUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.Title.Invalid),
@@ -47,7 +45,7 @@ class CreateTaskUseCaseTest {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithEmptyTitleFailure()
-        val result = sut.invoke(anyTask())
+        val result = sut.invoke(anyTitle())
 
         val expectedResult = CreateTaskUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.Title.Empty),
@@ -63,7 +61,7 @@ class CreateTaskUseCaseTest {
         repository.completeSavingWithFailure()
 
         assertFailsWith(CreateTaskUseCase.SaveFailed::class) {
-            sut.invoke(anyTask())
+            sut.invoke(anyTitle())
         }
     }
 
@@ -73,7 +71,7 @@ class CreateTaskUseCaseTest {
 
         validator.completeSuccessfully()
         repository.completeSavingSuccessfully()
-        val result = sut.invoke(anyTask())
+        val result = sut.invoke(anyTitle())
 
         assertEquals(CreateTaskUseCase.Result.Success, result)
     }
@@ -86,10 +84,13 @@ class CreateTaskUseCaseTest {
         val sut = CreateTask(
             repository = repository,
             validator = validator,
+            now = { 0 },
         )
 
         return Triple(sut, repository, validator)
     }
+
+    private fun anyTitle() = "A task"
 
     private class TaskRepositoryStub : TaskRepository {
         private var result: Result<Unit>? = null
