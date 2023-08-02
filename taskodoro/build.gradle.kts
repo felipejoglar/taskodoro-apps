@@ -37,7 +37,11 @@ kotlin {
     sourceSets {
 
         /* Main source sets */
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlinx.datetime)
+            }
+        }
         val androidMain by getting {
             dependencies {
                 implementation(libs.sqlDelight.android.driver)
