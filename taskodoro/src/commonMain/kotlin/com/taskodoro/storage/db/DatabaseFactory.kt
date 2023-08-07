@@ -16,8 +16,6 @@
 
 package com.taskodoro.storage.db
 
-import app.cash.sqldelight.db.SqlDriver
-
 internal const val DB_NAME = "TaskodoroDB"
 
 expect class DatabaseFactory {

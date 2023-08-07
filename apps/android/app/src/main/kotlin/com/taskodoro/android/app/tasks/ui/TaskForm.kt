@@ -190,7 +190,7 @@ private fun DueDatePicker(
 
     val datePickerState = rememberDatePickerState(
         initialDisplayMode = DisplayMode.Picker,
-        initialSelectedDateMillis = today
+        initialSelectedDateMillis = today,
     )
 
     DatePicker(
@@ -198,7 +198,7 @@ private fun DueDatePicker(
         dateValidator = { it >= today },
         title = null,
         headline = null,
-        showModeToggle = false
+        showModeToggle = false,
     )
 
     LaunchedEffect(key1 = datePickerState.selectedDateMillis) {

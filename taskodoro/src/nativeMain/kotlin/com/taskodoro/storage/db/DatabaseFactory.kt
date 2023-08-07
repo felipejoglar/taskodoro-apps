@@ -16,7 +16,6 @@
 
 package com.taskodoro.storage.db
 
-import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 
 actual class DatabaseFactory {

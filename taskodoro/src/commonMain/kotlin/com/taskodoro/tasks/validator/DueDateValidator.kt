@@ -22,7 +22,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 internal class DueDateValidator(
-    private val now: () -> Long
+    private val now: () -> Long,
 ) : Validator<Task> {
 
     override fun validate(value: Task): List<ValidatorError> = buildList {

@@ -17,7 +17,6 @@
 package com.taskodoro.android.app
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

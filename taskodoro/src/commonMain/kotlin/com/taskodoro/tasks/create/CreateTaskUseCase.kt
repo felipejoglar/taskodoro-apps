@@ -45,7 +45,7 @@ class CreateTask(
     override operator fun invoke(
         title: String,
         description: String?,
-        dueDate: Long?
+        dueDate: Long?,
     ): CreateTaskUseCase.Result {
         try {
             val task = Task(

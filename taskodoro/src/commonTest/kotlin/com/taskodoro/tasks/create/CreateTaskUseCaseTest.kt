@@ -139,7 +139,7 @@ class CreateTaskUseCaseTest {
     // region Helpers
 
     private fun makeSUT(
-        now: Long = 0
+        now: Long = 0,
     ): Triple<CreateTaskUseCase, TaskRepositoryStub, TaskValidatorStub> {
         val validator = TaskValidatorStub()
         val repository = TaskRepositoryStub()
