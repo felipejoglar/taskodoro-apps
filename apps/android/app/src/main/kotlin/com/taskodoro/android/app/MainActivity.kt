@@ -17,6 +17,7 @@
 package com.taskodoro.android.app
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,6 +37,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import java.time.Instant
+import java.time.ZoneId
 
 class MainActivity : ComponentActivity() {
 
@@ -50,7 +53,7 @@ class MainActivity : ComponentActivity() {
         val store = SQLDelightTaskStore(database)
         val repository = LocalTaskRepository(store)
         val validator = TaskValidatorFactory.create()
-        val now = { System.currentTimeMillis() / 1000 }
+        val now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
         val createTask = CreateTask(repository, validator, now)
 
         setContent {
@@ -68,6 +71,7 @@ class MainActivity : ComponentActivity() {
                     onTitleChanged = viewModel::onTitleChanged,
                     onDescriptionChanged = viewModel::onDescriptionChanged,
                     onPriorityChanged = viewModel::onPriorityChanged,
+                    onDueDateChanged = viewModel::onDueDateChanged,
                     onCreateTaskClicked = viewModel::onCreateTaskClicked,
                     onTaskCreated = {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()

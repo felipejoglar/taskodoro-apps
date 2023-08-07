@@ -28,10 +28,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DisplayMode
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -45,6 +50,10 @@ import com.taskodoro.android.app.ui.components.buttons.ItemsList
 import com.taskodoro.android.app.ui.components.buttons.SegmentedButton
 import com.taskodoro.android.app.ui.components.buttons.TaskodoroButton
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.concurrent.TimeUnit
 
 /**
  * Reusable Task creation/edition form composable.
@@ -57,6 +66,7 @@ fun TaskForm(
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onPriorityChanged: (Int) -> Unit,
+    onDueDateChanged: (Long) -> Unit,
     @StringRes submitLabel: Int,
     onSubmitClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -90,6 +100,14 @@ fun TaskForm(
             onSelectedItemChange = onPriorityChanged,
             modifier = Modifier.fillMaxWidth(),
         )
+
+        Text(
+            text = "Due on",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.paddingFromBaseline(top = 32.dp, bottom = 8.dp),
+        )
+
+        DueDatePicker(onDueDateChanged)
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -162,6 +180,38 @@ private fun DescriptionTextField(
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun DueDatePicker(
+    onDueDateChanged: (Long) -> Unit,
+) {
+    val today = LocalDate.now()
+        .atStartOfDay()
+        .asMillis(ZoneOffset.UTC)
+
+    val datePickerState = rememberDatePickerState(
+        initialDisplayMode = DisplayMode.Picker,
+        initialSelectedDateMillis = today
+    )
+
+    DatePicker(
+        state = datePickerState,
+        dateValidator = { it >= today },
+        title = null,
+        headline = null,
+        showModeToggle = false
+    )
+
+    LaunchedEffect(key1 = datePickerState.selectedDateMillis) {
+        datePickerState.selectedDateMillis?.let { onDueDateChanged(it.asSeconds()) }
+    }
+}
+
+private fun Long.asSeconds() = TimeUnit.MILLISECONDS.toSeconds(this)
+
+private fun LocalDateTime.asMillis(offset: ZoneOffset) =
+    TimeUnit.SECONDS.toMillis(toEpochSecond(offset))
+
+@Composable
 private fun ErrorLabel(errorLabel: Int?) {
     AnimatedVisibility(errorLabel != null) {
         val label = errorLabel?.let { stringResource(it) } ?: ""
@@ -213,6 +263,7 @@ private fun TaskFormPreview() {
             onDescriptionChanged = {},
             priority = 1,
             onPriorityChanged = {},
+            onDueDateChanged = {},
             submitLabel = R.string.create_new_task_create_task_button,
             onSubmitClicked = {},
             modifier = Modifier
@@ -244,6 +295,7 @@ private fun TaskFormWithErrorsPreview() {
             onDescriptionChanged = {},
             priority = 1,
             onPriorityChanged = {},
+            onDueDateChanged = {},
             submitLabel = R.string.create_new_task_create_task_button,
             onSubmitClicked = {},
             titleErrorLabel = R.string.create_new_task_empty_title_error,

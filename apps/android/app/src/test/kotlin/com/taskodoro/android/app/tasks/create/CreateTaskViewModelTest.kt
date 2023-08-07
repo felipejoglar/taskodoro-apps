@@ -19,7 +19,6 @@ package com.taskodoro.android.app.tasks.create
 import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.create.CreateTaskUseCase
-import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -94,6 +93,29 @@ class CreateTaskViewModelTest {
                 sut.onPriorityChanged(1)
             }, {
                 sut.onPriorityChanged(2)
+            }),
+        )
+    }
+
+    @Test
+    fun onDueDateChanged_updatesDueDateState() {
+        val (sut, _) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(dueDate = 10),
+            CreateTaskUIState(dueDate = 20),
+            CreateTaskUIState(dueDate = 30),
+        )
+
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf({
+                sut.onDueDateChanged(10)
+            }, {
+                sut.onDueDateChanged(20)
+            }, {
+                sut.onDueDateChanged(30)
             }),
         )
     }
@@ -224,7 +246,7 @@ class CreateTaskViewModelTest {
         override fun invoke(
             title: String,
             description: String?,
-            dueDate: Long?
+            dueDate: Long?,
         ): CreateTaskUseCase.Result {
             return result!!
         }
