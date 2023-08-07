@@ -24,6 +24,7 @@ import com.taskodoro.tasks.validator.ValidatorError
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 class CreateTaskUseCaseTest {
 
@@ -32,7 +33,7 @@ class CreateTaskUseCaseTest {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithInvalidTitleFailure()
-        val result = sut.invoke(anyTitle())
+        val result = sut.invoke(anyTitle)
 
         val expectedResult = CreateTaskUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.Title.Invalid),
@@ -45,7 +46,7 @@ class CreateTaskUseCaseTest {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithEmptyTitleFailure()
-        val result = sut.invoke(anyTitle())
+        val result = sut.invoke(anyTitle)
 
         val expectedResult = CreateTaskUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.Title.Empty),
@@ -58,7 +59,7 @@ class CreateTaskUseCaseTest {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithInvalidDueDateFailure()
-        val result = sut.invoke(anyTitle())
+        val result = sut.invoke(anyTitle)
 
         val expectedResult = CreateTaskUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.DueDate.Invalid),
@@ -74,7 +75,7 @@ class CreateTaskUseCaseTest {
         repository.completeSavingWithFailure()
 
         assertFailsWith(CreateTaskUseCase.SaveFailed::class) {
-            sut.invoke(anyTitle())
+            sut.invoke(anyTitle)
         }
     }
 
@@ -84,32 +85,84 @@ class CreateTaskUseCaseTest {
 
         validator.completeSuccessfully()
         repository.completeSavingSuccessfully()
-        val result = sut.invoke(anyTitle())
+        val result = sut.invoke(anyTitle)
 
         assertEquals(CreateTaskUseCase.Result.Success, result)
     }
 
+    @Test
+    fun save_savesCorrectTitleTrimmed() {
+        val (sut, repository, validator) = makeSUT()
+        val title = "  A title   "
+
+        validator.completeSuccessfully()
+        repository.completeSavingSuccessfully()
+
+        sut.invoke(title)
+        assertEquals("A title", repository.savedTask.title)
+
+        sut.invoke("A title")
+        assertEquals("A title", repository.savedTask.title)
+    }
+
+    @Test
+    fun save_savesCorrectDescription() {
+        val (sut, repository, validator) = makeSUT()
+        val description = "A description"
+
+        validator.completeSuccessfully()
+        repository.completeSavingSuccessfully()
+
+        sut.invoke(title = anyTitle, description = description)
+        assertEquals(description, repository.savedTask.description)
+
+        sut.invoke(title = anyTitle, description = null)
+        assertNull(repository.savedTask.description)
+    }
+
+    @Test
+    fun save_savesCorrectDueDate() {
+        val now = 0L
+        val dueDate = 100L
+        val (sut, repository, validator) = makeSUT(now)
+
+        validator.completeSuccessfully()
+        repository.completeSavingSuccessfully()
+
+        sut.invoke(title = anyTitle, dueDate = dueDate)
+        assertEquals(dueDate, repository.savedTask.dueDate)
+
+        sut.invoke(title = anyTitle, description = null)
+        assertEquals(now, repository.savedTask.dueDate)
+    }
+
     // region Helpers
 
-    private fun makeSUT(): Triple<CreateTaskUseCase, TaskRepositoryStub, TaskValidatorStub> {
+    private fun makeSUT(
+        now: Long = 0
+    ): Triple<CreateTaskUseCase, TaskRepositoryStub, TaskValidatorStub> {
         val validator = TaskValidatorStub()
         val repository = TaskRepositoryStub()
         val sut = CreateTask(
             repository = repository,
             validator = validator,
-            now = { 0 },
+            now = { now },
         )
 
         return Triple(sut, repository, validator)
     }
 
-    private fun anyTitle() = "A task"
+    private val anyTitle = "A task"
 
     private class TaskRepositoryStub : TaskRepository {
         private var result: Result<Unit>? = null
         private var shouldThrow = false
 
+        lateinit var savedTask: Task
+            private set
+
         override fun save(task: Task): Result<Unit> {
+            savedTask = task
             if (shouldThrow) {
                 shouldThrow = false
                 throw TaskRepository.SaveFailed

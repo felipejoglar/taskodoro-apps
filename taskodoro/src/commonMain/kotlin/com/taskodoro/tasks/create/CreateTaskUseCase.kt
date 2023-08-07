@@ -49,12 +49,12 @@ class CreateTask(
     ): CreateTaskUseCase.Result {
         try {
             val task = Task(
-                title = title,
+                title = title.trim(),
                 description = description,
                 dueDate = dueDate ?: now(),
                 createdAt = now(),
             )
-            val errors = validator.validate(task.withTrimmedValues())
+            val errors = validator.validate(task)
 
             return if (errors.isEmpty()) {
                 repository.save(task)
@@ -66,6 +66,4 @@ class CreateTask(
             throw CreateTaskUseCase.SaveFailed
         }
     }
-
-    private fun Task.withTrimmedValues(): Task = copy(title = title.trim())
 }
