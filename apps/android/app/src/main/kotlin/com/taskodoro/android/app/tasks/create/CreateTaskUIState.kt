@@ -24,6 +24,5 @@ data class CreateTaskUIState(
     val dueDate: Long = 0,
     val loading: Boolean = false,
     val isTaskCreated: Boolean = false,
-    @StringRes val titleError: Int? = null,
     @StringRes val error: Int? = null,
 )

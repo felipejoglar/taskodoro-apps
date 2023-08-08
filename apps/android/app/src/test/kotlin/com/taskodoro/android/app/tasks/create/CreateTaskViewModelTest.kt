@@ -122,7 +122,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error),
+            CreateTaskUIState(error = R.string.create_new_task_empty_title_error),
         )
 
         expectEquals(
@@ -142,7 +142,7 @@ class CreateTaskViewModelTest {
         val expectedStates = listOf(
             CreateTaskUIState(),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(titleError = R.string.create_new_task_invalid_title_error),
+            CreateTaskUIState(error = R.string.create_new_task_invalid_title_error),
         )
 
         expectEquals(
@@ -183,7 +183,7 @@ class CreateTaskViewModelTest {
             CreateTaskUIState(loading = true),
             CreateTaskUIState(error = R.string.create_new_task_unknown_error),
             CreateTaskUIState(loading = true),
-            CreateTaskUIState(titleError = R.string.create_new_task_empty_title_error),
+            CreateTaskUIState(error = R.string.create_new_task_empty_title_error),
             CreateTaskUIState(loading = true),
             CreateTaskUIState(isTaskCreated = true),
         )
@@ -202,6 +202,28 @@ class CreateTaskViewModelTest {
                 createTask.completeSuccessfully()
                 sut.onCreateTaskClicked()
             }),
+        )
+    }
+
+    @Test
+    fun onErrorShown_clearsError() {
+        val (sut, createTask) = makeSUT()
+        val expectedStates = listOf(
+            CreateTaskUIState(),
+            CreateTaskUIState(loading = true),
+            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
+            CreateTaskUIState(),
+        )
+
+        expectEquals(
+            flow = sut.state,
+            expectedValues = expectedStates,
+            actions = listOf({
+                createTask.throwError()
+                sut.onCreateTaskClicked()
+            }, {
+                sut.onErrorShown()
+            })
         )
     }
 
@@ -243,3 +265,13 @@ class CreateTaskViewModelTest {
 
     // endregion
 }
+
+
+//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
+//CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
+//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276),
+//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null)]>
+//but was:<[
+//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
+//CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
+//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276)]>

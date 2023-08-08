@@ -70,20 +70,6 @@ class CreateTaskViewModel(
             emit(createTask(state.title, state.description, state.dueDate))
         }
 
-    private fun handleErrors(errors: List<ValidatorError>) {
-        val titleErrors = errors.filterIsInstance<TaskValidatorError.Title>()
-
-        when (titleErrors.first()) {
-            TaskValidatorError.Title.Empty ->
-                updateWithTitleError(R.string.create_new_task_empty_title_error)
-
-            TaskValidatorError.Title.Invalid ->
-                updateWithTitleError(R.string.create_new_task_invalid_title_error)
-
-            TaskValidatorError.DueDate.Invalid -> updateWithError()
-        }
-    }
-
     private fun updateWith(
         loading: Boolean = false,
         isTaskSaved: Boolean = false,
@@ -92,18 +78,31 @@ class CreateTaskViewModel(
             it.copy(
                 loading = loading,
                 isTaskCreated = isTaskSaved,
-                titleError = null,
                 error = null,
             )
         }
     }
 
-    private fun updateWithError(@StringRes error: Int = R.string.create_new_task_unknown_error) {
-        _state.update { it.copy(loading = false, error = error) }
+    fun onErrorShown() {
+        _state.update { it.copy(error = null) }
     }
 
-    private fun updateWithTitleError(@StringRes titleError: Int) {
-        _state.update { it.copy(loading = false, titleError = titleError) }
+    private fun handleErrors(errors: List<ValidatorError>) {
+        val titleErrors = errors.filterIsInstance<TaskValidatorError.Title>()
+
+        when (titleErrors.first()) {
+            TaskValidatorError.Title.Empty ->
+                updateWithError(R.string.create_new_task_empty_title_error)
+
+            TaskValidatorError.Title.Invalid ->
+                updateWithError(R.string.create_new_task_invalid_title_error)
+
+            TaskValidatorError.DueDate.Invalid -> updateWithError()
+        }
+    }
+
+    private fun updateWithError(@StringRes error: Int = R.string.create_new_task_unknown_error) {
+        _state.update { it.copy(loading = false, error = error) }
     }
 }
 

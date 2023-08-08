@@ -74,6 +74,7 @@ class MainActivity : ComponentActivity() {
                     onTaskCreated = {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
                     },
+                    onErrorShown = viewModel::onErrorShown,
                     onBackClicked = ::finish,
                 )
             }

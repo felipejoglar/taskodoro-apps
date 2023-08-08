@@ -31,8 +31,12 @@ import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,6 +46,7 @@ import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.appbars.ActionsList
 import com.taskodoro.android.app.ui.components.appbars.TaskodoroTopAppBar
 import com.taskodoro.android.app.ui.components.appbars.TopAppBarIcon
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,18 +57,27 @@ fun CreateTaskScreen(
     onDueDateChanged: (Long) -> Unit,
     onCreateTaskClicked: () -> Unit,
     onTaskCreated: () -> Unit,
+    onErrorShown: () -> Unit,
     onBackClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     LaunchedEffect(state.isTaskCreated) {
         if (state.isTaskCreated) onTaskCreated()
     }
 
+    state.error?.let {
+        val errorMessage = stringResource(id = state.error)
+        scope.launch {
+            snackbarHostState.showSnackbar(errorMessage)
+            onErrorShown()
+        }
+    }
+
     Scaffold(
-        modifier = modifier
-            .fillMaxSize()
-            .consumeWindowInsets(WindowInsets.navigationBars)
-            .imePadding(),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TaskodoroTopAppBar(
                 title = stringResource(id = R.string.create_new_task_screen_title),
@@ -76,6 +90,10 @@ fun CreateTaskScreen(
                 ),
             )
         },
+        modifier = modifier
+            .fillMaxSize()
+            .consumeWindowInsets(WindowInsets.navigationBars)
+            .imePadding(),
     ) { paddingValues ->
         TaskForm(
             title = state.title,
@@ -83,7 +101,6 @@ fun CreateTaskScreen(
             description = state.description,
             onDescriptionChanged = onDescriptionChanged,
             onDueDateChanged = onDueDateChanged,
-            errorLabel = state.error,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
@@ -133,36 +150,7 @@ private fun CreateTaskScreenPreview() {
             onDueDateChanged = {},
             onCreateTaskClicked = {},
             onTaskCreated = {},
-            onBackClicked = {},
-        )
-    }
-}
-
-@Preview(
-    name = "Day Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-private fun CreateTaskScreenWithErrorsPreview() {
-    TaskodoroTemplate {
-        CreateTaskScreen(
-            state = CreateTaskUIState(
-                titleError = R.string.create_new_task_empty_title_error,
-                error = R.string.create_new_task_unknown_error,
-            ),
-            onTitleChanged = {},
-            onDescriptionChanged = {},
-            onDueDateChanged = {},
-            onCreateTaskClicked = {},
-            onTaskCreated = {},
+            onErrorShown = {},
             onBackClicked = {},
         )
     }

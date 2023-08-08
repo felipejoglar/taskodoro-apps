@@ -65,7 +65,6 @@ fun TaskForm(
     onDescriptionChanged: (String) -> Unit,
     onDueDateChanged: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    @StringRes errorLabel: Int? = null,
 ) {
     Column(modifier = modifier) {
         TitleTextField(
@@ -87,8 +86,6 @@ fun TaskForm(
         DueDatePicker(onDueDateChanged)
 
         Spacer(modifier = Modifier.weight(1f))
-
-        ErrorLabel(errorLabel)
     }
 }
 
@@ -161,27 +158,6 @@ private fun Long.asSeconds() = TimeUnit.MILLISECONDS.toSeconds(this)
 private fun LocalDateTime.asMillis(offset: ZoneOffset) =
     TimeUnit.SECONDS.toMillis(toEpochSecond(offset))
 
-@Composable
-private fun ErrorLabel(errorLabel: Int?) {
-    AnimatedVisibility(errorLabel != null) {
-        val label = errorLabel?.let { stringResource(it) } ?: ""
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onErrorContainer,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.errorContainer,
-                    shape = RoundedCornerShape(4.dp),
-                )
-                .padding(12.dp),
-        )
-    }
-}
-
 @Preview(
     name = "Day Mode",
     widthDp = 360,
@@ -230,7 +206,6 @@ private fun TaskFormWithErrorsPreview() {
             description = "",
             onDescriptionChanged = {},
             onDueDateChanged = {},
-            errorLabel = R.string.create_new_task_unknown_error,
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
         )
