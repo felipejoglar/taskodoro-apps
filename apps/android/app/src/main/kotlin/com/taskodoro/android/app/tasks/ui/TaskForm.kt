@@ -201,7 +201,7 @@ private fun DueDatePicker(
         showModeToggle = false,
     )
 
-    LaunchedEffect(key1 = datePickerState.selectedDateMillis) {
+    LaunchedEffect(datePickerState.selectedDateMillis) {
         datePickerState.selectedDateMillis?.let { onDueDateChanged(it.asSeconds()) }
     }
 }
