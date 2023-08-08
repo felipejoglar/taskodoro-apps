@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 data class TopAppBarIcon(
     val icon: ImageVector,
     val contentDescription: String,
-    val action: () -> Unit,
     val tint: Color? = null,
+    val isLoading: Boolean = false,
+    val action: () -> Unit,
 )

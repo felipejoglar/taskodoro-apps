@@ -223,7 +223,7 @@ class CreateTaskViewModelTest {
                 sut.onCreateTaskClicked()
             }, {
                 sut.onErrorShown()
-            })
+            }),
         )
     }
 
@@ -266,12 +266,11 @@ class CreateTaskViewModelTest {
     // endregion
 }
 
-
-//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
-//CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
-//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276),
-//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null)]>
-//but was:<[
-//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
-//CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
-//CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276)]>
+// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
+// CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
+// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276),
+// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null)]>
+// but was:<[
+// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
+// CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
+// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276)]>

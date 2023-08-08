@@ -18,10 +18,13 @@ package com.taskodoro.android.app.ui.components.appbars
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Send
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,9 +36,11 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.taskodoro.android.app.ui.components.TaskodoroTooltip
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 
@@ -74,16 +79,26 @@ fun TopAppBarIcon(
     modifier: Modifier = Modifier,
 ) {
     TaskodoroTooltip(icon.contentDescription) {
-        IconButton(
-            onClick = icon.action,
-            modifier = modifier
-                .tooltipAnchor(),
-        ) {
-            Icon(
-                imageVector = icon.icon,
-                contentDescription = icon.contentDescription,
-                tint = icon.tint ?: LocalContentColor.current,
+        if (icon.isLoading) {
+            CircularProgressIndicator(
+                strokeCap = StrokeCap.Round,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .size(40.dp)
+                    .padding(4.dp),
             )
+        } else {
+            IconButton(
+                onClick = icon.action,
+                modifier = modifier
+                    .tooltipAnchor(),
+            ) {
+                Icon(
+                    imageVector = icon.icon,
+                    contentDescription = icon.contentDescription,
+                    tint = icon.tint ?: LocalContentColor.current,
+                )
+            }
         }
     }
 }
@@ -120,7 +135,7 @@ private fun TitleContent(
 )
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun TaskodoroLargeTopBarPreview() {
+private fun TaskodoroTopBarPreview() {
     TaskodoroTheme {
         TaskodoroTopAppBar(
             title = "Taskodoro TopAppBar",
