@@ -22,7 +22,7 @@ plugins {
 
 kotlin {
 
-    android()
+    androidTarget()
 
     listOf(
         iosArm64(),
