@@ -18,14 +18,12 @@ package com.taskodoro.android.app.ui.components.appbars
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -35,8 +33,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
+import com.taskodoro.android.app.ui.components.TaskodoroTooltip
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 
 @Composable
@@ -52,18 +50,7 @@ fun TaskodoroTopAppBar(
         scrollBehavior = scrollBehavior,
         title = { TitleContent(title, subtitle) },
         navigationIcon = {
-            PlainTooltipBox(
-                tooltip = {
-                    Text(
-                        text = navigationIcon.contentDescription,
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                    )
-                },
-                modifier = Modifier
-                    .padding(all = 8.dp),
-            ) {
+            TaskodoroTooltip(navigationIcon.contentDescription) {
                 IconButton(
                     onClick = navigationIcon.action,
                     modifier = Modifier
