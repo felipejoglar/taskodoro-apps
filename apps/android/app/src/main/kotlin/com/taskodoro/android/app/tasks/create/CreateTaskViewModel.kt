@@ -51,10 +51,6 @@ class CreateTaskViewModel(
         _state.update { it.copy(description = description) }
     }
 
-    fun onPriorityChanged(priority: Int) {
-        _state.update { it.copy(priority = priority) }
-    }
-
     fun onDueDateChanged(dueDate: Long) {
         _state.update { it.copy(dueDate = dueDate) }
     }
@@ -65,7 +61,7 @@ class CreateTaskViewModel(
             .onStart { updateWith(loading = true) }
             .onSuccess { updateWith(isTaskSaved = true) }
             .onFailure { handleErrors(it) }
-            .catch { updateWithError(R.string.create_new_task_unknown_error) }
+            .catch { updateWithError() }
             .launchIn(viewModelScope)
     }
 
@@ -84,7 +80,7 @@ class CreateTaskViewModel(
             TaskValidatorError.Title.Invalid ->
                 updateWithTitleError(R.string.create_new_task_invalid_title_error)
 
-            TaskValidatorError.DueDate.Invalid -> TODO()
+            TaskValidatorError.DueDate.Invalid -> updateWithError()
         }
     }
 
@@ -102,7 +98,7 @@ class CreateTaskViewModel(
         }
     }
 
-    private fun updateWithError(@StringRes error: Int) {
+    private fun updateWithError(@StringRes error: Int= R.string.create_new_task_unknown_error) {
         _state.update { it.copy(loading = false, error = error) }
     }
 

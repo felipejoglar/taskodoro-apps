@@ -69,7 +69,6 @@ class MainActivity : ComponentActivity() {
                     state = state,
                     onTitleChanged = viewModel::onTitleChanged,
                     onDescriptionChanged = viewModel::onDescriptionChanged,
-                    onPriorityChanged = viewModel::onPriorityChanged,
                     onDueDateChanged = viewModel::onDueDateChanged,
                     onCreateTaskClicked = viewModel::onCreateTaskClicked,
                     onTaskCreated = {

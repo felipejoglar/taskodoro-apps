@@ -75,29 +75,6 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun onPriorityChanged_updatesPriorityState() {
-        val (sut, _) = makeSUT()
-        val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(priority = 0),
-            CreateTaskUIState(priority = 1),
-            CreateTaskUIState(priority = 2),
-        )
-
-        expectEquals(
-            flow = sut.state,
-            expectedValues = expectedStates,
-            actions = listOf({
-                sut.onPriorityChanged(0)
-            }, {
-                sut.onPriorityChanged(1)
-            }, {
-                sut.onPriorityChanged(2)
-            }),
-        )
-    }
-
-    @Test
     fun onDueDateChanged_updatesDueDateState() {
         val (sut, _) = makeSUT()
         val expectedStates = listOf(

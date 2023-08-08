@@ -22,6 +22,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -46,8 +47,6 @@ import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.TaskodoroTextField
-import com.taskodoro.android.app.ui.components.buttons.ItemsList
-import com.taskodoro.android.app.ui.components.buttons.SegmentedButton
 import com.taskodoro.android.app.ui.components.buttons.TaskodoroButton
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 import java.time.LocalDate
@@ -62,10 +61,8 @@ import java.util.concurrent.TimeUnit
 fun TaskForm(
     title: String,
     description: String,
-    priority: Int,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
-    onPriorityChanged: (Int) -> Unit,
     onDueDateChanged: (Long) -> Unit,
     @StringRes submitLabel: Int,
     onSubmitClicked: () -> Unit,
@@ -79,24 +76,9 @@ fun TaskForm(
             onTitleChanged = onTitleChanged,
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         DescriptionTextField(
             description = description,
             onDescriptionChanged = onDescriptionChanged,
-        )
-
-        Text(
-            text = stringResource(id = R.string.task_form_priority),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.paddingFromBaseline(top = 32.dp, bottom = 8.dp),
-        )
-
-        SegmentedButton(
-            items = getPriorityLabels(),
-            selectedItemIndex = priority,
-            onSelectedItemChange = onPriorityChanged,
-            modifier = Modifier.fillMaxWidth(),
         )
 
         Text(
@@ -134,10 +116,7 @@ private fun TitleTextField(
         value = title,
         onValueChanged = onTitleChanged,
         placeHolderText = titleLabel,
-        keyboardOptions = KeyboardOptions(
-            capitalization = KeyboardCapitalization.Sentences,
-            imeAction = ImeAction.Next,
-        ),
+        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences,),
     )
 }
 
@@ -153,7 +132,7 @@ private fun DescriptionTextField(
         placeHolderText = descriptionLabel,
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
         modifier = Modifier
-            .height(128.dp),
+            .defaultMinSize(minHeight = 128.dp),
     )
 }
 
@@ -210,15 +189,6 @@ private fun ErrorLabel(errorLabel: Int?) {
     }
 }
 
-@Composable
-private fun getPriorityLabels() = ItemsList(
-    value = listOf(
-        stringResource(id = R.string.task_form_priority_low),
-        stringResource(id = R.string.task_form_priority_medium),
-        stringResource(id = R.string.task_form_priority_high),
-    ),
-)
-
 @Preview(
     name = "Day Mode",
     widthDp = 360,
@@ -239,8 +209,6 @@ private fun TaskFormPreview() {
             onTitleChanged = {},
             description = "",
             onDescriptionChanged = {},
-            priority = 1,
-            onPriorityChanged = {},
             onDueDateChanged = {},
             submitLabel = R.string.create_new_task_create_task_button,
             onSubmitClicked = {},
@@ -270,8 +238,6 @@ private fun TaskFormWithErrorsPreview() {
             onTitleChanged = {},
             description = "",
             onDescriptionChanged = {},
-            priority = 1,
-            onPriorityChanged = {},
             onDueDateChanged = {},
             submitLabel = R.string.create_new_task_create_task_button,
             onSubmitClicked = {},
