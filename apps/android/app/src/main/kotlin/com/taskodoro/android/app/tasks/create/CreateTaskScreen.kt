@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -36,6 +38,7 @@ import com.taskodoro.android.R
 import com.taskodoro.android.app.tasks.ui.TaskForm
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.appbars.TaskodoroTopAppBar
+import com.taskodoro.android.app.ui.components.appbars.TopAppBarIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +65,7 @@ fun CreateTaskScreen(
             TaskodoroTopAppBar(
                 title = stringResource(id = R.string.create_new_task_screen_title),
                 subtitle = stringResource(id = R.string.project_default_title),
-                onNavigationClick = onBackClicked,
+                navigationIcon = navigationIcon(onBackClicked),
             )
         },
     ) { paddingValues ->
@@ -83,6 +86,15 @@ fun CreateTaskScreen(
         )
     }
 }
+
+@Composable
+private fun navigationIcon(
+    action: () -> Unit,
+) = TopAppBarIcon(
+    icon = Icons.Rounded.ArrowBack,
+    contentDescription = stringResource(id = R.string.navigation_back),
+    action = action,
+)
 
 @Preview(
     name = "Day Mode",

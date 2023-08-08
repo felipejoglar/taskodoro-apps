@@ -31,7 +31,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,10 +43,9 @@ import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 @OptIn(ExperimentalMaterial3Api::class)
 fun TaskodoroTopAppBar(
     title: String,
-    onNavigationClick: () -> Unit,
+    subtitle: String,
+    navigationIcon: TopAppBarIcon,
     modifier: Modifier = Modifier,
-    subtitle: String? = null,
-    navigationIcon: TaskodoroTopAppBarIcon = defaultNavigationIcon(),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     TopAppBar(
@@ -56,20 +54,18 @@ fun TaskodoroTopAppBar(
         navigationIcon = {
             PlainTooltipBox(
                 tooltip = {
-                    navigationIcon.contentDescription?.let {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp, vertical = 4.dp),
-                        )
-                    }
+                    Text(
+                        text = navigationIcon.contentDescription,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                    )
                 },
                 modifier = Modifier
-                    .padding(all = 8.dp)
+                    .padding(all = 8.dp),
             ) {
                 IconButton(
-                    onClick = onNavigationClick,
+                    onClick = navigationIcon.action,
                     modifier = Modifier
                         .tooltipAnchor(),
                 ) {
@@ -105,17 +101,6 @@ private fun TitleContent(title: String, subtitle: String?) {
     }
 }
 
-data class TaskodoroTopAppBarIcon(
-    val icon: ImageVector,
-    val contentDescription: String? = null,
-)
-
-@Composable
-private fun defaultNavigationIcon() = TaskodoroTopAppBarIcon(
-    icon = Icons.Rounded.ArrowBack,
-    contentDescription = stringResource(id = R.string.navigation_back),
-)
-
 @Preview(
     name = "Day Mode",
     uiMode = Configuration.UI_MODE_NIGHT_NO,
@@ -131,7 +116,11 @@ private fun TaskodoroLargeTopBarPreview() {
         TaskodoroTopAppBar(
             title = "Taskodoro TopAppBar",
             subtitle = "A subtitle",
-            onNavigationClick = { },
+            navigationIcon = TopAppBarIcon(
+                icon = Icons.Rounded.ArrowBack,
+                contentDescription = stringResource(id = R.string.navigation_back),
+                action = { },
+            ),
         )
     }
 }
