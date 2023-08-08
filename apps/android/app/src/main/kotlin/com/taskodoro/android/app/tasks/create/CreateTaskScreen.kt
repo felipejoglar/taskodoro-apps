@@ -17,7 +17,6 @@
 package com.taskodoro.android.app.tasks.create
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,21 +27,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.taskodoro.android.R
 import com.taskodoro.android.app.tasks.ui.TaskForm
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
-import com.taskodoro.android.app.ui.components.appbars.TaskodoroLargeTopBar
+import com.taskodoro.android.app.ui.components.appbars.TaskodoroTopAppBar
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateTaskScreen(
     state: CreateTaskUIState,
@@ -58,24 +53,16 @@ fun CreateTaskScreen(
         if (state.isTaskCreated) onTaskCreated()
     }
 
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
             .fillMaxSize()
             .consumeWindowInsets(WindowInsets.navigationBars)
             .imePadding(),
         topBar = {
-            TaskodoroLargeTopBar(
-                title = {
-                    Text(
-                        stringResource(id = R.string.create_new_task_screen_title),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                },
+            TaskodoroTopAppBar(
+                title = stringResource(id = R.string.create_new_task_screen_title),
+                subtitle = stringResource(id = R.string.project_default_title),
                 onNavigationClick = onBackClicked,
-                scrollBehavior = scrollBehavior,
             )
         },
     ) { paddingValues ->

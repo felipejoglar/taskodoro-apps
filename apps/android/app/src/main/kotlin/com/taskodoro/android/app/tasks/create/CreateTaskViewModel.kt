@@ -98,7 +98,7 @@ class CreateTaskViewModel(
         }
     }
 
-    private fun updateWithError(@StringRes error: Int= R.string.create_new_task_unknown_error) {
+    private fun updateWithError(@StringRes error: Int = R.string.create_new_task_unknown_error) {
         _state.update { it.copy(loading = false, error = error) }
     }
 
