@@ -36,7 +36,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
 import com.taskodoro.android.app.tasks.ui.TaskForm
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
@@ -89,13 +88,11 @@ fun CreateTaskScreen(
             submitLabel = R.string.create_new_task_create_task_button,
             onSubmitClicked = onCreateTaskClicked,
             loading = state.loading,
-            titleErrorLabel = state.titleError,
             errorLabel = state.error,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .verticalScroll(rememberScrollState()),
         )
     }
 }

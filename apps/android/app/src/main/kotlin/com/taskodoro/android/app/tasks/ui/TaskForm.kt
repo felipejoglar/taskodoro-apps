@@ -32,7 +32,6 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -46,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
+import com.taskodoro.android.app.ui.components.TaskodoroTextField
 import com.taskodoro.android.app.ui.components.buttons.ItemsList
 import com.taskodoro.android.app.ui.components.buttons.SegmentedButton
 import com.taskodoro.android.app.ui.components.buttons.TaskodoroButton
@@ -71,14 +71,12 @@ fun TaskForm(
     onSubmitClicked: () -> Unit,
     modifier: Modifier = Modifier,
     loading: Boolean = false,
-    @StringRes titleErrorLabel: Int? = null,
     @StringRes errorLabel: Int? = null,
 ) {
     Column(modifier = modifier) {
         TitleTextField(
             title = title,
             onTitleChanged = onTitleChanged,
-            titleErrorLabel = titleErrorLabel,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -129,32 +127,17 @@ fun TaskForm(
 private fun TitleTextField(
     title: String,
     onTitleChanged: (String) -> Unit,
-    titleErrorLabel: Int?,
 ) {
     val titleLabel = stringResource(id = R.string.task_form_title)
-    val isTitleError = titleErrorLabel != null
 
-    OutlinedTextField(
+    TaskodoroTextField(
         value = title,
-        onValueChange = onTitleChanged,
-        label = { Text(titleLabel) },
-        placeholder = { Text(titleLabel) },
-        singleLine = true,
+        onValueChanged = onTitleChanged,
+        placeHolderText = titleLabel,
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.Sentences,
             imeAction = ImeAction.Next,
         ),
-        isError = isTitleError,
-        supportingText = {
-            AnimatedVisibility(isTitleError) {
-                val label = titleErrorLabel?.let { stringResource(it) } ?: ""
-                Text(
-                    text = label,
-                    color = MaterialTheme.colorScheme.error,
-                )
-            }
-        },
-        modifier = Modifier.fillMaxWidth(),
     )
 }
 
@@ -164,17 +147,12 @@ private fun DescriptionTextField(
     onDescriptionChanged: (String) -> Unit,
 ) {
     val descriptionLabel = stringResource(id = R.string.task_form_description)
-    OutlinedTextField(
+    TaskodoroTextField(
         value = description,
-        onValueChange = onDescriptionChanged,
-        label = { Text(descriptionLabel) },
-        placeholder = { Text(descriptionLabel) },
-        keyboardOptions = KeyboardOptions(
-            capitalization = KeyboardCapitalization.Sentences,
-            imeAction = ImeAction.Done,
-        ),
+        onValueChanged = onDescriptionChanged,
+        placeHolderText = descriptionLabel,
+        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
         modifier = Modifier
-            .fillMaxWidth()
             .height(128.dp),
     )
 }
@@ -267,8 +245,7 @@ private fun TaskFormPreview() {
             submitLabel = R.string.create_new_task_create_task_button,
             onSubmitClicked = {},
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp),
+                .background(MaterialTheme.colorScheme.background),
         )
     }
 }
@@ -298,11 +275,9 @@ private fun TaskFormWithErrorsPreview() {
             onDueDateChanged = {},
             submitLabel = R.string.create_new_task_create_task_button,
             onSubmitClicked = {},
-            titleErrorLabel = R.string.create_new_task_empty_title_error,
             errorLabel = R.string.create_new_task_unknown_error,
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp),
+                .background(MaterialTheme.colorScheme.background),
         )
     }
 }

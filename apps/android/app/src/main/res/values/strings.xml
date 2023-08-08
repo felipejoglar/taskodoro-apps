@@ -26,7 +26,7 @@
 
     <!--  COMPONENT: TASK FORM  -->
     <string name="task_form_title">Title</string>
-    <string name="task_form_description">Description</string>
+    <string name="task_form_description">Write a description (optional)</string>
     <string name="task_form_priority">Priority</string>
     <string name="task_form_priority_low">Low</string>
     <string name="task_form_priority_medium">Medium</string>
