@@ -44,6 +44,6 @@ fun TaskodoroTooltip(
         },
         modifier = modifier
             .padding(all = 8.dp),
-        content = content
+        content = content,
     )
 }

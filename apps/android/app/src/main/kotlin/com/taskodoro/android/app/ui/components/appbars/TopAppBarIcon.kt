@@ -16,10 +16,12 @@
 
 package com.taskodoro.android.app.ui.components.appbars
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class TopAppBarIcon(
     val icon: ImageVector,
     val contentDescription: String,
     val action: () -> Unit,
+    val tint: Color? = null,
 )

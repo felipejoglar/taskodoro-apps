@@ -20,20 +20,22 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.TaskodoroTooltip
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 
@@ -44,41 +46,61 @@ fun TaskodoroTopAppBar(
     subtitle: String,
     navigationIcon: TopAppBarIcon,
     modifier: Modifier = Modifier,
+    actions: ActionsList = ActionsList(listOf()),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     TopAppBar(
         scrollBehavior = scrollBehavior,
         title = { TitleContent(title, subtitle) },
-        navigationIcon = {
-            TaskodoroTooltip(navigationIcon.contentDescription) {
-                IconButton(
-                    onClick = navigationIcon.action,
-                    modifier = Modifier
-                        .tooltipAnchor(),
-                ) {
-                    Icon(
-                        imageVector = navigationIcon.icon,
-                        contentDescription = navigationIcon.contentDescription,
-                    )
-                }
+        navigationIcon = { TopAppBarIcon(navigationIcon) },
+        actions = {
+            actions.icons.forEach { icon ->
+                TopAppBarIcon(icon)
             }
         },
         modifier = modifier,
     )
 }
 
+@Immutable
+data class ActionsList(
+    val icons: List<TopAppBarIcon>,
+)
+
 @Composable
-private fun TitleContent(title: String, subtitle: String?) {
-    Column {
-        subtitle?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.outline,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+@OptIn(ExperimentalMaterial3Api::class)
+fun TopAppBarIcon(
+    icon: TopAppBarIcon,
+    modifier: Modifier = Modifier,
+) {
+    TaskodoroTooltip(icon.contentDescription) {
+        IconButton(
+            onClick = icon.action,
+            modifier = modifier
+                .tooltipAnchor(),
+        ) {
+            Icon(
+                imageVector = icon.icon,
+                contentDescription = icon.contentDescription,
+                tint = icon.tint ?: LocalContentColor.current,
             )
         }
+    }
+}
+
+@Composable
+private fun TitleContent(
+    title: String,
+    subtitle: String,
+) {
+    Column {
+        Text(
+            text = subtitle,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.outline,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
         Text(
             text = title,
             fontWeight = FontWeight.Bold,
@@ -105,8 +127,23 @@ private fun TaskodoroLargeTopBarPreview() {
             subtitle = "A subtitle",
             navigationIcon = TopAppBarIcon(
                 icon = Icons.Rounded.ArrowBack,
-                contentDescription = stringResource(id = R.string.navigation_back),
+                contentDescription = "Back",
                 action = { },
+            ),
+            actions = ActionsList(
+                listOf(
+                    TopAppBarIcon(
+                        icon = Icons.Rounded.Send,
+                        contentDescription = "Submit",
+                        action = { },
+                        tint = MaterialTheme.colorScheme.primary,
+                    ),
+                    TopAppBarIcon(
+                        icon = Icons.Rounded.MoreVert,
+                        contentDescription = "More",
+                        action = { },
+                    ),
+                ),
             ),
         )
     }

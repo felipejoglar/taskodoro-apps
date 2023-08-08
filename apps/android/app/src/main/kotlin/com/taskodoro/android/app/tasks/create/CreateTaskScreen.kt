@@ -27,7 +27,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.taskodoro.android.R
 import com.taskodoro.android.app.tasks.ui.TaskForm
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
+import com.taskodoro.android.app.ui.components.appbars.ActionsList
 import com.taskodoro.android.app.ui.components.appbars.TaskodoroTopAppBar
 import com.taskodoro.android.app.ui.components.appbars.TopAppBarIcon
 
@@ -66,6 +69,11 @@ fun CreateTaskScreen(
                 title = stringResource(id = R.string.create_new_task_screen_title),
                 subtitle = stringResource(id = R.string.project_default_title),
                 navigationIcon = navigationIcon(onBackClicked),
+                actions = ActionsList(
+                    listOf(
+                        submitIcon(onCreateTaskClicked),
+                    ),
+                ),
             )
         },
     ) { paddingValues ->
@@ -75,9 +83,6 @@ fun CreateTaskScreen(
             description = state.description,
             onDescriptionChanged = onDescriptionChanged,
             onDueDateChanged = onDueDateChanged,
-            submitLabel = R.string.create_new_task_create_task_button,
-            onSubmitClicked = onCreateTaskClicked,
-            loading = state.loading,
             errorLabel = state.error,
             modifier = Modifier
                 .fillMaxSize()
@@ -94,6 +99,16 @@ private fun navigationIcon(
     icon = Icons.Rounded.ArrowBack,
     contentDescription = stringResource(id = R.string.navigation_back),
     action = action,
+)
+
+@Composable
+private fun submitIcon(
+    action: () -> Unit,
+) = TopAppBarIcon(
+    icon = Icons.Rounded.Send,
+    contentDescription = stringResource(id = R.string.create_new_task_create_task_button),
+    action = action,
+    tint = MaterialTheme.colorScheme.primary,
 )
 
 @Preview(

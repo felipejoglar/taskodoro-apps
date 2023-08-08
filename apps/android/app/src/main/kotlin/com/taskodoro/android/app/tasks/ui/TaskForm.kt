@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.TaskodoroTextField
-import com.taskodoro.android.app.ui.components.buttons.TaskodoroButton
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -65,10 +64,7 @@ fun TaskForm(
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onDueDateChanged: (Long) -> Unit,
-    @StringRes submitLabel: Int,
-    onSubmitClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    loading: Boolean = false,
     @StringRes errorLabel: Int? = null,
 ) {
     Column(modifier = modifier) {
@@ -93,16 +89,6 @@ fun TaskForm(
         Spacer(modifier = Modifier.weight(1f))
 
         ErrorLabel(errorLabel)
-
-        TaskodoroButton(
-            onClick = onSubmitClicked,
-            loading = loading,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-        ) {
-            Text(stringResource(id = submitLabel))
-        }
     }
 }
 
@@ -217,8 +203,6 @@ private fun TaskFormPreview() {
             description = "",
             onDescriptionChanged = {},
             onDueDateChanged = {},
-            submitLabel = R.string.create_new_task_create_task_button,
-            onSubmitClicked = {},
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
         )
@@ -246,8 +230,6 @@ private fun TaskFormWithErrorsPreview() {
             description = "",
             onDescriptionChanged = {},
             onDueDateChanged = {},
-            submitLabel = R.string.create_new_task_create_task_button,
-            onSubmitClicked = {},
             errorLabel = R.string.create_new_task_unknown_error,
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
