@@ -14,7 +14,8 @@
  *    limitations under the License.
  */
 
-import com.taskodoro.model.UuidGenerator
+package com.taskodoro.model
+
 import java.util.UUID
 
 class RandomUuidGenerator : UuidGenerator {
