@@ -23,7 +23,7 @@ import com.taskodoro.tasks.validator.ValidatorError
 
 interface CreateTaskUseCase {
     sealed class Result {
-        object Success : Result()
+        data object Success : Result()
         data class Failure(val errors: List<ValidatorError>) : Result()
     }
 

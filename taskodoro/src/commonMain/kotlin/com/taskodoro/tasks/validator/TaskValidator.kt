@@ -32,8 +32,8 @@ class TaskValidator(
 sealed class TaskValidatorError : ValidatorError() {
 
     sealed class Title : TaskValidatorError() {
-        object Empty : Title()
-        object Invalid : Title()
+        data object Empty : Title()
+        data object Invalid : Title()
     }
 
     sealed class DueDate : TaskValidatorError() {
