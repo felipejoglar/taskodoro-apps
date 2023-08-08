@@ -24,9 +24,9 @@ detektGradlePlugin = "1.23.0"
 desugar = "2.0.3"
 activity-compose = "1.7.2"
 
-compose = "1.4.3"
+compose = "1.6.0-alpha02"
 compose-material3 = "1.1.1"
-compose-compiler = "1.4.8"
+compose-compiler = "1.5.1"
 
 accompanist = "0.30.1"
 
