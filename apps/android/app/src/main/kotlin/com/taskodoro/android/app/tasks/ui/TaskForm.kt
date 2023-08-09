@@ -17,36 +17,48 @@
 package com.taskodoro.android.app.tasks.ui
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DisplayMode
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
-import com.taskodoro.android.app.ui.components.TaskodoroTemplate
 import com.taskodoro.android.app.ui.components.TaskodoroTextField
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.util.concurrent.TimeUnit
 
 /**
  * Reusable Task creation/edition form composable.
@@ -57,29 +69,33 @@ fun TaskForm(
     description: String,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
-    onDueDateChanged: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
-        TitleTextField(
-            title = title,
-            onTitleChanged = onTitleChanged,
-        )
+    val scrollState = rememberScrollState()
 
-        DescriptionTextField(
-            description = description,
-            onDescriptionChanged = onDescriptionChanged,
-        )
+    Column(
+        modifier = modifier,
+    ) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .weight(1f),
+        ) {
+            TitleTextField(
+                title = title,
+                onTitleChanged = onTitleChanged,
+                modifier = Modifier.padding(top = 4.dp),
+            )
 
-        Text(
-            text = "Due on",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.paddingFromBaseline(top = 32.dp, bottom = 8.dp),
-        )
+            DescriptionTextField(
+                description = description,
+                onDescriptionChanged = onDescriptionChanged,
+            )
 
-        DueDatePicker(onDueDateChanged)
+            Spacer(modifier = Modifier.weight(1.0f))
+        }
 
-        Spacer(modifier = Modifier.weight(1f))
+        ExtraFieldsRow(scrollState = scrollState)
     }
 }
 
@@ -87,6 +103,7 @@ fun TaskForm(
 private fun TitleTextField(
     title: String,
     onTitleChanged: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val focusRequester = remember { FocusRequester() }
     val titleLabel = stringResource(id = R.string.task_form_title)
@@ -96,7 +113,7 @@ private fun TitleTextField(
         onValueChanged = onTitleChanged,
         placeHolderText = titleLabel,
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-        modifier = Modifier.focusRequester(focusRequester),
+        modifier = modifier.focusRequester(focusRequester),
     )
 
     LaunchedEffect(Unit) {
@@ -120,37 +137,96 @@ private fun DescriptionTextField(
     )
 }
 
+private const val GRADIENT_START = 0.0f
+private const val GRADIENT_MIDDLE = 0.5f
+private const val GRADIENT_END = 1.0f
+
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
-private fun DueDatePicker(
-    onDueDateChanged: (Long) -> Unit,
+private fun ExtraFieldsRow(
+    scrollState: ScrollState,
 ) {
-    val today = LocalDate.now()
-        .atStartOfDay()
-        .asMillis(ZoneOffset.UTC)
+    Box(
+        modifier = Modifier
+            .height(IntrinsicSize.Max),
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
+        ) {
+            ExtraFieldChip()
+        }
 
-    val datePickerState = rememberDatePickerState(
-        initialDisplayMode = DisplayMode.Picker,
-        initialSelectedDateMillis = today,
-    )
+        Spacer(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .fillMaxHeight()
+                .width(16.dp)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        GRADIENT_START to MaterialTheme.colorScheme.background,
+                        GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
+                        GRADIENT_END to Color.Transparent,
+                    ),
+                ),
+        )
 
-    DatePicker(
-        state = datePickerState,
-        dateValidator = { it >= today },
-        title = null,
-        headline = null,
-        showModeToggle = false,
-    )
+        Spacer(
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .fillMaxHeight()
+                .width(16.dp)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        GRADIENT_START to Color.Transparent,
+                        GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
+                        GRADIENT_END to MaterialTheme.colorScheme.background,
+                    ),
+                ),
+        )
 
-    LaunchedEffect(datePickerState.selectedDateMillis) {
-        datePickerState.selectedDateMillis?.let { onDueDateChanged(it.asSeconds()) }
+        if (scrollState.canScrollForward) {
+            Spacer(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)),
+            )
+        }
     }
 }
 
-private fun Long.asSeconds() = TimeUnit.MILLISECONDS.toSeconds(this)
-
-private fun LocalDateTime.asMillis(offset: ZoneOffset) =
-    TimeUnit.SECONDS.toMillis(toEpochSecond(offset))
+@Composable
+private fun ExtraFieldChip() {
+    AssistChip(
+        onClick = { },
+        label = {
+            Text(
+                text = "Due date",
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Rounded.CalendarMonth,
+                contentDescription = "Due Date",
+                modifier = Modifier.size(16.dp),
+                tint = MaterialTheme.colorScheme.outline,
+            )
+        },
+        border = AssistChipDefaults.assistChipBorder(
+            borderWidth = 0.5.dp,
+            borderColor = MaterialTheme.colorScheme.outline,
+        ),
+        colors = AssistChipDefaults.assistChipColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
+        modifier = Modifier
+            .padding(vertical = 4.dp),
+    )
+}
 
 @Preview(
     name = "Day Mode",
@@ -172,34 +248,6 @@ private fun TaskFormPreview() {
             onTitleChanged = {},
             description = "",
             onDescriptionChanged = {},
-            onDueDateChanged = {},
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background),
-        )
-    }
-}
-
-@Preview(
-    name = "Day Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-private fun TaskFormWithErrorsPreview() {
-    TaskodoroTemplate {
-        TaskForm(
-            title = "",
-            onTitleChanged = {},
-            description = "",
-            onDescriptionChanged = {},
-            onDueDateChanged = {},
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
         )

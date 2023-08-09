@@ -54,7 +54,6 @@ fun CreateTaskScreen(
     state: CreateTaskUIState,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
-    onDueDateChanged: (Long) -> Unit,
     onCreateTaskClicked: () -> Unit,
     onTaskCreated: () -> Unit,
     onErrorShown: () -> Unit,
@@ -100,7 +99,6 @@ fun CreateTaskScreen(
             onTitleChanged = onTitleChanged,
             description = state.description,
             onDescriptionChanged = onDescriptionChanged,
-            onDueDateChanged = onDueDateChanged,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
@@ -149,7 +147,6 @@ private fun CreateTaskScreenPreview() {
             state = CreateTaskUIState(),
             onTitleChanged = {},
             onDescriptionChanged = {},
-            onDueDateChanged = {},
             onCreateTaskClicked = {},
             onTaskCreated = {},
             onErrorShown = {},
