@@ -27,6 +27,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -41,11 +42,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.taskodoro.android.R
+import com.taskodoro.android.app.tasks.ui.ExtraField
+import com.taskodoro.android.app.tasks.ui.Fields
 import com.taskodoro.android.app.tasks.ui.TaskForm
 import com.taskodoro.android.app.ui.components.TaskodoroTemplate
-import com.taskodoro.android.app.ui.components.appbars.ActionsList
-import com.taskodoro.android.app.ui.components.appbars.TaskodoroTopAppBar
-import com.taskodoro.android.app.ui.components.appbars.TopAppBarIcon
+import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
+import com.taskodoro.android.app.ui.components.appbar.TaskodoroTopAppBar
+import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarIcon
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,6 +102,11 @@ fun CreateTaskScreen(
             onTitleChanged = onTitleChanged,
             description = state.description,
             onDescriptionChanged = onDescriptionChanged,
+            bottomRowFields = extraFields {
+                scope.launch {
+                    snackbarHostState.showSnackbar("Due Date")
+                }
+            },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
@@ -126,6 +134,19 @@ private fun submitIcon(
     tint = MaterialTheme.colorScheme.primary,
     isLoading = isLoading,
     action = action,
+)
+
+@Composable
+fun extraFields(
+    onDueDateClicked: () -> Unit,
+) = Fields(
+    items = listOf(
+        ExtraField(
+            icon = Icons.Rounded.CalendarMonth,
+            description = stringResource(id = R.string.create_new_task_due_date),
+            onClick = onDueDateClicked,
+        ),
+    ),
 )
 
 @Preview(

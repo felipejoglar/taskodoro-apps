@@ -36,14 +36,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -52,6 +51,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,6 +70,7 @@ fun TaskForm(
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
+    bottomRowFields: Fields = Fields(emptyList()),
 ) {
     val scrollState = rememberScrollState()
 
@@ -95,7 +96,10 @@ fun TaskForm(
             Spacer(modifier = Modifier.weight(1.0f))
         }
 
-        ExtraFieldsRow(scrollState = scrollState)
+        ExtraFieldsRow(
+            scrollState = scrollState,
+            fields = bottomRowFields,
+        )
     }
 }
 
@@ -144,7 +148,10 @@ private const val GRADIENT_END = 1.0f
 @Composable
 private fun ExtraFieldsRow(
     scrollState: ScrollState,
+    fields: Fields,
 ) {
+    if (fields.items.isEmpty()) return
+
     Box(
         modifier = Modifier
             .height(IntrinsicSize.Max),
@@ -155,7 +162,9 @@ private fun ExtraFieldsRow(
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp),
         ) {
-            ExtraFieldChip()
+            fields.items.forEach { field ->
+                ExtraFieldChip(field)
+            }
         }
 
         Spacer(
@@ -199,19 +208,21 @@ private fun ExtraFieldsRow(
 }
 
 @Composable
-private fun ExtraFieldChip() {
+private fun ExtraFieldChip(
+    field: ExtraField,
+) {
     AssistChip(
-        onClick = { },
+        onClick = field.onClick,
         label = {
             Text(
-                text = "Due date",
+                text = field.description,
                 color = MaterialTheme.colorScheme.onBackground,
             )
         },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Rounded.CalendarMonth,
-                contentDescription = "Due Date",
+                imageVector = field.icon,
+                contentDescription = field.description,
                 modifier = Modifier.size(16.dp),
                 tint = MaterialTheme.colorScheme.outline,
             )
@@ -227,6 +238,17 @@ private fun ExtraFieldChip() {
             .padding(vertical = 4.dp),
     )
 }
+
+@Immutable
+data class Fields(
+    val items: List<ExtraField>,
+)
+
+data class ExtraField(
+    val icon: ImageVector,
+    val description: String,
+    val onClick: () -> Unit,
+)
 
 @Preview(
     name = "Day Mode",

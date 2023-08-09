@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.android.app.ui.components.appbars
+package com.taskodoro.android.app.ui.components.appbar
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -34,7 +34,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +41,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.app.ui.components.TaskodoroTooltip
+import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
+import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarIcon
 import com.taskodoro.android.app.ui.theme.TaskodoroTheme
 
 @Composable
@@ -67,11 +68,6 @@ fun TaskodoroTopAppBar(
     )
 }
 
-@Immutable
-data class ActionsList(
-    val icons: List<TopAppBarIcon>,
-)
-
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopAppBarIcon(
@@ -82,7 +78,7 @@ fun TopAppBarIcon(
         if (icon.isLoading) {
             CircularProgressIndicator(
                 strokeCap = StrokeCap.Round,
-                modifier = Modifier
+                modifier = modifier
                     .padding(4.dp)
                     .size(40.dp)
                     .padding(4.dp),
