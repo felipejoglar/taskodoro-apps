@@ -69,6 +69,7 @@ class MainActivity : ComponentActivity() {
                     state = state,
                     onTitleChanged = viewModel::onTitleChanged,
                     onDescriptionChanged = viewModel::onDescriptionChanged,
+                    onDueDateChanged = viewModel::onDueDateChanged,
                     onCreateTaskClicked = viewModel::onCreateTaskClicked,
                     onTaskCreated = {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()

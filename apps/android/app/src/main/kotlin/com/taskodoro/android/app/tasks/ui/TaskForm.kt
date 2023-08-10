@@ -17,41 +17,27 @@
 package com.taskodoro.android.app.tasks.ui
 
 import android.content.res.Configuration
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,10 +55,13 @@ fun TaskForm(
     description: String,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
+    onDueDateChanged: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    bottomRowFields: Fields = Fields(emptyList()),
 ) {
     val scrollState = rememberScrollState()
+
+    var openDueDateSelection by rememberSaveable { mutableStateOf(false) }
+    var initialSelectedDateSeconds by rememberSaveable { mutableStateOf<Long?>(null) }
 
     Column(
         modifier = modifier,
@@ -98,7 +87,24 @@ fun TaskForm(
 
         ExtraFieldsRow(
             scrollState = scrollState,
-            fields = bottomRowFields,
+            fields = Fields(
+                listOf(
+                    dueDateField(
+                        onDueDateClicked = { openDueDateSelection = true },
+                    ),
+                ),
+            ),
+        )
+    }
+
+    if (openDueDateSelection) {
+        DueDateModalBottomSheet(
+            onDateSelected = {
+                initialSelectedDateSeconds = it
+                onDueDateChanged(it)
+            },
+            onDismiss = { openDueDateSelection = false },
+            initialSelectedDateSeconds = initialSelectedDateSeconds,
         )
     }
 }
@@ -141,113 +147,13 @@ private fun DescriptionTextField(
     )
 }
 
-private const val GRADIENT_START = 0.0f
-private const val GRADIENT_MIDDLE = 0.5f
-private const val GRADIENT_END = 1.0f
-
 @Composable
-private fun ExtraFieldsRow(
-    scrollState: ScrollState,
-    fields: Fields,
-) {
-    if (fields.items.isEmpty()) return
-
-    Box(
-        modifier = Modifier
-            .height(IntrinsicSize.Max),
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp),
-        ) {
-            fields.items.forEach { field ->
-                ExtraFieldChip(field)
-            }
-        }
-
-        Spacer(
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .fillMaxHeight()
-                .width(16.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        GRADIENT_START to MaterialTheme.colorScheme.background,
-                        GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
-                        GRADIENT_END to Color.Transparent,
-                    ),
-                ),
-        )
-
-        Spacer(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .fillMaxHeight()
-                .width(16.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        GRADIENT_START to Color.Transparent,
-                        GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
-                        GRADIENT_END to MaterialTheme.colorScheme.background,
-                    ),
-                ),
-        )
-
-        if (scrollState.canScrollForward) {
-            Spacer(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)),
-            )
-        }
-    }
-}
-
-@Composable
-private fun ExtraFieldChip(
-    field: ExtraField,
-) {
-    AssistChip(
-        onClick = field.onClick,
-        label = {
-            Text(
-                text = field.description,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = field.icon,
-                contentDescription = field.description,
-                modifier = Modifier.size(16.dp),
-                tint = MaterialTheme.colorScheme.outline,
-            )
-        },
-        border = AssistChipDefaults.assistChipBorder(
-            borderWidth = 0.5.dp,
-            borderColor = MaterialTheme.colorScheme.outline,
-        ),
-        colors = AssistChipDefaults.assistChipColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
-        modifier = Modifier
-            .padding(vertical = 4.dp),
-    )
-}
-
-@Immutable
-data class Fields(
-    val items: List<ExtraField>,
-)
-
-data class ExtraField(
-    val icon: ImageVector,
-    val description: String,
-    val onClick: () -> Unit,
+fun dueDateField(
+    onDueDateClicked: () -> Unit,
+) = ExtraField(
+    icon = Icons.Rounded.CalendarMonth,
+    description = stringResource(id = R.string.create_new_task_due_date),
+    onClick = onDueDateClicked,
 )
 
 @Preview(
@@ -270,6 +176,7 @@ private fun TaskFormPreview() {
             onTitleChanged = {},
             description = "",
             onDescriptionChanged = {},
+            onDueDateChanged = {},
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
         )

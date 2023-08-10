@@ -19,10 +19,18 @@ package com.taskodoro.android.app.ui.components.appbar.model
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 
-data class TopAppBarIcon(
-    val icon: ImageVector,
-    val contentDescription: String,
-    val tint: Color? = null,
-    val isLoading: Boolean = false,
-    val action: () -> Unit,
-)
+sealed class TopAppBarElement {
+
+    data class Icon(
+        val icon: ImageVector,
+        val contentDescription: String,
+        val tint: Color? = null,
+        val isLoading: Boolean = false,
+        val action: () -> Unit,
+    ) : TopAppBarElement()
+
+    data class Button(
+        val text: String,
+        val action: () -> Unit,
+    ) : TopAppBarElement()
+}

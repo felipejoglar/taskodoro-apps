@@ -21,7 +21,7 @@ import androidx.annotation.StringRes
 data class CreateTaskUIState(
     val title: String = "",
     val description: String = "",
-    val dueDate: Long = 0,
+    val dueDate: Long? = null,
     val loading: Boolean = false,
     val isTaskCreated: Boolean = false,
     @StringRes val error: Int? = null,

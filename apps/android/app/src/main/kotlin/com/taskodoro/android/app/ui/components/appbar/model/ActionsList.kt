@@ -20,5 +20,5 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class ActionsList(
-    val icons: List<TopAppBarIcon>,
+    val elements: List<TopAppBarElement>,
 )
