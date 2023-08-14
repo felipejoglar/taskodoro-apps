@@ -890,7 +890,7 @@ style:
   UnusedPrivateMember:
     active: true
     allowedNames: ''
-    ignoreAnnotated: [ 'Preview' ]
+    ignoreAnnotated: [ 'Preview', '*Previews' ]
 
   UnusedPrivateProperty:
     active: true

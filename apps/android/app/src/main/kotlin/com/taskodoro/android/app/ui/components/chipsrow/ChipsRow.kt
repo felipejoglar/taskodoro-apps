@@ -14,10 +14,8 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.android.app.tasks.ui
+package com.taskodoro.android.app.ui.components.chipsrow
 
-import android.content.res.Configuration
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -40,41 +38,31 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
-import com.taskodoro.android.app.ui.theme.TaskodoroTheme
+import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsList
+import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsRowItem
+import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
+import com.taskodoro.android.app.ui.theme.AppTheme
 
 private const val GRADIENT_START = 0.0f
 private const val GRADIENT_MIDDLE = 0.5f
 private const val GRADIENT_END = 1.0f
 
-data class ExtraField(
-    val icon: ImageVector,
-    val description: String,
-    val onClick: () -> Unit,
-)
-
-@Immutable
-data class Fields(
-    val items: List<ExtraField>,
-)
-
 @Composable
-fun ExtraFieldsRow(
-    scrollState: ScrollState,
-    fields: Fields,
+fun ChipsRow(
+    chips: ChipsList,
     modifier: Modifier = Modifier,
+    showTopShadow: Boolean = false,
 ) {
-    if (fields.items.isEmpty()) return
+    if (chips.items.isEmpty()) return
 
     Box(
         modifier = modifier
@@ -88,8 +76,8 @@ fun ExtraFieldsRow(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
         ) {
-            fields.items.forEach { field ->
-                ExtraFieldChip(field)
+            chips.items.map { field ->
+                Chip(field)
             }
         }
 
@@ -121,7 +109,7 @@ fun ExtraFieldsRow(
                 ),
         )
 
-        if (scrollState.canScrollForward) {
+        if (showTopShadow) {
             Spacer(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
@@ -134,21 +122,21 @@ fun ExtraFieldsRow(
 }
 
 @Composable
-private fun ExtraFieldChip(
-    field: ExtraField,
+private fun Chip(
+    item: ChipsRowItem,
 ) {
     AssistChip(
-        onClick = field.onClick,
+        onClick = item.onClick,
         label = {
             Text(
-                text = field.description,
+                text = item.description,
                 color = MaterialTheme.colorScheme.onBackground,
             )
         },
         leadingIcon = {
             Icon(
-                imageVector = field.icon,
-                contentDescription = field.description,
+                imageVector = item.icon,
+                contentDescription = item.description,
                 modifier = Modifier.size(16.dp),
                 tint = MaterialTheme.colorScheme.outline,
             )
@@ -165,28 +153,20 @@ private fun ExtraFieldChip(
     )
 }
 
-@Preview(
-    name = "Day Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
+@FontScalePreviews
+@ComponentPreviews
 @Composable
-private fun TaskodoroTopBarPreview() {
-    TaskodoroTheme {
-        ExtraFieldsRow(
-            scrollState = rememberScrollState(),
-            fields = Fields(
-                listOf(
-                    ExtraField(
-                        icon = Icons.Rounded.CalendarMonth,
-                        description = stringResource(id = R.string.create_new_task_due_date),
-                        onClick = { },
-                    ),
-                ),
-            ),
+private fun ChipsRowPreview() {
+    val item = ChipsRowItem(
+        icon = Icons.Rounded.CalendarMonth,
+        description = stringResource(id = R.string.create_new_task_due_date),
+        onClick = {},
+    )
+    val chips = ChipsList(listOf(item, item, item, item))
+
+    AppTheme {
+        ChipsRow(
+            chips = chips,
         )
     }
 }

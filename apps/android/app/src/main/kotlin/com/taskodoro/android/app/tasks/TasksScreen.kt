@@ -16,7 +16,6 @@
 
 package com.taskodoro.android.app.tasks
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -29,10 +28,10 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.app.di.TasksUIComposer
-import com.taskodoro.android.app.ui.components.TaskodoroTemplate
+import com.taskodoro.android.app.ui.components.AppTemplate
+import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
 import com.taskodoro.tasks.model.Task
 
 @Composable
@@ -82,21 +81,10 @@ data class TasksList(
     val items: List<Task>,
 )
 
-@Preview(
-    name = "Day Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
+@ScreenPreviews
 @Composable
 private fun TasksScreenPreview() {
-    TaskodoroTemplate {
+    AppTemplate {
         val tasks = List(20) {
             Task(
                 title = "Task $it title",

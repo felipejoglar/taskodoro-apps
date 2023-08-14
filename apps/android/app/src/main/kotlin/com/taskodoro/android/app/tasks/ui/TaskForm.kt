@@ -16,7 +16,6 @@
 
 package com.taskodoro.android.app.tasks.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +26,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,15 +43,17 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
-import com.taskodoro.android.app.ui.components.TaskodoroTextField
-import com.taskodoro.android.app.ui.theme.TaskodoroTheme
+import com.taskodoro.android.app.ui.components.TextField
+import com.taskodoro.android.app.ui.components.chipsrow.ChipsRow
+import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsList
+import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsRowItem
+import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
+import com.taskodoro.android.app.ui.theme.AppTheme
 
-/**
- * Reusable Task creation/edition form composable.
- */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskForm(
     title: String,
@@ -85,27 +90,38 @@ fun TaskForm(
             Spacer(modifier = Modifier.weight(1.0f))
         }
 
-        ExtraFieldsRow(
-            scrollState = scrollState,
-            fields = Fields(
+        ChipsRow(
+            chips = ChipsList(
                 listOf(
                     dueDateField(
                         onDueDateClicked = { openDueDateSelection = true },
                     ),
                 ),
             ),
+            showTopShadow = scrollState.canScrollForward,
         )
     }
 
     if (openDueDateSelection) {
-        DueDateModalBottomSheet(
-            onDateSelected = {
-                initialSelectedDateSeconds = it
-                onDueDateChanged(it)
-            },
-            onDismiss = { openDueDateSelection = false },
-            initialSelectedDateSeconds = initialSelectedDateSeconds,
-        )
+        val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        val onDismiss = { openDueDateSelection = false }
+
+        ModalBottomSheet(
+            onDismissRequest = onDismiss,
+            sheetState = bottomSheetState,
+            containerColor = MaterialTheme.colorScheme.background,
+            dragHandle = { BottomSheetDefaults.DragHandle() },
+        ) {
+            DueDateSelection(
+                onDateSelected = {
+                    initialSelectedDateSeconds = it
+                    onDueDateChanged(it)
+                    openDueDateSelection = false
+                },
+                onDismiss = onDismiss,
+                initialSelectedDateSeconds = initialSelectedDateSeconds,
+            )
+        }
     }
 }
 
@@ -118,7 +134,7 @@ private fun TitleTextField(
     val focusRequester = remember { FocusRequester() }
     val titleLabel = stringResource(id = R.string.task_form_title)
 
-    TaskodoroTextField(
+    TextField(
         value = title,
         onValueChanged = onTitleChanged,
         placeHolderText = titleLabel,
@@ -137,7 +153,7 @@ private fun DescriptionTextField(
     onDescriptionChanged: (String) -> Unit,
 ) {
     val descriptionLabel = stringResource(id = R.string.task_form_description)
-    TaskodoroTextField(
+    TextField(
         value = description,
         onValueChanged = onDescriptionChanged,
         placeHolderText = descriptionLabel,
@@ -150,27 +166,17 @@ private fun DescriptionTextField(
 @Composable
 fun dueDateField(
     onDueDateClicked: () -> Unit,
-) = ExtraField(
+) = ChipsRowItem(
     icon = Icons.Rounded.CalendarMonth,
     description = stringResource(id = R.string.create_new_task_due_date),
     onClick = onDueDateClicked,
 )
 
-@Preview(
-    name = "Day Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
+@FontScalePreviews
+@ComponentPreviews
 @Composable
 private fun TaskFormPreview() {
-    TaskodoroTheme {
+    AppTheme {
         TaskForm(
             title = "",
             onTitleChanged = {},

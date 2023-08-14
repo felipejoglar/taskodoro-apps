@@ -26,7 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import com.taskodoro.android.app.tasks.create.CreateTaskScreen
 import com.taskodoro.android.app.tasks.create.CreateTaskViewModel
-import com.taskodoro.android.app.ui.components.TaskodoroTemplate
+import com.taskodoro.android.app.ui.components.AppTemplate
 import com.taskodoro.storage.db.DatabaseFactory
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
 
             val state by viewModel.state.collectAsState()
 
-            TaskodoroTemplate {
+            AppTemplate {
                 CreateTaskScreen(
                     state = state,
                     onTitleChanged = viewModel::onTitleChanged,

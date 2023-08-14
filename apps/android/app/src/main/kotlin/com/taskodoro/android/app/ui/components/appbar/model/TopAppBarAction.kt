@@ -17,8 +17,26 @@
 package com.taskodoro.android.app.ui.components.appbar.model
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+
+sealed class TopAppBarAction {
+
+    data class Icon(
+        val icon: ImageVector,
+        val contentDescription: String,
+        val tint: Color? = null,
+        val isLoading: Boolean = false,
+        val action: () -> Unit,
+    ) : TopAppBarAction()
+
+    data class Button(
+        val text: String,
+        val action: () -> Unit,
+    ) : TopAppBarAction()
+}
 
 @Immutable
 data class ActionsList(
-    val elements: List<TopAppBarElement>,
+    val items: List<TopAppBarAction>,
 )

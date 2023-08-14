@@ -22,14 +22,18 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
+import com.taskodoro.android.app.ui.theme.AppTheme
 
 @Composable
-fun TaskodoroTextField(
+fun TextField(
     value: String,
     onValueChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -58,4 +62,19 @@ fun TaskodoroTextField(
         modifier = modifier
             .fillMaxWidth(),
     )
+}
+
+@FontScalePreviews
+@ComponentPreviews
+@Composable
+private fun TextFieldPreview() {
+    AppTheme {
+        Surface {
+            TextField(
+                value = "",
+                onValueChanged = {},
+                placeHolderText = "Add a task now!",
+            )
+        }
+    }
 }

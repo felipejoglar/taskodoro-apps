@@ -16,7 +16,6 @@
 
 package com.taskodoro.android.app.tasks.create
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,14 +38,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
 import com.taskodoro.android.app.tasks.ui.TaskForm
-import com.taskodoro.android.app.ui.components.TaskodoroTemplate
-import com.taskodoro.android.app.ui.components.appbar.TaskodoroTopAppBar
+import com.taskodoro.android.app.ui.components.AppTemplate
+import com.taskodoro.android.app.ui.components.appbar.TwoRowsTopAppBar
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
-import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarElement
+import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,7 +69,7 @@ fun CreateTaskScreen(
     }
 
     state.error?.let {
-        val errorMessage = stringResource(id = state.error)
+        val errorMessage = stringResource(id = it)
         scope.launch {
             onErrorShown()
             snackbarHostState.showSnackbar(errorMessage)
@@ -81,11 +80,11 @@ fun CreateTaskScreen(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
-                modifier = Modifier.padding(bottom = 48.dp)
+                modifier = Modifier.padding(bottom = 48.dp),
             )
         },
         topBar = {
-            TaskodoroTopAppBar(
+            TwoRowsTopAppBar(
                 title = stringResource(id = R.string.create_new_task_screen_title),
                 subtitle = stringResource(id = R.string.project_default_title),
                 navigationIcon = navigationIcon(onBackClicked),
@@ -118,7 +117,7 @@ fun CreateTaskScreen(
 @Composable
 private fun navigationIcon(
     action: () -> Unit,
-) = TopAppBarElement.Icon(
+) = TopAppBarAction.Icon(
     icon = Icons.Rounded.ArrowBack,
     contentDescription = stringResource(id = R.string.navigation_back),
     action = action,
@@ -128,7 +127,7 @@ private fun navigationIcon(
 private fun submitIcon(
     isLoading: Boolean,
     action: () -> Unit,
-) = TopAppBarElement.Icon(
+) = TopAppBarAction.Icon(
     icon = Icons.Rounded.Send,
     contentDescription = stringResource(id = R.string.create_new_task_create_task_button),
     tint = MaterialTheme.colorScheme.primary,
@@ -136,21 +135,10 @@ private fun submitIcon(
     action = action,
 )
 
-@Preview(
-    name = "Day Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
+@ScreenPreviews
 @Composable
 private fun CreateTaskScreenPreview() {
-    TaskodoroTemplate {
+    AppTemplate {
         CreateTaskScreen(
             state = CreateTaskUIState(),
             onTitleChanged = {},

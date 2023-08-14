@@ -79,7 +79,7 @@ private val LightColors = lightColorScheme(
 )
 
 @Composable
-fun TaskodoroTheme(
+fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {

@@ -16,27 +16,29 @@
 
 package com.taskodoro.android.app.ui.components
 
-import android.content.res.Configuration.UI_MODE_NIGHT_NO
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.taskodoro.android.app.ui.theme.TaskodoroTheme
+import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
+import com.taskodoro.android.app.ui.theme.AppTheme
 
 @Composable
-fun TaskodoroTemplate(
+fun AppTemplate(
     modifier: Modifier = Modifier,
     useDarkIcons: Boolean = !isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    TaskodoroTheme {
+    AppTheme {
         val systemUiController = rememberSystemUiController()
 
         systemUiController.setStatusBarColor(
@@ -58,21 +60,19 @@ fun TaskodoroTemplate(
     }
 }
 
-@Preview(
-    name = "Day Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = UI_MODE_NIGHT_NO,
-)
-@Preview(
-    name = "Night Mode",
-    widthDp = 360,
-    heightDp = 640,
-    uiMode = UI_MODE_NIGHT_YES,
-)
+@ScreenPreviews
 @Composable
-private fun TaskodoroTemplatePreview() {
-    TaskodoroTemplate {
-        Text("Hello Taskodoro")
+private fun AppTemplatePreview() {
+    AppTemplate {
+        Column {
+            Spacer(modifier = Modifier.weight(1.0f))
+            Text(
+                text = "Taskodoro",
+                style = MaterialTheme.typography.displayMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.weight(1.0f))
+        }
     }
 }
