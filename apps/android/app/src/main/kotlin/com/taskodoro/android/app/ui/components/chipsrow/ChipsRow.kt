@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -81,42 +82,12 @@ fun ChipsRow(
             }
         }
 
-        Spacer(
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .fillMaxHeight()
-                .width(16.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        GRADIENT_START to MaterialTheme.colorScheme.background,
-                        GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
-                        GRADIENT_END to Color.Transparent,
-                    ),
-                ),
-        )
+        StartGradient()
+        EndGradient()
 
-        Spacer(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .fillMaxHeight()
-                .width(16.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        GRADIENT_START to Color.Transparent,
-                        GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
-                        GRADIENT_END to MaterialTheme.colorScheme.background,
-                    ),
-                ),
-        )
 
         if (showTopShadow) {
-            Spacer(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .fillMaxWidth()
-                    .shadow(1.dp)
-                    .height(1.dp),
-            )
+            TopBorderShadow()
         }
     }
 }
@@ -128,10 +99,7 @@ private fun Chip(
     AssistChip(
         onClick = item.onClick,
         label = {
-            Text(
-                text = item.description,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+            Text(text = item.description)
         },
         leadingIcon = {
             Icon(
@@ -143,13 +111,54 @@ private fun Chip(
         },
         border = AssistChipDefaults.assistChipBorder(
             borderWidth = 0.5.dp,
-            borderColor = MaterialTheme.colorScheme.outline,
-        ),
-        colors = AssistChipDefaults.assistChipColors(
-            containerColor = MaterialTheme.colorScheme.surface,
         ),
         modifier = Modifier
             .padding(vertical = 4.dp),
+    )
+}
+
+@Composable
+private fun BoxScope.StartGradient() {
+    Spacer(
+        modifier = Modifier.Companion
+            .align(Alignment.CenterStart)
+            .fillMaxHeight()
+            .width(16.dp)
+            .background(
+                brush = Brush.horizontalGradient(
+                    GRADIENT_START to MaterialTheme.colorScheme.background,
+                    GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
+                    GRADIENT_END to Color.Transparent,
+                ),
+            ),
+    )
+}
+
+@Composable
+private fun BoxScope.EndGradient() {
+    Spacer(
+        modifier = Modifier
+            .align(Alignment.CenterEnd)
+            .fillMaxHeight()
+            .width(16.dp)
+            .background(
+                brush = Brush.horizontalGradient(
+                    GRADIENT_START to Color.Transparent,
+                    GRADIENT_MIDDLE to MaterialTheme.colorScheme.background,
+                    GRADIENT_END to MaterialTheme.colorScheme.background,
+                ),
+            ),
+    )
+}
+
+@Composable
+private fun BoxScope.TopBorderShadow() {
+    Spacer(
+        modifier = Modifier.Companion
+            .align(Alignment.TopCenter)
+            .fillMaxWidth()
+            .shadow(1.dp)
+            .height(1.dp),
     )
 }
 

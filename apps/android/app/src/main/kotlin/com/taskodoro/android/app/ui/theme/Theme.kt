@@ -21,61 +21,38 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColors = darkColorScheme(
-    primary = Frost02_600,
-    onPrimary = SnowStorm01,
-    primaryContainer = Frost02_800,
-    onPrimaryContainer = Frost02_300,
-    secondary = Frost01_600,
-    onSecondary = SnowStorm01,
-    secondaryContainer = Frost01_800,
-    onSecondaryContainer = Frost01_300,
-    tertiary = Frost04_800,
-    onTertiary = SnowStorm01,
-    tertiaryContainer = Frost04_1000,
-    onTertiaryContainer = Frost04_500,
-    error = AuroraRed800,
-    errorContainer = AuroraRed1000,
-    onError = SnowStorm01,
-    onErrorContainer = AuroraRed500,
-    background = PolarNight01,
-    onBackground = SnowStorm01,
-    surface = PolarNight02,
-    onSurface = SnowStorm02,
-    inverseOnSurface = PolarNight02,
-    inverseSurface = SnowStorm02,
-    inversePrimary = Frost02_600,
-    outline = SnowStorm03,
-    outlineVariant = PolarNight04,
+    primary = LimeGreen40,
+    onPrimary = LimeGreen100,
+    primaryContainer = LimeGreen90,
+    onPrimaryContainer = LimeGreen10,
+    secondary = LimeGreen40,
+    onSecondary = LimeGreen100,
+    secondaryContainer = LimeGreen90,
+    onSecondaryContainer = LimeGreen10,
+    tertiary = LimeGreen40,
+    onTertiary = LimeGreen100,
+    tertiaryContainer = LimeGreen90,
+    onTertiaryContainer = LimeGreen10,
+    surfaceTint = Color.Transparent,
 )
 
 private val LightColors = lightColorScheme(
-    primary = Frost02_600,
-    onPrimary = PolarNight01,
-    primaryContainer = Frost02_300,
-    onPrimaryContainer = Frost02_800,
-    secondary = Frost01_600,
-    onSecondary = PolarNight01,
-    secondaryContainer = Frost01_300,
-    onSecondaryContainer = Frost01_800,
-    tertiary = Frost04_800,
-    onTertiary = PolarNight01,
-    tertiaryContainer = Frost04_500,
-    onTertiaryContainer = Frost04_1000,
-    error = AuroraRed800,
-    errorContainer = AuroraRed500,
-    onError = PolarNight01,
-    onErrorContainer = AuroraRed1000,
-    background = SnowStorm01,
-    onBackground = PolarNight01,
-    surface = SnowStorm02,
-    onSurface = PolarNight02,
-    inverseOnSurface = SnowStorm02,
-    inverseSurface = PolarNight02,
-    inversePrimary = Frost02_600,
-    outline = PolarNight04,
-    outlineVariant = SnowStorm03,
+    primary = LimeGreen40,
+    onPrimary = LimeGreen100,
+    primaryContainer = LimeGreen90,
+    onPrimaryContainer = LimeGreen10,
+    secondary = LimeGreen40,
+    onSecondary = LimeGreen100,
+    secondaryContainer = LimeGreen90,
+    onSecondaryContainer = LimeGreen10,
+    tertiary = LimeGreen40,
+    onTertiary = LimeGreen100,
+    tertiaryContainer = LimeGreen90,
+    onTertiaryContainer = LimeGreen10,
+    surfaceTint = Color.Transparent,
 )
 
 @Composable
@@ -83,11 +60,7 @@ fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colors = if (!useDarkTheme) {
-        LightColors
-    } else {
-        DarkColors
-    }
+    val colors = if (useDarkTheme) DarkColors else LightColors
 
     MaterialTheme(
         colorScheme = colors,
