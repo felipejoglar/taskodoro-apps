@@ -18,29 +18,29 @@ package com.taskodoro.android.app.tasks.create
 
 import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
-import com.taskodoro.tasks.create.CreateTaskUseCase
+import com.taskodoro.tasks.create.TaskCreateUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Assert
 import org.junit.Test
 
-class CreateTaskViewModelTest {
+class TaskCreateViewModelTest {
 
     @Test
     fun init_doesNotModifyInitialState() {
         val (sut, _) = makeSUT()
 
-        Assert.assertEquals(CreateTaskUIState(), sut.state.value)
+        Assert.assertEquals(TaskCreateUIState(), sut.state.value)
     }
 
     @Test
     fun onTitleChanged_updatesTitleState() {
         val (sut, _) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(title = "Hello"),
-            CreateTaskUIState(title = "Hello, World!"),
+            TaskCreateUIState(),
+            TaskCreateUIState(title = "Hello"),
+            TaskCreateUIState(title = "Hello, World!"),
         )
 
         expectEquals(
@@ -58,9 +58,9 @@ class CreateTaskViewModelTest {
     fun onDescriptionChanged_updatesDescriptionState() {
         val (sut, _) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(description = "Hello"),
-            CreateTaskUIState(description = "Hello, World!"),
+            TaskCreateUIState(),
+            TaskCreateUIState(description = "Hello"),
+            TaskCreateUIState(description = "Hello, World!"),
         )
 
         expectEquals(
@@ -78,10 +78,10 @@ class CreateTaskViewModelTest {
     fun onDueDateChanged_updatesDueDateState() {
         val (sut, _) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(dueDate = 10),
-            CreateTaskUIState(dueDate = 20),
-            CreateTaskUIState(dueDate = 30),
+            TaskCreateUIState(),
+            TaskCreateUIState(dueDate = 10),
+            TaskCreateUIState(dueDate = 20),
+            TaskCreateUIState(dueDate = 30),
         )
 
         expectEquals(
@@ -98,31 +98,31 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun onCreateTaskClicked_emitsCorrectStatesOnSuccessfulSave() {
-        val (sut, createTask) = makeSUT()
+    fun onTaskCreateClicked_emitsCorrectStatesOnSuccessfulSave() {
+        val (sut, taskCreate) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(isTaskCreated = true),
+            TaskCreateUIState(),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(isTaskCreated = true),
         )
 
         expectEquals(
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf {
-                createTask.completeSuccessfully()
-                sut.onCreateTaskClicked()
+                taskCreate.completeSuccessfully()
+                sut.onTaskCreateClicked()
             },
         )
     }
 
     @Test
-    fun onCreateTaskClicked_emitsEmptyTitleErrorOnEmptyTitleValidationError() {
-        val (sut, createTask) = makeSUT()
+    fun onTaskCreateClicked_emitsEmptyTitleErrorOnEmptyTitleValidationError() {
+        val (sut, taskCreate) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_empty_title_error),
+            TaskCreateUIState(),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(error = R.string.create_new_task_empty_title_error),
         )
 
         expectEquals(
@@ -130,19 +130,19 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 val validatorErrors = listOf(TaskValidatorError.Title.Empty)
-                createTask.completeWithValidatorErrors(validatorErrors)
-                sut.onCreateTaskClicked()
+                taskCreate.completeWithValidatorErrors(validatorErrors)
+                sut.onTaskCreateClicked()
             },
         )
     }
 
     @Test
-    fun onCreateTaskClicked_emitsInvalidTitleErrorOnInvalidTitleValidationError() {
-        val (sut, createTask) = makeSUT()
+    fun onTaskCreateClicked_emitsInvalidTitleErrorOnInvalidTitleValidationError() {
+        val (sut, taskCreate) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_invalid_title_error),
+            TaskCreateUIState(),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(error = R.string.create_new_task_invalid_title_error),
         )
 
         expectEquals(
@@ -150,77 +150,77 @@ class CreateTaskViewModelTest {
             expectedValues = expectedStates,
             actions = listOf {
                 val validatorErrors = listOf(TaskValidatorError.Title.Invalid)
-                createTask.completeWithValidatorErrors(validatorErrors)
-                sut.onCreateTaskClicked()
+                taskCreate.completeWithValidatorErrors(validatorErrors)
+                sut.onTaskCreateClicked()
             },
         )
     }
 
     @Test
-    fun onCreateTaskClicked_emitsUnknownErrorOnCaughtError() {
-        val (sut, createTask) = makeSUT()
+    fun onTaskCreateClicked_emitsUnknownErrorOnCaughtError() {
+        val (sut, taskCreate) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
+            TaskCreateUIState(),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(error = R.string.create_new_task_unknown_error),
         )
 
         expectEquals(
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf {
-                createTask.throwError()
-                sut.onCreateTaskClicked()
+                taskCreate.throwError()
+                sut.onTaskCreateClicked()
             },
         )
     }
 
     @Test
-    fun onCreateTaskClicked_clearsErrorWhenSavingCorrectlyAfterError() {
-        val (sut, createTask) = makeSUT()
+    fun onTaskCreateClicked_clearsErrorWhenSavingCorrectlyAfterError() {
+        val (sut, taskCreate) = makeSUT()
         val expectedStatesForUnknownError = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_empty_title_error),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(isTaskCreated = true),
+            TaskCreateUIState(),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(error = R.string.create_new_task_unknown_error),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(error = R.string.create_new_task_empty_title_error),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(isTaskCreated = true),
         )
 
         expectEquals(
             flow = sut.state,
             expectedValues = expectedStatesForUnknownError,
             actions = listOf({
-                createTask.throwError()
-                sut.onCreateTaskClicked()
+                taskCreate.throwError()
+                sut.onTaskCreateClicked()
             }, {
                 val validatorErrors = listOf(TaskValidatorError.Title.Empty)
-                createTask.completeWithValidatorErrors(validatorErrors)
-                sut.onCreateTaskClicked()
+                taskCreate.completeWithValidatorErrors(validatorErrors)
+                sut.onTaskCreateClicked()
             }, {
-                createTask.completeSuccessfully()
-                sut.onCreateTaskClicked()
+                taskCreate.completeSuccessfully()
+                sut.onTaskCreateClicked()
             }),
         )
     }
 
     @Test
     fun onErrorShown_clearsError() {
-        val (sut, createTask) = makeSUT()
+        val (sut, taskCreate) = makeSUT()
         val expectedStates = listOf(
-            CreateTaskUIState(),
-            CreateTaskUIState(loading = true),
-            CreateTaskUIState(error = R.string.create_new_task_unknown_error),
-            CreateTaskUIState(),
+            TaskCreateUIState(),
+            TaskCreateUIState(loading = true),
+            TaskCreateUIState(error = R.string.create_new_task_unknown_error),
+            TaskCreateUIState(),
         )
 
         expectEquals(
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf({
-                createTask.throwError()
-                sut.onCreateTaskClicked()
+                taskCreate.throwError()
+                sut.onTaskCreateClicked()
             }, {
                 sut.onErrorShown()
             }),
@@ -229,33 +229,33 @@ class CreateTaskViewModelTest {
 
     // region Helpers
 
-    private fun makeSUT(): Pair<CreateTaskViewModel, CreateTaskUseCaseStub> {
-        val createTask = CreateTaskUseCaseStub()
-        val sut = CreateTaskViewModel(
-            createTask = createTask,
+    private fun makeSUT(): Pair<TaskCreateViewModel, TaskCreateUseCaseStub> {
+        val taskCreate = TaskCreateUseCaseStub()
+        val sut = TaskCreateViewModel(
+            taskCreate = taskCreate,
             dispatcher = UnconfinedTestDispatcher(),
         )
 
-        return sut to createTask
+        return sut to taskCreate
     }
 
-    private class CreateTaskUseCaseStub : CreateTaskUseCase {
-        private var result: CreateTaskUseCase.Result? = null
+    private class TaskCreateUseCaseStub : TaskCreateUseCase {
+        private var result: TaskCreateUseCase.Result? = null
 
         override fun invoke(
             title: String,
             description: String?,
             dueDate: Long?,
-        ): CreateTaskUseCase.Result {
+        ): TaskCreateUseCase.Result {
             return result!!
         }
 
         fun completeSuccessfully() {
-            result = CreateTaskUseCase.Result.Success
+            result = TaskCreateUseCase.Result.Success
         }
 
         fun completeWithValidatorErrors(validatorErrors: List<ValidatorError>) {
-            result = CreateTaskUseCase.Result.Failure(validatorErrors)
+            result = TaskCreateUseCase.Result.Failure(validatorErrors)
         }
 
         fun throwError() {
@@ -265,12 +265,3 @@ class CreateTaskViewModelTest {
 
     // endregion
 }
-
-// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
-// CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
-// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276),
-// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null)]>
-// but was:<[
-// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=null),
-// CreateTaskUIState(title=, description=, dueDate=0, loading=true, isTaskCreated=false, error=null),
-// CreateTaskUIState(title=, description=, dueDate=0, loading=false, isTaskCreated=false, error=2131296276)]>

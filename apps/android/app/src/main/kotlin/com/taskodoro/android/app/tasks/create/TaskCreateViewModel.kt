@@ -20,7 +20,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taskodoro.android.R
-import com.taskodoro.tasks.create.CreateTaskUseCase
+import com.taskodoro.tasks.create.TaskCreateUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
 import kotlinx.coroutines.CoroutineDispatcher
@@ -35,12 +35,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 
-class CreateTaskViewModel(
-    private val createTask: CreateTaskUseCase,
+class TaskCreateViewModel(
+    private val taskCreate: TaskCreateUseCase,
     private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(CreateTaskUIState())
+    private val _state = MutableStateFlow(TaskCreateUIState())
     internal val state = _state.asStateFlow()
 
     fun onTitleChanged(title: String) {
@@ -55,8 +55,8 @@ class CreateTaskViewModel(
         _state.update { it.copy(dueDate = dueDate) }
     }
 
-    fun onCreateTaskClicked() {
-        createTask(state.value)
+    fun onTaskCreateClicked() {
+        taskCreate(state.value)
             .flowOn(dispatcher)
             .onStart { updateWith(loading = true) }
             .onSuccess { updateWith(isTaskSaved = true) }
@@ -65,9 +65,9 @@ class CreateTaskViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun createTask(state: CreateTaskUIState) =
+    private fun taskCreate(state: TaskCreateUIState) =
         flow {
-            emit(createTask(state.title, state.description, state.dueDate))
+            emit(taskCreate(state.title, state.description, state.dueDate))
         }
 
     private fun updateWith(
@@ -106,12 +106,12 @@ class CreateTaskViewModel(
     }
 }
 
-private fun Flow<CreateTaskUseCase.Result>.onSuccess(
+private fun Flow<TaskCreateUseCase.Result>.onSuccess(
     action: () -> Unit,
-): Flow<CreateTaskUseCase.Result> =
-    onEach { if (it is CreateTaskUseCase.Result.Success) action() }
+): Flow<TaskCreateUseCase.Result> =
+    onEach { if (it is TaskCreateUseCase.Result.Success) action() }
 
-private fun Flow<CreateTaskUseCase.Result>.onFailure(
+private fun Flow<TaskCreateUseCase.Result>.onFailure(
     action: (List<ValidatorError>) -> Unit,
-): Flow<CreateTaskUseCase.Result> =
-    onEach { if (it is CreateTaskUseCase.Result.Failure) action(it.errors) }
+): Flow<TaskCreateUseCase.Result> =
+    onEach { if (it is TaskCreateUseCase.Result.Failure) action(it.errors) }

@@ -50,12 +50,12 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateTaskScreen(
-    state: CreateTaskUIState,
+fun TaskCreateScreen(
+    state: TaskCreateUIState,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onDueDateChanged: (Long) -> Unit,
-    onCreateTaskClicked: () -> Unit,
+    onTaskCreateClicked: () -> Unit,
     onTaskCreated: () -> Unit,
     onErrorShown: () -> Unit,
     onBackClicked: () -> Unit,
@@ -90,7 +90,7 @@ fun CreateTaskScreen(
                 navigationIcon = navigationIcon(onBackClicked),
                 actions = ActionsList(
                     listOf(
-                        submitIcon(state.loading, onCreateTaskClicked),
+                        submitIcon(state.loading, onTaskCreateClicked),
                     ),
                 ),
             )
@@ -137,14 +137,14 @@ private fun submitIcon(
 
 @ScreenPreviews
 @Composable
-private fun CreateTaskScreenPreview() {
+private fun TaskCreateScreenPreview() {
     AppTemplate {
-        CreateTaskScreen(
-            state = CreateTaskUIState(),
+        TaskCreateScreen(
+            state = TaskCreateUIState(),
             onTitleChanged = {},
             onDescriptionChanged = {},
             onDueDateChanged = {},
-            onCreateTaskClicked = {},
+            onTaskCreateClicked = {},
             onTaskCreated = {},
             onErrorShown = {},
             onBackClicked = {},

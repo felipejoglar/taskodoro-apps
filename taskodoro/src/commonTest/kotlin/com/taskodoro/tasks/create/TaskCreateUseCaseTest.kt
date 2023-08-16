@@ -26,7 +26,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
-class CreateTaskUseCaseTest {
+class TaskCreateUseCaseTest {
 
     @Test
     fun save_failsWithInvalidTitleOnInvalidTitleFailure() {
@@ -35,7 +35,7 @@ class CreateTaskUseCaseTest {
         validator.completeWithInvalidTitleFailure()
         val result = sut.invoke(anyTitle)
 
-        val expectedResult = CreateTaskUseCase.Result.Failure(
+        val expectedResult = TaskCreateUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.Title.Invalid),
         )
         assertEquals(expectedResult, result)
@@ -48,7 +48,7 @@ class CreateTaskUseCaseTest {
         validator.completeWithEmptyTitleFailure()
         val result = sut.invoke(anyTitle)
 
-        val expectedResult = CreateTaskUseCase.Result.Failure(
+        val expectedResult = TaskCreateUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.Title.Empty),
         )
         assertEquals(expectedResult, result)
@@ -61,7 +61,7 @@ class CreateTaskUseCaseTest {
         validator.completeWithInvalidDueDateFailure()
         val result = sut.invoke(anyTitle)
 
-        val expectedResult = CreateTaskUseCase.Result.Failure(
+        val expectedResult = TaskCreateUseCase.Result.Failure(
             errors = listOf(TaskValidatorError.DueDate.Invalid),
         )
         assertEquals(expectedResult, result)
@@ -74,7 +74,7 @@ class CreateTaskUseCaseTest {
         validator.completeSuccessfully()
         repository.completeSavingWithFailure()
 
-        assertFailsWith(CreateTaskUseCase.SaveFailed::class) {
+        assertFailsWith(TaskCreateUseCase.SaveFailed::class) {
             sut.invoke(anyTitle)
         }
     }
@@ -87,7 +87,7 @@ class CreateTaskUseCaseTest {
         repository.completeSavingSuccessfully()
         val result = sut.invoke(anyTitle)
 
-        assertEquals(CreateTaskUseCase.Result.Success, result)
+        assertEquals(TaskCreateUseCase.Result.Success, result)
     }
 
     @Test
@@ -140,10 +140,10 @@ class CreateTaskUseCaseTest {
 
     private fun makeSUT(
         now: Long = 0,
-    ): Triple<CreateTaskUseCase, TaskRepositoryStub, TaskValidatorStub> {
+    ): Triple<TaskCreateUseCase, TaskRepositoryStub, TaskValidatorStub> {
         val validator = TaskValidatorStub()
         val repository = TaskRepositoryStub()
-        val sut = CreateTask(
+        val sut = TaskCreate(
             repository = repository,
             validator = validator,
             now = { now },

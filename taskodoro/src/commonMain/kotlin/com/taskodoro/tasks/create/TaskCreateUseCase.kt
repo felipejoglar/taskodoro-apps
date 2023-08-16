@@ -21,7 +21,7 @@ import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.validator.Validator
 import com.taskodoro.tasks.validator.ValidatorError
 
-interface CreateTaskUseCase {
+interface TaskCreateUseCase {
     sealed class Result {
         data object Success : Result()
         data class Failure(val errors: List<ValidatorError>) : Result()
@@ -36,17 +36,17 @@ interface CreateTaskUseCase {
     ): Result
 }
 
-class CreateTask(
+class TaskCreate(
     private val repository: TaskRepository,
     private val validator: Validator<Task>,
     private val now: () -> Long,
-) : CreateTaskUseCase {
+) : TaskCreateUseCase {
 
     override operator fun invoke(
         title: String,
         description: String?,
         dueDate: Long?,
-    ): CreateTaskUseCase.Result {
+    ): TaskCreateUseCase.Result {
         try {
             val task = Task(
                 title = title.trim(),
@@ -58,12 +58,12 @@ class CreateTask(
 
             return if (errors.isEmpty()) {
                 repository.save(task)
-                CreateTaskUseCase.Result.Success
+                TaskCreateUseCase.Result.Success
             } else {
-                CreateTaskUseCase.Result.Failure(errors)
+                TaskCreateUseCase.Result.Failure(errors)
             }
         } catch (exception: TaskRepository.SaveFailed) {
-            throw CreateTaskUseCase.SaveFailed
+            throw TaskCreateUseCase.SaveFailed
         }
     }
 }

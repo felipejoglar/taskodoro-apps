@@ -24,13 +24,13 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
-import com.taskodoro.android.app.tasks.create.CreateTaskScreen
-import com.taskodoro.android.app.tasks.create.CreateTaskViewModel
+import com.taskodoro.android.app.tasks.create.TaskCreateScreen
+import com.taskodoro.android.app.tasks.create.TaskCreateViewModel
 import com.taskodoro.android.app.ui.components.AppTemplate
 import com.taskodoro.storage.db.DatabaseFactory
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
-import com.taskodoro.tasks.create.CreateTask
+import com.taskodoro.tasks.create.TaskCreate
 import com.taskodoro.tasks.validator.TaskValidatorFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,24 +53,24 @@ class MainActivity : ComponentActivity() {
         val repository = LocalTaskRepository(store)
         val validator = TaskValidatorFactory.create()
         val now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
-        val createTask = CreateTask(repository, validator, now)
+        val taskCreate = TaskCreate(repository, validator, now)
 
         setContent {
             val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-            val viewModel = CreateTaskViewModel(
-                createTask = createTask,
+            val viewModel = TaskCreateViewModel(
+                taskCreate = taskCreate,
                 dispatcher = Dispatchers.IO,
             )
 
             val state by viewModel.state.collectAsState()
 
             AppTemplate {
-                CreateTaskScreen(
+                TaskCreateScreen(
                     state = state,
                     onTitleChanged = viewModel::onTitleChanged,
                     onDescriptionChanged = viewModel::onDescriptionChanged,
                     onDueDateChanged = viewModel::onDueDateChanged,
-                    onCreateTaskClicked = viewModel::onCreateTaskClicked,
+                    onTaskCreateClicked = viewModel::onTaskCreateClicked,
                     onTaskCreated = {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
                     },

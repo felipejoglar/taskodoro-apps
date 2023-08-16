@@ -18,7 +18,7 @@ package com.taskodoro.android.app.tasks.create
 
 import androidx.annotation.StringRes
 
-data class CreateTaskUIState(
+data class TaskCreateUIState(
     val title: String = "",
     val description: String = "",
     val dueDate: Long? = null,
