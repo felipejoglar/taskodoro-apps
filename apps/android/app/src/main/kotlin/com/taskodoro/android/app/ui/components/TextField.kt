@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 
@@ -64,17 +65,37 @@ fun TextField(
     )
 }
 
-@FontScalePreviews
 @ComponentPreviews
 @Composable
 private fun TextFieldPreview() {
+    AppTheme(useDynamicColors = false) {
+        TextFieldCommonPreview()
+    }
+}
+
+@DynamicColorsPreviews
+@Composable
+private fun TextFieldDynamicColorsPreview() {
     AppTheme {
-        Surface {
-            TextField(
-                value = "",
-                onValueChanged = {},
-                placeHolderText = "Add a task now!",
-            )
-        }
+        TextFieldCommonPreview()
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun TextFieldFontScalePreview() {
+    AppTheme(useDynamicColors = false) {
+        TextFieldCommonPreview()
+    }
+}
+
+@Composable
+private fun TextFieldCommonPreview() {
+    Surface {
+        TextField(
+            value = "",
+            onValueChanged = {},
+            placeHolderText = "Add a task now!",
+        )
     }
 }

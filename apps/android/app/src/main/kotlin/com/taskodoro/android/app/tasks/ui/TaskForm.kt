@@ -49,6 +49,7 @@ import com.taskodoro.android.app.ui.components.chipsrow.ChipsRow
 import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsList
 import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsRowItem
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 
@@ -169,19 +170,39 @@ fun dueDateField(
     onClick = onDueDateClicked,
 )
 
-@FontScalePreviews
 @ComponentPreviews
 @Composable
 private fun TaskFormPreview() {
-    AppTheme {
-        TaskForm(
-            title = "",
-            onTitleChanged = {},
-            description = "",
-            onDescriptionChanged = {},
-            onDueDateChanged = {},
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background),
-        )
+    AppTheme(useDynamicColors = false) {
+        TaskFormCommonPreview()
     }
+}
+
+@DynamicColorsPreviews
+@Composable
+private fun TaskFormDynamicColorsPreview() {
+    AppTheme {
+        TaskFormCommonPreview()
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun TaskFormFontScalePreview() {
+    AppTheme(useDynamicColors = false) {
+        TaskFormCommonPreview()
+    }
+}
+
+@Composable
+private fun TaskFormCommonPreview() {
+    TaskForm(
+        title = "",
+        onTitleChanged = {},
+        description = "",
+        onDescriptionChanged = {},
+        onDueDateChanged = {},
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background),
+    )
 }

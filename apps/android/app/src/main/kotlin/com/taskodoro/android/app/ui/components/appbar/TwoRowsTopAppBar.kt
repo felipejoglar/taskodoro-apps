@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 
@@ -50,30 +51,50 @@ fun TwoRowsTopAppBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@FontScalePreviews
 @ComponentPreviews
 @Composable
-private fun SingleRowTopAppBarPreview() {
+private fun TwoRowsTopAppBarPreview() {
+    AppTheme(useDynamicColors = false) {
+        TwoRowsTopAppBarCommonPreview()
+    }
+}
+
+@DynamicColorsPreviews
+@Composable
+private fun TwoRowsTopAppBarDynamicColorsPreview() {
     AppTheme {
-        TwoRowsTopAppBar(
-            title = "TopAppBar",
-            subtitle = "This is a subtitle",
-            navigationIcon = TopAppBarAction.Icon(
-                icon = Icons.Rounded.ArrowBack,
-                contentDescription = "Back",
-                action = { },
-            ),
-            actions = ActionsList(
-                listOf(
-                    TopAppBarAction.Icon(
-                        icon = Icons.Rounded.Send,
-                        contentDescription = "Submit",
-                        action = { },
-                        tint = MaterialTheme.colorScheme.primary,
-                    ),
+        TwoRowsTopAppBarCommonPreview()
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun TwoRowsTopAppBarFontScalePreview() {
+    AppTheme(useDynamicColors = false) {
+        TwoRowsTopAppBarCommonPreview()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun TwoRowsTopAppBarCommonPreview() {
+    TwoRowsTopAppBar(
+        title = "TopAppBar",
+        subtitle = "This is a subtitle",
+        navigationIcon = TopAppBarAction.Icon(
+            icon = Icons.Rounded.ArrowBack,
+            contentDescription = "Back",
+            action = { },
+        ),
+        actions = ActionsList(
+            listOf(
+                TopAppBarAction.Icon(
+                    icon = Icons.Rounded.Send,
+                    contentDescription = "Submit",
+                    action = { },
+                    tint = MaterialTheme.colorScheme.primary,
                 ),
             ),
-        )
-    }
+        ),
+    )
 }

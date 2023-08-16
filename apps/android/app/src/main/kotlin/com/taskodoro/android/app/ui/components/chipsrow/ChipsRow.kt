@@ -50,6 +50,7 @@ import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsList
 import com.taskodoro.android.app.ui.components.chipsrow.model.ChipsRowItem
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 
@@ -84,7 +85,6 @@ fun ChipsRow(
 
         StartGradient()
         EndGradient()
-
 
         if (showTopShadow) {
             TopBorderShadow()
@@ -162,10 +162,32 @@ private fun BoxScope.TopBorderShadow() {
     )
 }
 
-@FontScalePreviews
 @ComponentPreviews
 @Composable
 private fun ChipsRowPreview() {
+    AppTheme(useDynamicColors = false) {
+        ChipsRowCommonPreview()
+    }
+}
+
+@DynamicColorsPreviews
+@Composable
+private fun ChipsRowDynamicColorsPreview() {
+    AppTheme {
+        ChipsRowCommonPreview()
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun ChipsRowFontScalePreview() {
+    AppTheme(useDynamicColors = false) {
+        ChipsRowCommonPreview()
+    }
+}
+
+@Composable
+private fun ChipsRowCommonPreview() {
     val item = ChipsRowItem(
         icon = Icons.Rounded.CalendarMonth,
         description = stringResource(id = R.string.create_new_task_due_date),
@@ -173,9 +195,7 @@ private fun ChipsRowPreview() {
     )
     val chips = ChipsList(listOf(item, item, item, item))
 
-    AppTheme {
-        ChipsRow(
-            chips = chips,
-        )
-    }
+    ChipsRow(
+        chips = chips,
+    )
 }

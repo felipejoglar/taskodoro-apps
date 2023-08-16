@@ -34,6 +34,7 @@ import com.taskodoro.android.app.ui.components.appbar.SingleRowTopAppBar
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 import java.time.LocalDate
@@ -93,16 +94,36 @@ private val today: Long
 private fun Long.asSeconds() = TimeUnit.MILLISECONDS.toSeconds(this)
 private fun Long.asMillis() = TimeUnit.SECONDS.toMillis(this)
 
-@FontScalePreviews
 @ComponentPreviews
 @Composable
 private fun DueDateSelectionPreview() {
+    AppTheme(useDynamicColors = false) {
+        DueDateSelectionCommonPreview()
+    }
+}
+
+@DynamicColorsPreviews
+@Composable
+private fun DueDateSelectionDynamicColorsPreview() {
     AppTheme {
-        Surface {
-            DueDateSelection(
-                onDateSelected = {},
-                onDismiss = {},
-            )
-        }
+        DueDateSelectionCommonPreview()
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun DueDateSelectionFontScalePreview() {
+    AppTheme(useDynamicColors = false) {
+        DueDateSelectionCommonPreview()
+    }
+}
+
+@Composable
+private fun DueDateSelectionCommonPreview() {
+    Surface {
+        DueDateSelection(
+            onDateSelected = {},
+            onDismiss = {},
+        )
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 
@@ -46,27 +47,47 @@ fun SingleRowTopAppBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@FontScalePreviews
 @ComponentPreviews
 @Composable
 private fun SingleRowTopAppBarPreview() {
+    AppTheme(useDynamicColors = false) {
+        SingleRowTopAppBarCommonPreview()
+    }
+}
+
+@DynamicColorsPreviews
+@Composable
+private fun SingleRowTopAppBarDynamicColorsPreview() {
     AppTheme {
-        SingleRowTopAppBar(
-            title = "TopAppBar",
-            navigationIcon = TopAppBarAction.Icon(
-                icon = Icons.Rounded.ArrowBack,
-                contentDescription = "Back",
-                action = { },
-            ),
-            actions = ActionsList(
-                listOf(
-                    TopAppBarAction.Button(
-                        text = "Save",
-                        action = { },
-                    ),
+        SingleRowTopAppBarCommonPreview()
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun SingleRowTopAppBarFontScalePreview() {
+    AppTheme(useDynamicColors = false) {
+        SingleRowTopAppBarCommonPreview()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SingleRowTopAppBarCommonPreview() {
+    SingleRowTopAppBar(
+        title = "TopAppBar",
+        navigationIcon = TopAppBarAction.Icon(
+            icon = Icons.Rounded.ArrowBack,
+            contentDescription = "Back",
+            action = { },
+        ),
+        actions = ActionsList(
+            listOf(
+                TopAppBarAction.Button(
+                    text = "Save",
+                    action = { },
                 ),
             ),
-        )
-    }
+        ),
+    )
 }

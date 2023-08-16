@@ -31,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,6 +42,7 @@ import com.taskodoro.android.app.ui.components.Tooltip
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
+import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 
@@ -145,34 +145,54 @@ private fun TopAppBarButton(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@FontScalePreviews
 @ComponentPreviews
 @Composable
-private fun TaskodoroTopBarPreview() {
+private fun TopAppBarPreview() {
+    AppTheme(useDynamicColors = false) {
+        TopAppBarCommonPreview()
+    }
+}
+
+@DynamicColorsPreviews
+@Composable
+private fun TopAppBarDynamicColorsPreview() {
     AppTheme {
-        TopAppBar(
-            title = "TopAppBar",
-            subtitle = "A subtitle",
-            navigationIcon = TopAppBarAction.Icon(
-                icon = Icons.Rounded.ArrowBack,
-                contentDescription = "Back",
-                action = { },
-            ),
-            actions = ActionsList(
-                listOf(
-                    TopAppBarAction.Icon(
-                        icon = Icons.Rounded.Send,
-                        contentDescription = "Submit",
-                        action = { },
-                        tint = MaterialTheme.colorScheme.primary,
-                    ),
-                    TopAppBarAction.Button(
-                        text = "Save",
-                        action = { },
-                    ),
+        TopAppBarCommonPreview()
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun TopAppBarFontScalePreview() {
+    AppTheme(useDynamicColors = false) {
+        TopAppBarCommonPreview()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun TopAppBarCommonPreview() {
+    TopAppBar(
+        title = "TopAppBar",
+        subtitle = "A subtitle",
+        navigationIcon = TopAppBarAction.Icon(
+            icon = Icons.Rounded.ArrowBack,
+            contentDescription = "Back",
+            action = { },
+        ),
+        actions = ActionsList(
+            listOf(
+                TopAppBarAction.Icon(
+                    icon = Icons.Rounded.Send,
+                    contentDescription = "Submit",
+                    action = { },
+                    tint = MaterialTheme.colorScheme.primary,
+                ),
+                TopAppBarAction.Button(
+                    text = "Save",
+                    action = { },
                 ),
             ),
-        )
-    }
+        ),
+    )
 }

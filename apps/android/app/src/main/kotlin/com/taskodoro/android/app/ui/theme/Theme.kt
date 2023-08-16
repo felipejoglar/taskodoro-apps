@@ -16,12 +16,16 @@
 
 package com.taskodoro.android.app.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
 private val DarkColors = darkColorScheme(
     primary = LimeGreen40,
@@ -58,12 +62,26 @@ private val LightColors = lightColorScheme(
 @Composable
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
+    useDynamicColors: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val colors = if (useDarkTheme) DarkColors else LightColors
+    val colors = when {
+        useDynamicColors && isAndroid12OrLater && useDarkTheme -> dynamicDarkColorScheme(
+            LocalContext.current,
+        )
+
+        useDynamicColors && isAndroid12OrLater && !useDarkTheme -> dynamicLightColorScheme(
+            LocalContext.current,
+        )
+
+        useDarkTheme -> DarkColors
+        else -> LightColors
+    }
 
     MaterialTheme(
         colorScheme = colors,
         content = content,
     )
 }
+
+private val isAndroid12OrLater = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S

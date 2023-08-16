@@ -36,9 +36,12 @@ import com.taskodoro.android.app.ui.theme.AppTheme
 fun AppTemplate(
     modifier: Modifier = Modifier,
     useDarkIcons: Boolean = !isSystemInDarkTheme(),
+    useDynamicColors: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    AppTheme {
+    AppTheme(
+        useDynamicColors = useDynamicColors,
+    ) {
         val systemUiController = rememberSystemUiController()
 
         systemUiController.setStatusBarColor(
