@@ -19,10 +19,14 @@ package com.taskodoro.android.app
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import com.taskodoro.android.app.tasks.create.TaskCreateScreen
 import com.taskodoro.android.app.tasks.create.TaskCreateViewModel
@@ -63,10 +67,20 @@ class MainActivity : ComponentActivity() {
             )
 
             val state by viewModel.state.collectAsState()
+            var openConfirmationDialog by remember { mutableStateOf(false) }
+
+            val onBackClicked = {
+                if (state.title.isNotBlank()) {
+                    openConfirmationDialog = true
+                } else {
+                    finish()
+                }
+            }
 
             AppTemplate {
                 TaskCreateScreen(
                     state = state,
+                    openConfirmationDialog = openConfirmationDialog,
                     onTitleChanged = viewModel::onTitleChanged,
                     onDescriptionChanged = viewModel::onDescriptionChanged,
                     onDueDateChanged = viewModel::onDueDateChanged,
@@ -75,9 +89,13 @@ class MainActivity : ComponentActivity() {
                         Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
                     },
                     onErrorShown = viewModel::onErrorShown,
-                    onBackClicked = ::finish,
+                    onDismissConfirmationDialog = { openConfirmationDialog = false },
+                    onDiscardChanges = ::finish,
+                    onBackClicked = onBackClicked,
                 )
             }
+
+            BackHandler(enabled = true, onBackClicked)
 
             DisposableEffect(Unit) { onDispose { scope.cancel() } }
         }

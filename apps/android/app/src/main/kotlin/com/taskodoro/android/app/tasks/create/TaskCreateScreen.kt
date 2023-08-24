@@ -27,11 +27,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Send
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -52,12 +55,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun TaskCreateScreen(
     state: TaskCreateUIState,
+    openConfirmationDialog: Boolean,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onDueDateChanged: (Long) -> Unit,
     onTaskCreateClicked: () -> Unit,
     onTaskCreated: () -> Unit,
     onErrorShown: () -> Unit,
+    onDismissConfirmationDialog: () -> Unit,
+    onDiscardChanges: () -> Unit,
     onBackClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -112,6 +118,13 @@ fun TaskCreateScreen(
                 .verticalScroll(rememberScrollState()),
         )
     }
+
+    if (openConfirmationDialog) {
+        ConfirmationDialog(
+            onDismissConfirmationDialog = onDismissConfirmationDialog,
+            onDiscardChanges = onDiscardChanges,
+        )
+    }
 }
 
 @Composable
@@ -135,18 +148,72 @@ private fun submitIcon(
     action = action,
 )
 
+@Composable
+private fun ConfirmationDialog(
+    onDismissConfirmationDialog: () -> Unit,
+    onDiscardChanges: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    AlertDialog(
+        onDismissRequest = onDismissConfirmationDialog,
+        title = {
+            Text(text = "Are you sure you want to cancel?")
+        },
+        text = {
+            Text(text = "Your changes will be discarded")
+        },
+        confirmButton = {
+            TextButton(onClick = onDiscardChanges) {
+                Text(
+                    text = "Discard changes",
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismissConfirmationDialog) {
+                Text(text = "Cancel")
+            }
+        },
+        modifier = modifier,
+    )
+}
+
 @ScreenPreviews
 @Composable
 private fun TaskCreateScreenPreview() {
     AppTemplate {
         TaskCreateScreen(
             state = TaskCreateUIState(),
+            openConfirmationDialog = false,
             onTitleChanged = {},
             onDescriptionChanged = {},
             onDueDateChanged = {},
             onTaskCreateClicked = {},
             onTaskCreated = {},
             onErrorShown = {},
+            onDismissConfirmationDialog = {},
+            onDiscardChanges = {},
+            onBackClicked = {},
+        )
+    }
+}
+
+@ScreenPreviews
+@Composable
+private fun TaskCreateScreenWithDialogPreview() {
+    AppTemplate {
+        TaskCreateScreen(
+            state = TaskCreateUIState(),
+            openConfirmationDialog = true,
+            onTitleChanged = {},
+            onDescriptionChanged = {},
+            onDueDateChanged = {},
+            onTaskCreateClicked = {},
+            onTaskCreated = {},
+            onErrorShown = {},
+            onDismissConfirmationDialog = {},
+            onDiscardChanges = {},
             onBackClicked = {},
         )
     }
