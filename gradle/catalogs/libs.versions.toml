@@ -24,7 +24,7 @@ detektGradlePlugin = "1.23.0"
 desugar = "2.0.3"
 activity-compose = "1.7.2"
 
-compose = "1.6.0-alpha02"
+compose = "1.6.0-alpha04"
 compose-material3 = "1.1.1"
 compose-compiler = "1.5.1"
 
@@ -59,7 +59,7 @@ sqlDelight-android-driver = { module = "app.cash.sqldelight:android-driver", ver
 sqlDelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 sqlDelight-jvm-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
 
-# kotlinx datetime -
+# kotlinx datetime - https://github.com/Kotlin/kotlinx-datetime
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime"}
 
 # JUnit - https://junit.org/junit4/
