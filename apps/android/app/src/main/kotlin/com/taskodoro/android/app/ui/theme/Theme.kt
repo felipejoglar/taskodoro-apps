@@ -17,45 +17,74 @@
 package com.taskodoro.android.app.ui.theme
 
 import android.os.Build
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
 
 private val DarkColors = darkColorScheme(
-    primary = LimeGreen40,
-    onPrimary = LimeGreen100,
-    primaryContainer = LimeGreen90,
-    onPrimaryContainer = LimeGreen10,
-    secondary = LimeGreen40,
-    onSecondary = LimeGreen100,
-    secondaryContainer = LimeGreen90,
-    onSecondaryContainer = LimeGreen10,
-    tertiary = LimeGreen40,
-    onTertiary = LimeGreen100,
-    tertiaryContainer = LimeGreen90,
-    onTertiaryContainer = LimeGreen10,
+    primary = GreenAccentDark,
+    onPrimary = ForegroundDefaultDark,
+    primaryContainer = GreenBackgroundDark,
+    onPrimaryContainer = GreenAccentDark,
+    secondary = BrownAccentDark,
+    onSecondary = ForegroundDefaultDark,
+    secondaryContainer = BrownBackgroundDark,
+    onSecondaryContainer = BrownAccentDark,
+    tertiary = PinkAccentDark,
+    onTertiary = ForegroundDefaultDark,
+    tertiaryContainer = PinkBackgroundDark,
+    onTertiaryContainer = PinkAccentDark,
+    error = RedAccentDark,
+    onError = ForegroundDefaultDark,
+    errorContainer = RedBackgroundDark,
+    onErrorContainer = RedAccentDark,
+    background = BackgroundDefaultDark,
+    onBackground = ForegroundDefaultDark,
+    surface = BackgroundDefaultDark,
+    onSurface = ForegroundDefaultDark,
     surfaceTint = Color.Transparent,
 )
 
 private val LightColors = lightColorScheme(
-    primary = LimeGreen40,
-    onPrimary = LimeGreen100,
-    primaryContainer = LimeGreen90,
-    onPrimaryContainer = LimeGreen10,
-    secondary = LimeGreen40,
-    onSecondary = LimeGreen100,
-    secondaryContainer = LimeGreen90,
-    onSecondaryContainer = LimeGreen10,
-    tertiary = LimeGreen40,
-    onTertiary = LimeGreen100,
-    tertiaryContainer = LimeGreen90,
-    onTertiaryContainer = LimeGreen10,
+    primary = GreenAccentLight,
+    onPrimary = ForegroundDefaultLight,
+    primaryContainer = GreenBackgroundLight,
+    onPrimaryContainer = GreenAccentLight,
+    secondary = BrownAccentLight,
+    onSecondary = ForegroundDefaultLight,
+    secondaryContainer = BrownBackgroundLight,
+    onSecondaryContainer = BrownAccentLight,
+    tertiary = PinkAccentLight,
+    onTertiary = ForegroundDefaultLight,
+    tertiaryContainer = PinkBackgroundLight,
+    onTertiaryContainer = PinkAccentLight,
+    error = RedAccentLight,
+    onError = ForegroundDefaultLight,
+    errorContainer = RedBackgroundLight,
+    onErrorContainer = RedAccentLight,
+    background = BackgroundDefaultLight,
+    onBackground = ForegroundDefaultLight,
+    surface = BackgroundDefaultLight,
+    onSurface = ForegroundDefaultLight,
     surfaceTint = Color.Transparent,
 )
 
@@ -65,15 +94,10 @@ fun AppTheme(
     useDynamicColors: Boolean = true,
     content: @Composable () -> Unit,
 ) {
+    val dynamicColorsEnabled = useDynamicColors && isAndroid12OrLater
     val colors = when {
-        useDynamicColors && isAndroid12OrLater && useDarkTheme -> dynamicDarkColorScheme(
-            LocalContext.current,
-        )
-
-        useDynamicColors && isAndroid12OrLater && !useDarkTheme -> dynamicLightColorScheme(
-            LocalContext.current,
-        )
-
+        dynamicColorsEnabled && useDarkTheme -> dynamicDarkColorScheme(LocalContext.current)
+        dynamicColorsEnabled && !useDarkTheme -> dynamicLightColorScheme(LocalContext.current)
         useDarkTheme -> DarkColors
         else -> LightColors
     }
@@ -85,3 +109,75 @@ fun AppTheme(
 }
 
 private val isAndroid12OrLater = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+@ComponentPreviews
+@Composable
+private fun ColorPreview() {
+    AppTheme(
+        useDynamicColors = false,
+    ) {
+        Column(
+            Modifier.background(MaterialTheme.colorScheme.background),
+        ) {
+            ColoredPreview(
+                color = MaterialTheme.colorScheme.primary,
+                colorContainer = MaterialTheme.colorScheme.primaryContainer,
+                onColorContainer = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+            ColoredPreview(
+                color = MaterialTheme.colorScheme.secondary,
+                colorContainer = MaterialTheme.colorScheme.secondaryContainer,
+                onColorContainer = MaterialTheme.colorScheme.onSecondaryContainer,
+            )
+            ColoredPreview(
+                color = MaterialTheme.colorScheme.tertiary,
+                colorContainer = MaterialTheme.colorScheme.tertiaryContainer,
+                onColorContainer = MaterialTheme.colorScheme.onTertiaryContainer,
+            )
+            ColoredPreview(
+                color = MaterialTheme.colorScheme.error,
+                colorContainer = MaterialTheme.colorScheme.errorContainer,
+                onColorContainer = MaterialTheme.colorScheme.onErrorContainer,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ColoredPreview(
+    color: Color,
+    colorContainer: Color,
+    onColorContainer: Color,
+) {
+    Column {
+        Text(
+            text = "This is a Theme",
+            style = MaterialTheme.typography.headlineMedium,
+            color = color,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 16.dp),
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 16.dp)
+                .background(colorContainer)
+                .border(
+                    width = 2.dp,
+                    color = onColorContainer,
+                    shape = RoundedCornerShape(16.dp),
+                )
+                .clip(RoundedCornerShape(16.dp)),
+        ) {
+            Text(
+                text = "This is a Theme",
+                style = MaterialTheme.typography.headlineMedium,
+                color = onColorContainer,
+                modifier = Modifier.padding(all = 16.dp),
+            )
+        }
+    }
+}
