@@ -157,22 +157,22 @@ private fun ConfirmationDialog(
     AlertDialog(
         onDismissRequest = onDismissConfirmationDialog,
         title = {
-            Text(text = "Are you sure you want to cancel?")
+            Text(text = stringResource(id = R.string.create_new_task_confirmation_dialog_title))
         },
         text = {
-            Text(text = "Your changes will be discarded")
+            Text(text = stringResource(id = R.string.create_new_task_confirmation_dialog_text))
         },
         confirmButton = {
             TextButton(onClick = onDiscardChanges) {
                 Text(
-                    text = "Discard changes",
+                    text = stringResource(id = R.string.create_new_task_confirmation_dialog_accept),
                     color = MaterialTheme.colorScheme.error,
                 )
             }
         },
         dismissButton = {
             TextButton(onClick = onDismissConfirmationDialog) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.create_new_task_confirmation_dialog_dismiss))
             }
         },
         modifier = modifier,

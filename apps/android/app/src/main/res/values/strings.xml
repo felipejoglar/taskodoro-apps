@@ -25,6 +25,10 @@
     <string name="create_new_task_empty_title_error">Task\'s title can\'t be empty</string>
     <string name="create_new_task_invalid_title_error">Task\'s title should have at least 4 characters</string>
     <string name="create_new_task_unknown_error">An error has occurred, please try again.</string>
+    <string name="create_new_task_confirmation_dialog_title">Are you sure you want to cancel?</string>
+    <string name="create_new_task_confirmation_dialog_text">Your changes will be discarded</string>
+    <string name="create_new_task_confirmation_dialog_accept">Discard changes</string>
+    <string name="create_new_task_confirmation_dialog_dismiss">Cancel</string>
 
     <!--  COMPONENT: TASK FORM  -->
     <string name="task_form_title">Title</string>
