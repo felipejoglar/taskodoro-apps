@@ -42,7 +42,7 @@ allprojects {
 
 // Spotless configuration
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-    val ktlintVersion = "0.48.2"
+    val ktlintVersion = "0.50.0"
 
     kotlin {
         target("**/*.kt")
@@ -82,7 +82,7 @@ allprojects {
 
         dependencies {
             // https://mrmans0n.github.io/compose-rules/
-            detektPlugins("io.nlopez.compose.rules:detekt:0.1.12")
+            detektPlugins("io.nlopez.compose.rules:detekt:0.2.1")
         }
     }
 }

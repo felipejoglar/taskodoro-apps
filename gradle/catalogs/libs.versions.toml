@@ -17,9 +17,9 @@
 [versions]
 kotlin = "1.9.0"
 
-androidGradlePlugin = "8.2.0-beta01"
-spotlessGradlePlugin = "6.19.0"
-detektGradlePlugin = "1.23.0"
+androidGradlePlugin = "8.3.0-alpha02"
+spotlessGradlePlugin = "6.21.0"
+detektGradlePlugin = "1.23.1"
 
 desugar = "2.0.3"
 activity-compose = "1.7.2"
