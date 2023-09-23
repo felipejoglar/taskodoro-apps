@@ -43,7 +43,6 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            @Suppress("UnstableApiUsage")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -58,7 +57,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
     }
