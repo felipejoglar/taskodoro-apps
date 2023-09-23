@@ -15,26 +15,26 @@
 #
 
 [versions]
-kotlin = "1.9.0"
+kotlin = "1.9.10"
 
-androidGradlePlugin = "8.3.0-alpha02"
+androidGradlePlugin = "8.3.0-alpha04"
 spotlessGradlePlugin = "6.21.0"
 detektGradlePlugin = "1.23.1"
 
 desugar = "2.0.3"
 activity-compose = "1.7.2"
 
-compose = "1.6.0-alpha04"
-compose-material3 = "1.1.1"
-compose-compiler = "1.5.1"
+compose = "1.6.0-alpha06"
+compose-material3 = "1.1.2"
+compose-compiler = "1.5.3"
 
-accompanist = "0.30.1"
+accompanist = "0.33.1-alpha"
 
-coroutines = "1.7.1"
+coroutines = "1.7.3"
 
-sqlDelight = "2.0.0-rc02"
+sqlDelight = "2.0.0"
 
-datetime = "0.4.0"
+datetime = "0.4.1"
 
 junit = "4.13.2"
 
@@ -76,7 +76,7 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
-# Kotlin Gradle Plugin - https://kotlinlang.org/docs/   releases.html
+# Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin"}
 
