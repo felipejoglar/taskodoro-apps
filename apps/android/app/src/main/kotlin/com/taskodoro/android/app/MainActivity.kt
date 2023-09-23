@@ -31,9 +31,8 @@ import androidx.core.view.WindowCompat
 import com.taskodoro.android.app.tasks.create.TaskCreateScreen
 import com.taskodoro.android.app.tasks.create.TaskCreateViewModel
 import com.taskodoro.android.app.ui.components.AppTemplate
-import com.taskodoro.storage.db.DatabaseFactory
 import com.taskodoro.storage.tasks.LocalTaskRepository
-import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
+import com.taskodoro.storage.tasks.TaskStoreFactory
 import com.taskodoro.tasks.create.TaskCreate
 import com.taskodoro.tasks.validator.TaskValidatorFactory
 import kotlinx.coroutines.CoroutineScope
@@ -50,10 +49,7 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val database = DatabaseFactory(applicationContext).create().apply {
-            taskdoroDBQueries.clearDB()
-        }
-        val store = SQLDelightTaskStore(database)
+        val store = TaskStoreFactory(applicationContext).create()
         val repository = LocalTaskRepository(store)
         val validator = TaskValidatorFactory.create()
         val now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }

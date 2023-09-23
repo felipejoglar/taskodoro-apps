@@ -14,30 +14,10 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+package com.taskodoro.storage.db.test
+
+import app.cash.sqldelight.db.SqlDriver
+
+expect object TestDriverFactory {
+    fun create(): SqlDriver
 }
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-include(":taskodoro")
-include(":infra:database")
-include(":infra:database-test")

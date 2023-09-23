@@ -17,33 +17,31 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
 
     androidTarget()
 
-    listOf(
-        iosArm64(),
-        iosX64(),
-        iosSimulatorArm64(),
-    ).forEach {
-        it.binaries.framework {
-            baseName = "Taskodoro"
-        }
-    }
+    iosArm64()
+    iosX64()
+    iosSimulatorArm64()
 
     sourceSets {
 
         /* Main source sets */
-        val commonMain by getting {
+        val commonMain by getting
+        val androidMain by getting {
             dependencies {
-                implementation(projects.infra.database)
-                implementation(libs.kotlinx.datetime)
+                implementation(libs.sqlDelight.android.driver)
             }
         }
-        val androidMain by getting
-        val nativeMain by creating
+        val nativeMain by creating {
+            dependencies {
+                implementation(libs.sqlDelight.native.driver)
+            }
+        }
         val iosMain by creating
         val iosArm64Main by getting
         val iosX64Main by getting
@@ -58,12 +56,7 @@ kotlin {
         iosSimulatorArm64Main.dependsOn(iosMain)
 
         /* Test source sets */
-        val commonTest by getting {
-            dependencies {
-                implementation(projects.infra.databaseTest)
-                implementation(libs.kotlin.test)
-            }
-        }
+        val commonTest by getting
         val androidUnitTest by getting
         val iosArm64Test by getting
         val iosX64Test by getting
@@ -78,14 +71,6 @@ kotlin {
         iosArm64Test.dependsOn(iosTest)
         iosX64Test.dependsOn(iosTest)
         iosSimulatorArm64Test.dependsOn(iosTest)
-    }
-
-    // Enable concurrent sweep phase in new native memory manager.
-    // https://kotlinlang.org/docs/whatsnew1620.html#concurrent-implementation-for-the-sweep-phase-in-new-memory-manager
-    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
-        binaries.all {
-            freeCompilerArgs = freeCompilerArgs.plus("-Xgc=cms")
-        }
     }
 }
 
@@ -103,5 +88,13 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+sqldelight {
+    databases {
+        create("TaskodoroDB") {
+            packageName.set("com.taskodoro.storage.db")
+        }
     }
 }

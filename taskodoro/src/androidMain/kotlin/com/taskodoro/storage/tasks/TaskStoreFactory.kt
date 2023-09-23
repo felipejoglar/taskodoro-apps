@@ -14,12 +14,21 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.db
+package com.taskodoro.storage.tasks
 
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import android.content.Context
+import com.taskodoro.storage.db.DatabaseFactory
+import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
 
-actual object TestDriverFactory {
-    actual fun create(): SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-        .also { TaskodoroDB.Schema.create(it) }
+actual class TaskStoreFactory(
+    private val context: Context,
+) {
+
+    actual fun create(): TaskStore {
+        val database = DatabaseFactory(context).create().apply {
+            taskdoroDBQueries.clearDB()
+        }
+
+        return SQLDelightTaskStore(database = database)
+    }
 }

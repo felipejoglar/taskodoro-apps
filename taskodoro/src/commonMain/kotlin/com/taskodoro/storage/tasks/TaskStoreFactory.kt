@@ -14,30 +14,8 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+package com.taskodoro.storage.tasks
+
+expect class TaskStoreFactory {
+    fun create(): TaskStore
 }
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-include(":taskodoro")
-include(":infra:database")
-include(":infra:database-test")

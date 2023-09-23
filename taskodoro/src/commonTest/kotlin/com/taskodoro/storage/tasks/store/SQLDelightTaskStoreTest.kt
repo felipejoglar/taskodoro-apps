@@ -19,7 +19,7 @@ package com.taskodoro.storage.tasks.store
 import com.taskodoro.helpers.anyTask
 import com.taskodoro.model.Uuid
 import com.taskodoro.storage.db.TaskodoroDB
-import com.taskodoro.storage.db.TestDriverFactory
+import com.taskodoro.storage.db.test.TestDriverFactory
 import com.taskodoro.tasks.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals

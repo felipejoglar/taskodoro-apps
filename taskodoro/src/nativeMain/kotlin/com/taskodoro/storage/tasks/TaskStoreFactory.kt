@@ -14,14 +14,15 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.validator
+package com.taskodoro.storage.tasks
 
-import com.taskodoro.tasks.model.Task
+import com.taskodoro.storage.db.DatabaseFactory
+import com.taskodoro.storage.tasks.store.SQLDelightTaskStore
 
-internal class EmptyTitleValidator : Validator<Task> {
-    override fun validate(value: Task): List<ValidatorError> = buildList {
-        if (value.title.isBlank()) {
-            add(TaskValidatorError.Title.Empty)
-        }
+actual class TaskStoreFactory {
+
+    actual fun create(): TaskStore {
+        val database = DatabaseFactory().create()
+        return SQLDelightTaskStore(database = database)
     }
 }
