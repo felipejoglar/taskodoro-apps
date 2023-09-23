@@ -46,7 +46,7 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
 
     kotlin {
         target("**/*.kt")
-        targetExclude("$buildDir/**/*.kt")
+        targetExclude("${project.layout.buildDirectory}/**/*.kt")
         targetExclude("bin/**/*.kt")
 
         ktlint(ktlintVersion)
@@ -72,7 +72,8 @@ allprojects {
             setSource(files(project.projectDir))
             exclude("**/build/**")
             exclude {
-                it.file.relativeTo(projectDir).startsWith(project.buildDir.relativeTo(projectDir))
+                it.file.relativeTo(projectDir)
+                    .startsWith(project.layout.buildDirectory.asFile.get().relativeTo(projectDir))
             }
 
             reports {
