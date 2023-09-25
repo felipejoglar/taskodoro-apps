@@ -23,42 +23,35 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlin.test.Test
-import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.fail
 
 class TaskValidatorTest {
 
     @Test
-    fun validate_failsWithEmptyAndInvalidTitleOnEmptyTitle() {
+    fun validate_throwsInvalidTitleOnEmptyTitle() {
         val emptyTitleTask = taskWith(title = "")
         val blankTitleTask = taskWith(title = "    ")
         val sut = makeSUT()
 
-        val emptyValidation = sut.validate(emptyTitleTask)
-        val blankValidation = sut.validate(blankTitleTask)
+        val expectedError = TaskValidatorError.InvalidTitle
 
-        val expectedError = listOf(
-            TaskValidatorError.Title.Empty,
-            TaskValidatorError.Title.Invalid,
-        )
-        assertEquals(expectedError, emptyValidation)
-        assertEquals(expectedError, blankValidation)
+        assertFailsWith(expectedError::class) { sut.validate(emptyTitleTask) }
+        assertFailsWith(expectedError::class) { sut.validate(blankTitleTask) }
     }
 
     @Test
-    fun validate_failsWithInvalidTitleOnInvalidTitle() {
+    fun validate_throwsInvalidTitleOnInvalidTitle() {
         val invalidTitleTask = taskWith(title = "12")
         val invalidTitleTask1 = taskWith(title = "123")
         val invalidTitleTask2 = taskWith(title = "   123   ")
         val sut = makeSUT()
 
-        val validation = sut.validate(invalidTitleTask)
-        val validation1 = sut.validate(invalidTitleTask1)
-        val validation2 = sut.validate(invalidTitleTask2)
+        val expectedError = TaskValidatorError.InvalidTitle
 
-        val expectedError = listOf(TaskValidatorError.Title.Invalid)
-        assertEquals(expectedError, validation)
-        assertEquals(expectedError, validation1)
-        assertEquals(expectedError, validation2)
+        assertFailsWith(expectedError::class) { sut.validate(invalidTitleTask) }
+        assertFailsWith(expectedError::class) { sut.validate(invalidTitleTask1) }
+        assertFailsWith(expectedError::class) { sut.validate(invalidTitleTask2) }
     }
 
     @Test
@@ -68,25 +61,19 @@ class TaskValidatorTest {
         val validTitleTask2 = taskWith(title = "    1234    ")
         val sut = makeSUT()
 
-        val validationResult = sut.validate(validTitleTask)
-        val validationResult1 = sut.validate(validTitleTask1)
-        val validationResult2 = sut.validate(validTitleTask2)
-
-        val expectedErrors = listOf<ValidatorError>()
-        assertEquals(expectedErrors, validationResult)
-        assertEquals(expectedErrors, validationResult1)
-        assertEquals(expectedErrors, validationResult2)
+        assertNotFails { sut.validate(validTitleTask) }
+        assertNotFails { sut.validate(validTitleTask1) }
+        assertNotFails { sut.validate(validTitleTask2) }
     }
 
     @Test
-    fun validate_failsWithInvalidDueDateOnOneDayPreviousCurrentDay() {
+    fun validate_throwsInvalidDueDateOnOneDayPreviousCurrentDay() {
         val yesterdayDueDateTask = taskWith(dueDate = yesterday)
         val sut = makeSUT()
 
-        val validation = sut.validate(yesterdayDueDateTask)
+        val expectedError = TaskValidatorError.InvalidDueDate
 
-        val expectedError = listOf(TaskValidatorError.DueDate.Invalid)
-        assertEquals(expectedError, validation)
+        assertFailsWith(expectedError::class) { sut.validate(yesterdayDueDateTask) }
     }
 
     @Test
@@ -94,10 +81,7 @@ class TaskValidatorTest {
         val nowDueDateTask = taskWith(dueDate = today)
         val sut = makeSUT()
 
-        val validation = sut.validate(nowDueDateTask)
-
-        val expectedError = listOf<ValidatorError>()
-        assertEquals(expectedError, validation)
+        assertNotFails { sut.validate(nowDueDateTask) }
     }
 
     @Test
@@ -105,25 +89,7 @@ class TaskValidatorTest {
         val tomorrowDueDateTask = taskWith(dueDate = tomorrow)
         val sut = makeSUT()
 
-        val validation = sut.validate(tomorrowDueDateTask)
-
-        val expectedError = listOf<ValidatorError>()
-        assertEquals(expectedError, validation)
-    }
-
-    @Test
-    fun validate_failsAllValidations() {
-        val invalidTask = anyTask(title = "", dueDate = yesterday)
-        val sut = makeSUT()
-
-        val emptyValidation = sut.validate(invalidTask)
-
-        val expectedError = listOf(
-            TaskValidatorError.Title.Empty,
-            TaskValidatorError.Title.Invalid,
-            TaskValidatorError.DueDate.Invalid,
-        )
-        assertEquals(expectedError, emptyValidation)
+        assertNotFails { sut.validate(tomorrowDueDateTask) }
     }
 
     // region Helpers
@@ -137,6 +103,14 @@ class TaskValidatorTest {
 
     private fun taskWith(dueDate: Long) =
         anyTask(dueDate = dueDate)
+
+    private fun assertNotFails(block: () -> Unit) {
+        try {
+            block()
+        } catch (exception: Exception) {
+            fail("Expected to complete successfully, but failed with $exception instead")
+        }
+    }
 
     private val today: Long = Clock.System
         .now()

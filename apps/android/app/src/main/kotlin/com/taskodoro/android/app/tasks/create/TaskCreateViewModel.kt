@@ -22,7 +22,6 @@ import androidx.lifecycle.viewModelScope
 import com.taskodoro.android.R
 import com.taskodoro.tasks.create.TaskCreateUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
-import com.taskodoro.tasks.validator.ValidatorError
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,7 +59,7 @@ class TaskCreateViewModel(
             .flowOn(dispatcher)
             .onStart { updateWith(loading = true) }
             .onSuccess { updateWith(isTaskSaved = true) }
-            .onFailure { handleErrors(it) }
+            .onFailure { handleError(it as TaskValidatorError) }
             .catch { updateWithError() }
             .launchIn(viewModelScope)
     }
@@ -87,17 +86,13 @@ class TaskCreateViewModel(
         _state.update { it.copy(error = null) }
     }
 
-    private fun handleErrors(errors: List<ValidatorError>) {
-        val titleErrors = errors.filterIsInstance<TaskValidatorError.Title>()
-
-        when (titleErrors.first()) {
-            TaskValidatorError.Title.Empty ->
-                updateWithError(R.string.create_new_task_empty_title_error)
-
-            TaskValidatorError.Title.Invalid ->
+    private fun handleError(error: TaskValidatorError) {
+        when (error) {
+            TaskValidatorError.InvalidTitle ->
                 updateWithError(R.string.create_new_task_invalid_title_error)
 
-            TaskValidatorError.DueDate.Invalid -> updateWithError()
+            TaskValidatorError.InvalidDueDate ->
+                updateWithError(R.string.create_new_task_invalid_date_error)
         }
     }
 
@@ -106,12 +101,12 @@ class TaskCreateViewModel(
     }
 }
 
-private fun Flow<TaskCreateUseCase.Result>.onSuccess(
+private fun Flow<Result<Unit>>.onSuccess(
     action: () -> Unit,
-): Flow<TaskCreateUseCase.Result> =
-    onEach { if (it is TaskCreateUseCase.Result.Success) action() }
+): Flow<Result<Unit>> =
+    onEach { it.onSuccess { action() } }
 
-private fun Flow<TaskCreateUseCase.Result>.onFailure(
-    action: (List<ValidatorError>) -> Unit,
-): Flow<TaskCreateUseCase.Result> =
-    onEach { if (it is TaskCreateUseCase.Result.Failure) action(it.errors) }
+private fun Flow<Result<Unit>>.onFailure(
+    action: (Throwable) -> Unit,
+): Flow<Result<Unit>> =
+    onEach { it.onFailure { error -> action(error) } }

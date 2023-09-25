@@ -22,9 +22,9 @@ internal class TitleLengthValidator(
     private val minimumLength: Int,
 ) : Validator<Task> {
 
-    override fun validate(value: Task): List<ValidatorError> = buildList {
+    override fun validate(value: Task) {
         if (value.title.trim().length < minimumLength) {
-            add(TaskValidatorError.Title.Invalid)
+            throw TaskValidatorError.InvalidTitle
         }
     }
 }

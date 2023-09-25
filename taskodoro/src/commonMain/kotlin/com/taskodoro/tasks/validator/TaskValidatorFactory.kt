@@ -27,7 +27,6 @@ object TaskValidatorFactory {
         val now = { Clock.System.now().epochSeconds }
 
         val validators = listOf(
-            EmptyTitleValidator(),
             TitleLengthValidator(MINIMUM_TITLE_LENGTH),
             DueDateValidator(now),
         )

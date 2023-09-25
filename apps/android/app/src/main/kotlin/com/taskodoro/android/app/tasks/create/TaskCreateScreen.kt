@@ -173,7 +173,7 @@ private fun ConfirmationDialog(
         dismissButton = {
             TextButton(onClick = onDismissConfirmationDialog) {
                 Text(
-                    text = stringResource(id = R.string.create_new_task_confirmation_dialog_dismiss)
+                    text = stringResource(id = R.string.create_new_task_confirmation_dialog_dismiss),
                 )
             }
         },

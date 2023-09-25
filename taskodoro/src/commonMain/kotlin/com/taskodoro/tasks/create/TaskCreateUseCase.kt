@@ -18,22 +18,17 @@ package com.taskodoro.tasks.create
 
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
-import com.taskodoro.tasks.validator.ValidatorError
 
 interface TaskCreateUseCase {
-    sealed class Result {
-        data object Success : Result()
-        data class Failure(val errors: List<ValidatorError>) : Result()
-    }
-
     object SaveFailed : Exception()
 
     operator fun invoke(
         title: String,
         description: String? = null,
         dueDate: Long? = null,
-    ): Result
+    ): Result<Unit>
 }
 
 class TaskCreate(
@@ -46,22 +41,20 @@ class TaskCreate(
         title: String,
         description: String?,
         dueDate: Long?,
-    ): TaskCreateUseCase.Result {
-        try {
-            val task = Task(
-                title = title.trim(),
-                description = description,
-                dueDate = dueDate ?: now(),
-                createdAt = now(),
-            )
-            val errors = validator.validate(task)
+    ): Result<Unit> {
+        val task = Task(
+            title = title.trim(),
+            description = description,
+            dueDate = dueDate ?: now(),
+            createdAt = now(),
+        )
 
-            return if (errors.isEmpty()) {
-                repository.save(task)
-                TaskCreateUseCase.Result.Success
-            } else {
-                TaskCreateUseCase.Result.Failure(errors)
-            }
+        return try {
+            validator.validate(task)
+            repository.save(task)
+            Result.success(Unit)
+        } catch (error: TaskValidatorError) {
+            Result.failure(error)
         } catch (exception: TaskRepository.SaveFailed) {
             throw TaskCreateUseCase.SaveFailed
         }

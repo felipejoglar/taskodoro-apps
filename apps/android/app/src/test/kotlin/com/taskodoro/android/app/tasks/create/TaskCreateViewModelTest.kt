@@ -117,26 +117,6 @@ class TaskCreateViewModelTest {
     }
 
     @Test
-    fun onTaskCreateClicked_emitsEmptyTitleErrorOnEmptyTitleValidationError() {
-        val (sut, taskCreate) = makeSUT()
-        val expectedStates = listOf(
-            TaskCreateUIState(),
-            TaskCreateUIState(loading = true),
-            TaskCreateUIState(error = R.string.create_new_task_empty_title_error),
-        )
-
-        expectEquals(
-            flow = sut.state,
-            expectedValues = expectedStates,
-            actions = listOf {
-                val validatorErrors = listOf(TaskValidatorError.Title.Empty)
-                taskCreate.completeWithValidatorErrors(validatorErrors)
-                sut.onTaskCreateClicked()
-            },
-        )
-    }
-
-    @Test
     fun onTaskCreateClicked_emitsInvalidTitleErrorOnInvalidTitleValidationError() {
         val (sut, taskCreate) = makeSUT()
         val expectedStates = listOf(
@@ -149,7 +129,7 @@ class TaskCreateViewModelTest {
             flow = sut.state,
             expectedValues = expectedStates,
             actions = listOf {
-                val validatorErrors = listOf(TaskValidatorError.Title.Invalid)
+                val validatorErrors = listOf(TaskValidatorError.InvalidTitle)
                 taskCreate.completeWithValidatorErrors(validatorErrors)
                 sut.onTaskCreateClicked()
             },
@@ -183,7 +163,7 @@ class TaskCreateViewModelTest {
             TaskCreateUIState(loading = true),
             TaskCreateUIState(error = R.string.create_new_task_unknown_error),
             TaskCreateUIState(loading = true),
-            TaskCreateUIState(error = R.string.create_new_task_empty_title_error),
+            TaskCreateUIState(error = R.string.create_new_task_invalid_date_error),
             TaskCreateUIState(loading = true),
             TaskCreateUIState(isTaskCreated = true),
         )
@@ -195,7 +175,7 @@ class TaskCreateViewModelTest {
                 taskCreate.throwError()
                 sut.onTaskCreateClicked()
             }, {
-                val validatorErrors = listOf(TaskValidatorError.Title.Empty)
+                val validatorErrors = listOf(TaskValidatorError.InvalidDueDate)
                 taskCreate.completeWithValidatorErrors(validatorErrors)
                 sut.onTaskCreateClicked()
             }, {
@@ -240,22 +220,22 @@ class TaskCreateViewModelTest {
     }
 
     private class TaskCreateUseCaseStub : TaskCreateUseCase {
-        private var result: TaskCreateUseCase.Result? = null
+        private var result: Result<Unit>? = null
 
         override fun invoke(
             title: String,
             description: String?,
             dueDate: Long?,
-        ): TaskCreateUseCase.Result {
+        ): Result<Unit> {
             return result!!
         }
 
         fun completeSuccessfully() {
-            result = TaskCreateUseCase.Result.Success
+            result = Result.success(Unit)
         }
 
         fun completeWithValidatorErrors(validatorErrors: List<ValidatorError>) {
-            result = TaskCreateUseCase.Result.Failure(validatorErrors)
+            result = Result.failure(validatorErrors.first())
         }
 
         fun throwError() {

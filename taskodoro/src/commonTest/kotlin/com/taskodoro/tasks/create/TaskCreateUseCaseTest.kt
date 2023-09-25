@@ -35,22 +35,7 @@ class TaskCreateUseCaseTest {
         validator.completeWithInvalidTitleFailure()
         val result = sut.invoke(anyTitle)
 
-        val expectedResult = TaskCreateUseCase.Result.Failure(
-            errors = listOf(TaskValidatorError.Title.Invalid),
-        )
-        assertEquals(expectedResult, result)
-    }
-
-    @Test
-    fun save_failsWithEmptyTitleOnEmptyTitleFailure() {
-        val (sut, _, validator) = makeSUT()
-
-        validator.completeWithEmptyTitleFailure()
-        val result = sut.invoke(anyTitle)
-
-        val expectedResult = TaskCreateUseCase.Result.Failure(
-            errors = listOf(TaskValidatorError.Title.Empty),
-        )
+        val expectedResult = Result.failure<Unit>(TaskValidatorError.InvalidTitle)
         assertEquals(expectedResult, result)
     }
 
@@ -61,9 +46,7 @@ class TaskCreateUseCaseTest {
         validator.completeWithInvalidDueDateFailure()
         val result = sut.invoke(anyTitle)
 
-        val expectedResult = TaskCreateUseCase.Result.Failure(
-            errors = listOf(TaskValidatorError.DueDate.Invalid),
-        )
+        val expectedResult = Result.failure<Unit>(TaskValidatorError.InvalidDueDate)
         assertEquals(expectedResult, result)
     }
 
@@ -87,7 +70,7 @@ class TaskCreateUseCaseTest {
         repository.completeSavingSuccessfully()
         val result = sut.invoke(anyTitle)
 
-        assertEquals(TaskCreateUseCase.Result.Success, result)
+        assertEquals(Result.success(Unit), result)
     }
 
     @Test
@@ -180,26 +163,22 @@ class TaskCreateUseCaseTest {
     }
 
     private class TaskValidatorStub : Validator<Task> {
-        private var validatorErrors: MutableList<ValidatorError> = mutableListOf()
+        private var error: ValidatorError? = null
 
-        override fun validate(value: Task): List<ValidatorError> {
-            return validatorErrors
+        override fun validate(value: Task) {
+            error?.let { throw it }
         }
 
         fun completeSuccessfully() {
-            validatorErrors.clear()
-        }
-
-        fun completeWithEmptyTitleFailure() {
-            validatorErrors.add(TaskValidatorError.Title.Empty)
+            error = null
         }
 
         fun completeWithInvalidTitleFailure() {
-            validatorErrors.add(TaskValidatorError.Title.Invalid)
+            error = TaskValidatorError.InvalidTitle
         }
 
         fun completeWithInvalidDueDateFailure() {
-            validatorErrors.add(TaskValidatorError.DueDate.Invalid)
+            error = TaskValidatorError.InvalidDueDate
         }
     }
 

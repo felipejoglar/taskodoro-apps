@@ -25,12 +25,12 @@ internal class DueDateValidator(
     private val now: () -> Long,
 ) : Validator<Task> {
 
-    override fun validate(value: Task): List<ValidatorError> = buildList {
+    override fun validate(value: Task) {
         val dueDateDay = extractDayFrom(value.dueDate)
         val currentDateDay = extractDayFrom(now())
 
         if (dueDateDay < currentDateDay) {
-            add(TaskValidatorError.DueDate.Invalid)
+            throw TaskValidatorError.InvalidDueDate
         }
     }
 

@@ -22,21 +22,14 @@ class TaskValidator(
     private val validators: List<Validator<Task>>,
 ) : Validator<Task> {
 
-    override fun validate(value: Task): List<ValidatorError> = buildList {
+    override fun validate(value: Task) {
         validators.forEach { validator ->
-            addAll(validator.validate(value))
+            validator.validate(value)
         }
     }
 }
 
 sealed class TaskValidatorError : ValidatorError() {
-
-    sealed class Title : TaskValidatorError() {
-        data object Empty : Title()
-        data object Invalid : Title()
-    }
-
-    sealed class DueDate : TaskValidatorError() {
-        object Invalid : Title()
-    }
+    data object InvalidTitle : TaskValidatorError()
+    data object InvalidDueDate : TaskValidatorError()
 }
