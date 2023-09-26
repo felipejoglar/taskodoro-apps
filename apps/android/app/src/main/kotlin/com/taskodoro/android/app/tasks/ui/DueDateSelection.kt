@@ -18,8 +18,6 @@ package com.taskodoro.android.app.tasks.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +31,8 @@ import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.appbar.SingleRowTopAppBar
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.icons.ArrowBack
+import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
 import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
@@ -60,7 +60,7 @@ fun DueDateSelection(
         SingleRowTopAppBar(
             title = stringResource(id = R.string.create_new_task_due_date),
             navigationIcon = TopAppBarAction.Icon(
-                icon = Icons.Rounded.ArrowBack,
+                icon = Icons.ArrowBack,
                 contentDescription = stringResource(id = R.string.navigation_back),
                 action = onDismiss,
             ),

@@ -19,9 +19,6 @@ package com.taskodoro.android.app.ui.components.appbar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,6 +38,9 @@ import androidx.compose.ui.unit.dp
 import com.taskodoro.android.app.ui.components.Tooltip
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.icons.ArrowBack
+import com.taskodoro.android.app.ui.components.icons.Icons
+import com.taskodoro.android.app.ui.components.icons.Send
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
 import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
@@ -176,14 +176,14 @@ private fun TopAppBarCommonPreview() {
         title = "TopAppBar",
         subtitle = "A subtitle",
         navigationIcon = TopAppBarAction.Icon(
-            icon = Icons.Rounded.ArrowBack,
+            icon = Icons.ArrowBack,
             contentDescription = "Back",
             action = { },
         ),
         actions = ActionsList(
             listOf(
                 TopAppBarAction.Icon(
-                    icon = Icons.Rounded.Send,
+                    icon = Icons.Send,
                     contentDescription = "Submit",
                     action = { },
                     tint = MaterialTheme.colorScheme.primary,

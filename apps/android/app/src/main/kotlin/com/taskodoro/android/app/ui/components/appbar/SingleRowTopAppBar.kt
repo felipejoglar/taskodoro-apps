@@ -16,14 +16,14 @@
 
 package com.taskodoro.android.app.ui.components.appbar
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.icons.ArrowBack
+import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
 import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.FontScalePreviews
@@ -77,7 +77,7 @@ private fun SingleRowTopAppBarCommonPreview() {
     SingleRowTopAppBar(
         title = "TopAppBar",
         navigationIcon = TopAppBarAction.Icon(
-            icon = Icons.Rounded.ArrowBack,
+            icon = Icons.ArrowBack,
             contentDescription = "Back",
             action = { },
         ),

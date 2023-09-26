@@ -24,9 +24,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -48,6 +45,9 @@ import com.taskodoro.android.app.ui.components.AppTemplate
 import com.taskodoro.android.app.ui.components.appbar.TwoRowsTopAppBar
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.icons.ArrowBack
+import com.taskodoro.android.app.ui.components.icons.Icons
+import com.taskodoro.android.app.ui.components.icons.Send
 import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
 import kotlinx.coroutines.launch
 
@@ -131,7 +131,7 @@ fun TaskCreateScreen(
 private fun navigationIcon(
     action: () -> Unit,
 ) = TopAppBarAction.Icon(
-    icon = Icons.Rounded.ArrowBack,
+    icon = Icons.ArrowBack,
     contentDescription = stringResource(id = R.string.navigation_back),
     action = action,
 )
@@ -141,7 +141,7 @@ private fun submitIcon(
     isLoading: Boolean,
     action: () -> Unit,
 ) = TopAppBarAction.Icon(
-    icon = Icons.Rounded.Send,
+    icon = Icons.Send,
     contentDescription = stringResource(id = R.string.create_new_task_create_task_button),
     tint = MaterialTheme.colorScheme.primary,
     isLoading = isLoading,
