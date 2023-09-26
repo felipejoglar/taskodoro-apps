@@ -21,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 // Light Theme Colors
 val ForegroundDefaultLight = Color(red = 31, green = 35, blue = 40)
 val BackgroundDefaultLight = Color(red = 255, green = 255, blue = 255)
+val ForegroundMutedLight = Color(red = 73, green = 75, blue = 85)
+val BackgroundSubtleLight = Color(red = 246, green = 248, blue = 250)
 
 val GreenAccentLight = Color(red = 26, green = 127, blue = 55)
 val GreenBackgroundLight = Color(red = 218, green = 251, blue = 225)
@@ -49,6 +51,8 @@ val RedBorderEmphasisLight = RedBackgroundEmphasisLight
 // Dark Theme Colors
 val ForegroundDefaultDark = Color(red = 230, green = 237, blue = 243)
 val BackgroundDefaultDark = Color(red = 13, green = 17, blue = 23)
+val ForegroundMutedDark = Color(red = 159, green = 161, blue = 173)
+val BackgroundSubtleDark = Color(red = 22, green = 27, blue = 34)
 
 val GreenAccentDark = Color(63, 185, 80)
 val GreenBackgroundDark = Color(red = 46, green = 160, blue = 67).copy(alpha = 0.15f)

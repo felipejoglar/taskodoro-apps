@@ -62,6 +62,8 @@ private val DarkColors = darkColorScheme(
     surface = BackgroundDefaultDark,
     onSurface = ForegroundDefaultDark,
     surfaceTint = Color.Transparent,
+    surfaceVariant = BackgroundSubtleDark,
+    onSurfaceVariant = ForegroundMutedDark,
 )
 
 private val LightColors = lightColorScheme(
@@ -86,6 +88,8 @@ private val LightColors = lightColorScheme(
     surface = BackgroundDefaultLight,
     onSurface = ForegroundDefaultLight,
     surfaceTint = Color.Transparent,
+    surfaceVariant = BackgroundSubtleLight,
+    onSurfaceVariant = ForegroundMutedLight,
 )
 
 @Composable
