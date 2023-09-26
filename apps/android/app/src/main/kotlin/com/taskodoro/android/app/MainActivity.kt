@@ -23,11 +23,11 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.taskodoro.android.app.tasks.create.TaskCreateScreen
 import com.taskodoro.android.app.tasks.create.TaskCreateViewModel
 import com.taskodoro.android.app.ui.components.AppTemplate
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 dispatcher = Dispatchers.IO,
             )
 
-            val state by viewModel.state.collectAsState()
+            val state by viewModel.state.collectAsStateWithLifecycle()
             var openConfirmationDialog by remember { mutableStateOf(false) }
 
             val onBackClicked = {

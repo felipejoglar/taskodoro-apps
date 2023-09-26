@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
 
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
