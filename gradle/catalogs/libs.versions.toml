@@ -23,12 +23,11 @@ detektGradlePlugin = "1.23.1"
 
 desugar = "2.0.3"
 activity-compose = "1.7.2"
+androidx-activity =  "1.8.0-rc01"
 
 compose = "1.6.0-alpha06"
 compose-material3 = "1.1.2"
 compose-compiler = "1.5.3"
-
-accompanist = "0.33.1-alpha"
 
 coroutines = "1.7.3"
 
@@ -48,11 +47,9 @@ androidx-compose-material-icons-extended = { module = "androidx.compose.material
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 
-# Accompanist - https://google.github.io/accompanist/
-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-
 # Activity Compose - https://developer.android.com/jetpack/androidx/releases/activity
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
 
 # SQL Delight - https://cashapp.github.io/sqldelight
 sqlDelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }

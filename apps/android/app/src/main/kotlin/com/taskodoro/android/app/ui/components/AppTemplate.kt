@@ -16,7 +16,6 @@
 
 package com.taskodoro.android.app.ui.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,33 +25,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
 import com.taskodoro.android.app.ui.theme.AppTheme
 
 @Composable
 fun AppTemplate(
     modifier: Modifier = Modifier,
-    useDarkIcons: Boolean = !isSystemInDarkTheme(),
     useDynamicColors: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     AppTheme(
         useDynamicColors = useDynamicColors,
     ) {
-        val systemUiController = rememberSystemUiController()
-
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons,
-        )
-        systemUiController.setNavigationBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons,
-        )
-
         Surface(
             color = MaterialTheme.colorScheme.background,
             modifier = modifier
