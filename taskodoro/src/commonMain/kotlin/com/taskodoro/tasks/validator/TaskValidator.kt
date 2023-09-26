@@ -18,7 +18,7 @@ package com.taskodoro.tasks.validator
 
 import com.taskodoro.tasks.model.Task
 
-class TaskValidator(
+internal class TaskValidator(
     private val validators: List<Validator<Task>>,
 ) : Validator<Task> {
 

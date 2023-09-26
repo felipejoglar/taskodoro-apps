@@ -20,7 +20,7 @@ import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.tasks.TaskStore
 import com.taskodoro.tasks.model.Task
 
-class SQLDelightTaskStore(
+internal class SQLDelightTaskStore(
     database: TaskodoroDB,
 ) : TaskStore {
 
