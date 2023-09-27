@@ -96,7 +96,7 @@ fun TaskCreateScreen(
                 navigationIcon = navigationIcon(onBackClicked),
                 actions = ActionsList(
                     listOf(
-                        submitIcon(state.loading, onTaskCreateClicked),
+                        submitIcon(state.loading, state.sendEnabled, onTaskCreateClicked),
                     ),
                 ),
             )
@@ -139,12 +139,14 @@ private fun navigationIcon(
 @Composable
 private fun submitIcon(
     isLoading: Boolean,
+    enabled: Boolean,
     action: () -> Unit,
 ) = TopAppBarAction.Icon(
     icon = Icons.Send,
     contentDescription = stringResource(id = R.string.create_new_task_create_task_button),
     tint = MaterialTheme.colorScheme.primary,
     isLoading = isLoading,
+    enabled = enabled,
     action = action,
 )
 

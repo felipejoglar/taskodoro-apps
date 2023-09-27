@@ -27,6 +27,7 @@ sealed class TopAppBarAction {
         val contentDescription: String,
         val tint: Color? = null,
         val isLoading: Boolean = false,
+        val enabled: Boolean = true,
         val action: () -> Unit,
     ) : TopAppBarAction()
 

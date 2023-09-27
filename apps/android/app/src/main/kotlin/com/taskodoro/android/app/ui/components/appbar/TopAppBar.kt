@@ -105,27 +105,57 @@ private fun TopAppBarIcon(
     icon: TopAppBarAction.Icon,
     modifier: Modifier = Modifier,
 ) {
-    Tooltip(icon.contentDescription) {
-        if (icon.isLoading) {
-            CircularProgressIndicator(
-                strokeCap = StrokeCap.Round,
-                modifier = modifier
-                    .padding(4.dp)
-                    .size(40.dp)
-                    .padding(4.dp),
-            )
-        } else {
-            IconButton(
-                onClick = icon.action,
-                modifier = modifier,
-            ) {
-                Icon(
-                    imageVector = icon.icon,
-                    contentDescription = icon.contentDescription,
-                    tint = icon.tint ?: LocalContentColor.current,
-                )
+    if (icon.isLoading) {
+        CircularProgressIndicator(
+            strokeCap = StrokeCap.Round,
+            modifier = modifier
+                .padding(4.dp)
+                .size(40.dp)
+                .padding(4.dp),
+        )
+    } else {
+        if (icon.enabled) {
+            Tooltip(icon.contentDescription) {
+                EnabledTopAppBarIconButton(icon, modifier)
             }
+        } else {
+            DisabledTopAppBarIconButton(icon, modifier)
         }
+    }
+}
+
+@Composable
+private fun EnabledTopAppBarIconButton(
+    icon: TopAppBarAction.Icon,
+    modifier: Modifier
+) {
+    IconButton(
+        onClick = icon.action,
+        modifier = modifier,
+    ) {
+        Icon(
+            imageVector = icon.icon,
+            contentDescription = icon.contentDescription,
+            tint = icon.tint ?: LocalContentColor.current,
+        )
+    }
+}
+
+@Composable
+private fun DisabledTopAppBarIconButton(
+    icon: TopAppBarAction.Icon,
+    modifier: Modifier
+) {
+    IconButton(
+        onClick = icon.action,
+        enabled = false,
+        modifier = modifier,
+    ) {
+        Icon(
+            imageVector = icon.icon,
+            contentDescription = icon.contentDescription,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 
