@@ -43,7 +43,7 @@ class TaskCreateViewModel(
     internal val state = _state.asStateFlow()
 
     fun onTitleChanged(title: String) {
-        _state.update { it.copy(title = title) }
+        _state.update { it.copy(title = title, sendEnabled = title.isNotBlank()) }
     }
 
     fun onDescriptionChanged(description: String) {

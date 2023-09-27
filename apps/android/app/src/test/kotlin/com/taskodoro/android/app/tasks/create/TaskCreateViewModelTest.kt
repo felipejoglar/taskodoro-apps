@@ -35,12 +35,13 @@ class TaskCreateViewModelTest {
     }
 
     @Test
-    fun onTitleChanged_updatesTitleState() {
+    fun onTitleChanged_updatesTitleAndSendEnabledState() {
         val (sut, _) = makeSUT()
         val expectedStates = listOf(
             TaskCreateUIState(),
-            TaskCreateUIState(title = "Hello"),
-            TaskCreateUIState(title = "Hello, World!"),
+            TaskCreateUIState(title = "Hello", sendEnabled = true),
+            TaskCreateUIState(title = "", sendEnabled = false),
+            TaskCreateUIState(title = "   ", sendEnabled = false),
         )
 
         expectEquals(
@@ -49,7 +50,9 @@ class TaskCreateViewModelTest {
             actions = listOf({
                 sut.onTitleChanged("Hello")
             }, {
-                sut.onTitleChanged("Hello, World!")
+                sut.onTitleChanged("")
+            }, {
+                sut.onTitleChanged("   ")
             }),
         )
     }

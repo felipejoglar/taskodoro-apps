@@ -22,6 +22,7 @@ data class TaskCreateUIState(
     val title: String = "",
     val description: String = "",
     val dueDate: Long? = null,
+    val sendEnabled: Boolean = false,
     val loading: Boolean = false,
     val isTaskCreated: Boolean = false,
     @StringRes val error: Int? = null,
