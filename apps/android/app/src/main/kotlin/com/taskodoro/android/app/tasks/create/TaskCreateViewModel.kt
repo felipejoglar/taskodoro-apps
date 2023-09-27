@@ -20,8 +20,10 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taskodoro.android.R
+import com.taskodoro.android.app.di.concurrency.dispatchers.IODispatcher
 import com.taskodoro.tasks.create.TaskCreateUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,10 +35,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class TaskCreateViewModel(
+@HiltViewModel
+class TaskCreateViewModel @Inject constructor(
     private val taskCreate: TaskCreateUseCase,
-    private val dispatcher: CoroutineDispatcher,
+    @IODispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TaskCreateUIState())

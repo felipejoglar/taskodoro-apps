@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.android.app
+package com.taskodoro.android.app.main
 
 import android.os.Bundle
 import android.widget.Toast
@@ -22,6 +22,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,17 +32,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.taskodoro.android.app.tasks.create.TaskCreateScreen
 import com.taskodoro.android.app.tasks.create.TaskCreateViewModel
 import com.taskodoro.android.app.ui.components.AppTemplate
-import com.taskodoro.storage.tasks.LocalTaskRepository
-import com.taskodoro.storage.tasks.TaskStoreFactory
-import com.taskodoro.tasks.create.TaskCreate
-import com.taskodoro.tasks.validator.TaskValidatorFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import java.time.Instant
-import java.time.ZoneId
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,18 +46,8 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
 
-        val store = TaskStoreFactory(applicationContext).create()
-        val repository = LocalTaskRepository(store)
-        val validator = TaskValidatorFactory.create()
-        val now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
-        val taskCreate = TaskCreate(repository, validator, now)
-
         setContent {
-            val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-            val viewModel = TaskCreateViewModel(
-                taskCreate = taskCreate,
-                dispatcher = Dispatchers.IO,
-            )
+            val viewModel by viewModels<TaskCreateViewModel>()
 
             val state by viewModel.state.collectAsStateWithLifecycle()
             var openConfirmationDialog by remember { mutableStateOf(false) }
@@ -92,8 +79,6 @@ class MainActivity : ComponentActivity() {
             }
 
             BackHandler(enabled = true, onBackClicked)
-
-            DisposableEffect(Unit) { onDispose { scope.cancel() } }
         }
     }
 }
