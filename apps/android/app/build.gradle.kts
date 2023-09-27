@@ -15,8 +15,10 @@
  */
 
 plugins {
+    kotlin("kapt")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.hilt)
 }
 
 android {
@@ -91,8 +93,16 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
