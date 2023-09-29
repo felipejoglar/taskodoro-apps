@@ -16,8 +16,11 @@
 
 package com.taskodoro.android.app.tasks.create
 
+import android.os.Parcelable
 import androidx.annotation.StringRes
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class TaskCreateUIState(
     val title: String = "",
     val description: String = "",
@@ -26,4 +29,4 @@ data class TaskCreateUIState(
     val loading: Boolean = false,
     val isTaskCreated: Boolean = false,
     @StringRes val error: Int? = null,
-)
+) : Parcelable

@@ -16,6 +16,7 @@
 
 package com.taskodoro.android.app.tasks.create
 
+import androidx.lifecycle.SavedStateHandle
 import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.create.TaskCreateUseCase
@@ -216,6 +217,7 @@ class TaskCreateViewModelTest {
         val taskCreate = TaskCreateUseCaseStub()
         val sut = TaskCreateViewModel(
             taskCreate = taskCreate,
+            savedStateHandle = SavedStateHandle(),
             dispatcher = UnconfinedTestDispatcher(),
         )
 

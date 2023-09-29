@@ -17,6 +17,7 @@
 package com.taskodoro.android.app.tasks.create
 
 import androidx.annotation.StringRes
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taskodoro.android.R
@@ -26,36 +27,39 @@ import com.taskodoro.tasks.validator.TaskValidatorError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class TaskCreateViewModel @Inject constructor(
     private val taskCreate: TaskCreateUseCase,
+    private val savedStateHandle: SavedStateHandle,
     @IODispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(TaskCreateUIState())
-    internal val state = _state.asStateFlow()
+    private var _state: TaskCreateUIState = TaskCreateUIState()
+        set(value) {
+            field = value
+            savedStateHandle[TASK_CREATE_UI_STATE] = value
+        }
+
+    internal val state = savedStateHandle.getStateFlow(TASK_CREATE_UI_STATE, _state)
 
     fun onTitleChanged(title: String) {
-        _state.update { it.copy(title = title, sendEnabled = title.isNotBlank()) }
+        _state = _state.copy(title = title, sendEnabled = title.isNotBlank())
     }
 
     fun onDescriptionChanged(description: String) {
-        _state.update { it.copy(description = description) }
+        _state = _state.copy(description = description)
     }
 
     fun onDueDateChanged(dueDate: Long) {
-        _state.update { it.copy(dueDate = dueDate) }
+        _state = _state.copy(dueDate = dueDate)
     }
 
     fun onTaskCreateClicked() {
@@ -77,17 +81,11 @@ class TaskCreateViewModel @Inject constructor(
         loading: Boolean = false,
         isTaskSaved: Boolean = false,
     ) {
-        _state.update {
-            it.copy(
-                loading = loading,
-                isTaskCreated = isTaskSaved,
-                error = null,
-            )
-        }
+        _state = _state.copy(loading = loading, isTaskCreated = isTaskSaved, error = null)
     }
 
     fun onErrorShown() {
-        _state.update { it.copy(error = null) }
+        _state = _state.copy(error = null)
     }
 
     private fun handleError(error: TaskValidatorError) {
@@ -101,7 +99,11 @@ class TaskCreateViewModel @Inject constructor(
     }
 
     private fun updateWithError(@StringRes error: Int = R.string.create_new_task_unknown_error) {
-        _state.update { it.copy(loading = false, error = error) }
+        _state = _state.copy(loading = false, error = error)
+    }
+
+    companion object {
+        private const val TASK_CREATE_UI_STATE = "TASK_CREATE_UI_STATE"
     }
 }
 

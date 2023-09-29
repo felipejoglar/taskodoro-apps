@@ -28,6 +28,8 @@ plugins {
     alias(libs.plugins.android.hilt).apply(false)
     alias(libs.plugins.kotlin.android).apply(false)
     alias(libs.plugins.kotlin.multiplatform).apply(false)
+    alias(libs.plugins.kotlin.parcelize).apply(false)
+    alias(libs.plugins.kotlin.kapt).apply(false)
     alias(libs.plugins.sqlDelight).apply(false)
 
     alias(libs.plugins.spotless).apply(true)

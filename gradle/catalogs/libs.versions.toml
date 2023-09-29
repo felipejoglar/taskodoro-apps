@@ -88,6 +88,8 @@ android-hilt = {id = "com.google.dagger.hilt.android", version.ref = "hilt-andro
 # Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin"}
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"}
 
 # SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight"}
