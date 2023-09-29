@@ -85,7 +85,7 @@ data class TasksList(
 @Composable
 private fun TasksScreenPreview() {
     AppTemplate {
-        val tasks = List(20) {
+        val tasks = List(PREVIEW_LIST_COUNT) {
             Task(
                 title = "Task $it title",
                 dueDate = it.toLong(),
@@ -95,3 +95,5 @@ private fun TasksScreenPreview() {
         TasksContent(tasks = TasksList(tasks))
     }
 }
+
+private const val PREVIEW_LIST_COUNT = 20

@@ -35,7 +35,7 @@ val Icons.Send: ImageVector
             defaultWidth = 28.0.dp,
             defaultHeight = 28.0.dp,
             viewportWidth = 40.0f,
-            viewportHeight = 40.0f
+            viewportHeight = 40.0f,
         ).apply {
             path(
                 fill = SolidColor(Color.Black),
@@ -46,7 +46,7 @@ val Icons.Send: ImageVector
                 strokeLineCap = StrokeCap.Butt,
                 strokeLineJoin = StrokeJoin.Miter,
                 strokeLineMiter = 1f,
-                pathFillType = PathFillType.NonZero
+                pathFillType = PathFillType.NonZero,
             ) {
                 moveTo(5.208f, 31.125f)
                 verticalLineTo(8.875f)

@@ -116,45 +116,29 @@ private fun TopAppBarIcon(
     } else {
         if (icon.enabled) {
             Tooltip(icon.contentDescription) {
-                EnabledTopAppBarIconButton(icon, modifier)
+                TopAppBarIconButton(icon, modifier)
             }
         } else {
-            DisabledTopAppBarIconButton(icon, modifier)
+            TopAppBarIconButton(icon, modifier, false)
         }
     }
 }
 
 @Composable
-private fun EnabledTopAppBarIconButton(
+private fun TopAppBarIconButton(
     icon: TopAppBarAction.Icon,
-    modifier: Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     IconButton(
         onClick = icon.action,
+        enabled = enabled,
         modifier = modifier,
     ) {
         Icon(
             imageVector = icon.icon,
             contentDescription = icon.contentDescription,
             tint = icon.tint ?: LocalContentColor.current,
-        )
-    }
-}
-
-@Composable
-private fun DisabledTopAppBarIconButton(
-    icon: TopAppBarAction.Icon,
-    modifier: Modifier
-) {
-    IconButton(
-        onClick = icon.action,
-        enabled = false,
-        modifier = modifier,
-    ) {
-        Icon(
-            imageVector = icon.icon,
-            contentDescription = icon.contentDescription,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

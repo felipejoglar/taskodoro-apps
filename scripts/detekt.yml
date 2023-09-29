@@ -748,6 +748,7 @@ style:
   MagicNumber:
     active: true
     excludes:
+      - '**/components/icons/**'
       - '**/Color.kt'
       - '**/test/**'
       - '**/androidTest/**'
