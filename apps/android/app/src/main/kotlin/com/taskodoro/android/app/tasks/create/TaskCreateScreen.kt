@@ -59,7 +59,7 @@ fun TaskCreateScreen(
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onDueDateChanged: (Long) -> Unit,
-    onTaskCreateClicked: () -> Unit,
+    onSubmitClicked: () -> Unit,
     onTaskCreated: () -> Unit,
     onErrorShown: () -> Unit,
     onDismissConfirmationDialog: () -> Unit,
@@ -96,7 +96,7 @@ fun TaskCreateScreen(
                 navigationIcon = navigationIcon(onBackClicked),
                 actions = ActionsList(
                     listOf(
-                        submitIcon(state.loading, state.sendEnabled, onTaskCreateClicked),
+                        submitIcon(state.loading, state.submitEnabled, onSubmitClicked),
                     ),
                 ),
             )
@@ -193,7 +193,7 @@ private fun TaskCreateScreenPreview() {
             onTitleChanged = {},
             onDescriptionChanged = {},
             onDueDateChanged = {},
-            onTaskCreateClicked = {},
+            onSubmitClicked = {},
             onTaskCreated = {},
             onErrorShown = {},
             onDismissConfirmationDialog = {},
@@ -213,7 +213,7 @@ private fun TaskCreateScreenWithDialogPreview() {
             onTitleChanged = {},
             onDescriptionChanged = {},
             onDueDateChanged = {},
-            onTaskCreateClicked = {},
+            onSubmitClicked = {},
             onTaskCreated = {},
             onErrorShown = {},
             onDismissConfirmationDialog = {},

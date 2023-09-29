@@ -51,7 +51,7 @@ class TaskCreateViewModel @Inject constructor(
     internal val state = savedStateHandle.getStateFlow(TASK_CREATE_UI_STATE, _state)
 
     fun onTitleChanged(title: String) {
-        _state = _state.copy(title = title, sendEnabled = title.isNotBlank())
+        _state = _state.copy(title = title, submitEnabled = title.isNotBlank())
     }
 
     fun onDescriptionChanged(description: String) {

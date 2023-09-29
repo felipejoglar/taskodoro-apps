@@ -40,9 +40,9 @@ class TaskCreateViewModelTest {
         val (sut, _) = makeSUT()
         val expectedStates = listOf(
             TaskCreateUIState(),
-            TaskCreateUIState(title = "Hello", sendEnabled = true),
-            TaskCreateUIState(title = "", sendEnabled = false),
-            TaskCreateUIState(title = "   ", sendEnabled = false),
+            TaskCreateUIState(title = "Hello", submitEnabled = true),
+            TaskCreateUIState(title = "", submitEnabled = false),
+            TaskCreateUIState(title = "   ", submitEnabled = false),
         )
 
         expectEquals(
