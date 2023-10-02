@@ -27,6 +27,7 @@ import com.taskodoro.tasks.validator.TaskValidatorError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -42,24 +43,18 @@ class TaskCreateViewModel @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    private var _state: TaskCreateUIState = TaskCreateUIState()
-        set(value) {
-            field = value
-            savedStateHandle[TASK_CREATE_UI_STATE] = value
-        }
-
-    internal val state = savedStateHandle.getStateFlow(TASK_CREATE_UI_STATE, _state)
+    internal val state = savedStateHandle.getStateFlow(TASK_CREATE_UI_STATE, TaskCreateUIState())
 
     fun onTitleChanged(title: String) {
-        _state = _state.copy(title = title, submitEnabled = title.isNotBlank())
+        state.update { it.copy(title = title, submitEnabled = title.isNotBlank()) }
     }
 
     fun onDescriptionChanged(description: String) {
-        _state = _state.copy(description = description)
+        state.update { it.copy(description = description) }
     }
 
     fun onDueDateChanged(dueDate: Long) {
-        _state = _state.copy(dueDate = dueDate)
+        state.update { it.copy(dueDate = dueDate) }
     }
 
     fun onTaskCreateClicked() {
@@ -81,11 +76,11 @@ class TaskCreateViewModel @Inject constructor(
         loading: Boolean = false,
         isTaskSaved: Boolean = false,
     ) {
-        _state = _state.copy(loading = loading, isTaskCreated = isTaskSaved, error = null)
+        state.update { it.copy(loading = loading, isTaskCreated = isTaskSaved, error = null) }
     }
 
     fun onErrorShown() {
-        _state = _state.copy(error = null)
+        state.update { it.copy(error = null) }
     }
 
     private fun handleError(error: TaskValidatorError) {
@@ -99,7 +94,13 @@ class TaskCreateViewModel @Inject constructor(
     }
 
     private fun updateWithError(@StringRes error: Int = R.string.create_new_task_unknown_error) {
-        _state = _state.copy(loading = false, error = error)
+        state.update { it.copy(loading = false, error = error) }
+    }
+
+    private fun StateFlow<TaskCreateUIState>.update(
+        block: (TaskCreateUIState) -> TaskCreateUIState
+    ) {
+        savedStateHandle[TASK_CREATE_UI_STATE] = block(this.value)
     }
 
     companion object {
