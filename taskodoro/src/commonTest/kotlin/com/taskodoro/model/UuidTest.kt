@@ -22,7 +22,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
 
-class UuidTests {
+class UuidTest {
 
     @Test
     fun fromValue_returnsUuidOnValidValue() {
