@@ -98,7 +98,7 @@ class TaskCreateViewModel @Inject constructor(
     }
 
     private fun StateFlow<TaskCreateUIState>.update(
-        block: (TaskCreateUIState) -> TaskCreateUIState
+        block: (TaskCreateUIState) -> TaskCreateUIState,
     ) {
         savedStateHandle[TASK_CREATE_UI_STATE] = block(this.value)
     }
