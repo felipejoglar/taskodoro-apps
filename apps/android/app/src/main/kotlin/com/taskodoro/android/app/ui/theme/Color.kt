@@ -54,26 +54,26 @@ val BackgroundDefaultDark = Color(red = 13, green = 17, blue = 23)
 val ForegroundMutedDark = Color(red = 159, green = 161, blue = 173)
 val BackgroundSubtleDark = Color(red = 22, green = 27, blue = 34)
 
-val GreenAccentDark = Color(63, 185, 80)
+val GreenAccentDark = Color(red = 63, green = 185, blue = 80)
 val GreenBackgroundDark = Color(red = 46, green = 160, blue = 67).copy(alpha = 0.15f)
 val GreenBackgroundEmphasisDark = Color(red = 55, green = 134, blue = 54)
 val GreenBorderDark = Color(red = 46, green = 160, blue = 67).copy(alpha = 0.4f)
 val GreenBorderEmphasisDark = GreenBackgroundEmphasisDark
 
-val BrownAccentDark = Color(210, 153, 34)
-val BrownBackgroundDark = Color(187, 128, 9).copy(alpha = 0.15f)
-val BrownBackgroundEmphasisDark = Color(158, 106, 3)
-val BrownBorderDark = Color(187, 128, 9).copy(alpha = 0.4f)
+val BrownAccentDark = Color(red = 210, green = 153, blue = 34)
+val BrownBackgroundDark = Color(red = 187, green = 128, blue = 9).copy(alpha = 0.15f)
+val BrownBackgroundEmphasisDark = Color(red = 158, green = 106, blue = 3)
+val BrownBorderDark = Color(red = 187, green = 128, blue = 9).copy(alpha = 0.4f)
 val BrownBorderEmphasisDark = BrownBackgroundEmphasisDark
 
-val PinkAccentDark = Color(219, 97, 162)
-val PinkBackgroundDark = Color(219, 97, 162).copy(alpha = 0.1f)
-val PinkBackgroundEmphasisDark = Color(191, 75, 138)
-val PinkBorderDark = Color(219, 97, 162).copy(alpha = 0.4f)
+val PinkAccentDark = Color(red = 219, green = 97, blue = 162)
+val PinkBackgroundDark = Color(red = 219, green = 97, blue = 162).copy(alpha = 0.1f)
+val PinkBackgroundEmphasisDark = Color(red = 191, green = 75, blue = 138)
+val PinkBorderDark = Color(red = 219, green = 97, blue = 162).copy(alpha = 0.4f)
 val PinkBorderEmphasisDark = PinkBackgroundEmphasisDark
 
-val RedAccentDark = Color(248, 81, 73)
-val RedBackgroundDark = Color(248, 81, 73).copy(alpha = 0.1f)
-val RedBackgroundEmphasisDark = Color(218, 54, 51)
-val RedBorderDark = Color(248, 81, 73).copy(alpha = 0.4f)
+val RedAccentDark = Color(red = 248, green = 81, blue = 73)
+val RedBackgroundDark = Color(red = 248, green = 81, blue = 73).copy(alpha = 0.1f)
+val RedBackgroundEmphasisDark = Color(red = 218, green = 54, blue = 51)
+val RedBorderDark = Color(red = 248, green = 81, blue = 73).copy(alpha = 0.4f)
 val RedBorderEmphasisDark = RedBackgroundEmphasisDark
