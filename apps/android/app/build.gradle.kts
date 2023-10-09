@@ -94,6 +94,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
