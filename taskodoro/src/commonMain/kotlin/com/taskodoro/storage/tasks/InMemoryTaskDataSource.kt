@@ -27,8 +27,8 @@ class InMemoryTaskDataSource : TaskLocalDataSource {
     override fun getAllTasks(): List<Task> =
         List(TASK_COUNT) {
             Task(
-                id = it.toString(),
                 title = "Task $it title",
+                dueDate = it.toLong(),
                 createdAt = it.toLong(),
             )
         }

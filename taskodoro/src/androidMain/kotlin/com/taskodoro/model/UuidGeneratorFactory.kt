@@ -16,8 +16,6 @@
 
 package com.taskodoro.model
 
-import RandomUuidGenerator
-
 internal actual object UuidGeneratorFactory {
     actual fun create(): UuidGenerator = RandomUuidGenerator()
 }

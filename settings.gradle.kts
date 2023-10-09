@@ -39,3 +39,5 @@ rootProject.name = "Taskodoro_App"
 
 include(":apps:android:app")
 include(":taskodoro")
+include(":infra:database")
+include(":infra:database-test")

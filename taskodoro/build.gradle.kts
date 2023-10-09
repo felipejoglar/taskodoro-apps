@@ -17,12 +17,11 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
 
-    android()
+    androidTarget()
 
     listOf(
         iosArm64(),
@@ -37,17 +36,14 @@ kotlin {
     sourceSets {
 
         /* Main source sets */
-        val commonMain by getting
-        val androidMain by getting {
+        val commonMain by getting {
             dependencies {
-                implementation(libs.sqlDelight.android.driver)
+                implementation(projects.infra.database)
+                implementation(libs.kotlinx.datetime)
             }
         }
-        val nativeMain by creating {
-            dependencies {
-                implementation(libs.sqlDelight.native.driver)
-            }
-        }
+        val androidMain by getting
+        val nativeMain by creating
         val iosMain by creating
         val iosArm64Main by getting
         val iosX64Main by getting
@@ -64,14 +60,11 @@ kotlin {
         /* Test source sets */
         val commonTest by getting {
             dependencies {
+                implementation(projects.infra.databaseTest)
                 implementation(libs.kotlin.test)
             }
         }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.sqlDelight.jvm.driver)
-            }
-        }
+        val androidUnitTest by getting
         val iosArm64Test by getting
         val iosX64Test by getting
         val iosSimulatorArm64Test by getting
@@ -110,13 +103,5 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-sqldelight {
-    databases {
-        create("TaskodoroDB") {
-            packageName.set("com.taskodoro.storage.db")
-        }
     }
 }

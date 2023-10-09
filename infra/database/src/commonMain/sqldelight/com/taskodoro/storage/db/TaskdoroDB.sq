@@ -1,0 +1,18 @@
+import kotlin.Boolean;
+
+CREATE TABLE LocalTask  (
+    id TEXT NOT NULL PRIMARY KEY UNIQUE,
+    title TEXT NOT NULL,
+    description TEXT,
+    priority INTEGER DEFAULT 1,
+    completed INTEGER AS Boolean NOT NULL DEFAULT 0,
+    dueDate INTEGER NOT NULL,
+    createdAt INTEGER NOT NULL,
+    updatedAt INTEGER
+);
+
+CREATE UNIQUE INDEX task_id ON LocalTask(id);
+
+clearDB {
+    DELETE FROM LocalTask;
+}

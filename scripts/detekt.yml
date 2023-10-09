@@ -315,6 +315,7 @@ exceptions:
   SwallowedException:
     active: true
     excludes:
+      - '**/TaskCreateUseCase.kt'
       - '**/LocalTaskRepository.kt'
       - '**/NSUUIDGenerator.kt'
       - '**/RandomUuidGenerator.kt'
@@ -747,6 +748,7 @@ style:
   MagicNumber:
     active: true
     excludes:
+      - '**/components/icons/**'
       - '**/Color.kt'
       - '**/test/**'
       - '**/androidTest/**'
@@ -810,8 +812,6 @@ style:
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
-    active: false
-  OptionalWhenBraces:
     active: false
   PreferToOverPairSyntax:
     active: false
@@ -889,7 +889,7 @@ style:
   UnusedPrivateMember:
     active: true
     allowedNames: ''
-    ignoreAnnotated: [ 'Preview' ]
+    ignoreAnnotated: [ 'Preview', '*Previews' ]
 
   UnusedPrivateProperty:
     active: true

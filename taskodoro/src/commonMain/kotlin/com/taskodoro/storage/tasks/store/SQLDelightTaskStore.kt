@@ -20,7 +20,7 @@ import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.tasks.TaskStore
 import com.taskodoro.tasks.model.Task
 
-class SQLDelightTaskStore(
+internal class SQLDelightTaskStore(
     database: TaskodoroDB,
 ) : TaskStore {
 
@@ -28,11 +28,12 @@ class SQLDelightTaskStore(
 
     override fun save(task: Task) {
         tasksQueries.insert(
-            id = task.id,
+            id = task.id.uuidString,
             title = task.title,
             description = task.description,
             priority = task.priority.ordinal.toLong(),
             completed = false,
+            dueDate = task.dueDate,
             createdAt = task.createdAt,
             updatedAt = 0,
         )

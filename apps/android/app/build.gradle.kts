@@ -16,7 +16,10 @@
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.android.hilt)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -43,7 +46,6 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            @Suppress("UnstableApiUsage")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -58,7 +60,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    @Suppress("UnstableApiUsage")
     buildFeatures {
         compose = true
     }
@@ -90,10 +91,20 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.activity.compose)
 
-    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

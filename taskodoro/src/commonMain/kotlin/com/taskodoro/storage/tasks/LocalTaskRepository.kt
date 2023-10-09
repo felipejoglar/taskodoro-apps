@@ -28,6 +28,6 @@ class LocalTaskRepository(
             store.save(task)
             Result.success(Unit)
         } catch (exception: Exception) {
-            Result.failure(TaskRepository.TaskException.SaveFailed)
+            Result.failure(TaskRepository.SaveFailed)
         }
 }

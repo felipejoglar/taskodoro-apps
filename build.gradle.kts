@@ -25,8 +25,11 @@ buildscript {
 plugins {
     alias(libs.plugins.android.application).apply(false)
     alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.android.hilt).apply(false)
     alias(libs.plugins.kotlin.android).apply(false)
     alias(libs.plugins.kotlin.multiplatform).apply(false)
+    alias(libs.plugins.kotlin.parcelize).apply(false)
+    alias(libs.plugins.kotlin.kapt).apply(false)
     alias(libs.plugins.sqlDelight).apply(false)
 
     alias(libs.plugins.spotless).apply(true)
@@ -42,11 +45,11 @@ allprojects {
 
 // Spotless configuration
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-    val ktlintVersion = "0.48.2"
+    val ktlintVersion = "0.50.0"
 
     kotlin {
         target("**/*.kt")
-        targetExclude("$buildDir/**/*.kt")
+        targetExclude("${project.layout.buildDirectory}/**/*.kt")
         targetExclude("bin/**/*.kt")
 
         ktlint(ktlintVersion)
@@ -72,7 +75,8 @@ allprojects {
             setSource(files(project.projectDir))
             exclude("**/build/**")
             exclude {
-                it.file.relativeTo(projectDir).startsWith(project.buildDir.relativeTo(projectDir))
+                it.file.relativeTo(projectDir)
+                    .startsWith(project.layout.buildDirectory.asFile.get().relativeTo(projectDir))
             }
 
             reports {
@@ -82,7 +86,7 @@ allprojects {
 
         dependencies {
             // https://mrmans0n.github.io/compose-rules/
-            detektPlugins("io.nlopez.compose.rules:detekt:0.1.12")
+            detektPlugins("io.nlopez.compose.rules:detekt:0.2.1")
         }
     }
 }

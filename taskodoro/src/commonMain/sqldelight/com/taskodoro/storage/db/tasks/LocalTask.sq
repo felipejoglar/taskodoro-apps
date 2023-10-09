@@ -1,6 +1,0 @@
-insert:
-INSERT INTO LocalTask(id, title, description, priority, completed, createdAt, updatedAt)
-VALUES (?, ?, ?, ?, ?, ?, ?);
-
-load:
-SELECT * FROM LocalTask;

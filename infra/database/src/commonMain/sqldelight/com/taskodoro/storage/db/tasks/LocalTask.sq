@@ -1,0 +1,6 @@
+insert:
+INSERT INTO LocalTask(id, title, description, priority, completed, dueDate, createdAt, updatedAt)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+load:
+SELECT * FROM LocalTask;
