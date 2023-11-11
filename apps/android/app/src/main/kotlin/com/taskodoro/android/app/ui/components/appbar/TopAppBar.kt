@@ -138,7 +138,11 @@ private fun TopAppBarIconButton(
         Icon(
             imageVector = icon.icon,
             contentDescription = icon.contentDescription,
-            tint = icon.tint ?: LocalContentColor.current,
+            tint = if (enabled) {
+                icon.tint ?: LocalContentColor.current
+            } else {
+                LocalContentColor.current
+            },
         )
     }
 }
