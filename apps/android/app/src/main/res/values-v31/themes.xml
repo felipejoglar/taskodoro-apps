@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~    Copyright 2023 Green Peaks Studio
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +15,9 @@
   -->
 
 <resources>
-    <style name="Theme.Taskodoro" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
 
     <style name="Theme.Taskodoro.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBrandingImage">@drawable/splash_branding_image</item>
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo_animated</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
