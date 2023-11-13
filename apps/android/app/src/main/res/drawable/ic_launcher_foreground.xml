@@ -28,14 +28,14 @@
             android:fillColor="#00000000"
             android:pathData="M22,11.08V12a10,10 0,1 1,-5.93 -9.14"
             android:strokeWidth="2"
-            android:strokeColor="@color/ic_launcher_foreground"
+            android:strokeColor="@color/accent"
             android:strokeLineCap="round"
             android:strokeLineJoin="round" />
         <path
             android:fillColor="#00000000"
             android:pathData="M22,4 L12,14.01l-3,-3"
             android:strokeWidth="2"
-            android:strokeColor="@color/ic_launcher_foreground"
+            android:strokeColor="@color/accent"
             android:strokeLineCap="round"
             android:strokeLineJoin="round" />
     </group>

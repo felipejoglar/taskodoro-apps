@@ -29,7 +29,7 @@
                 android:pathData="M 34 23.08 L 34 24 C 33.999 26.156 33.3 28.255 32.009 29.982 C 30.718 31.709 28.903 32.972 26.835 33.584 C 24.767 34.195 22.557 34.122 20.535 33.375 C 18.512 32.627 16.785 31.246 15.611 29.437 C 14.437 27.628 13.88 25.488 14.022 23.336 C 14.164 21.185 14.997 19.136 16.398 17.497 C 17.799 15.858 19.693 14.715 21.796 14.24 C 23.9 13.765 26.1 13.982 28.07 14.86"
                 android:fillColor="#000"
                 android:fillAlpha="0"
-                android:strokeColor="@color/ic_launcher_foreground"
+                android:strokeColor="@color/accent"
                 android:strokeWidth="2"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"/>
@@ -38,7 +38,7 @@
                 android:pathData="M 34 16 L 24 26.01 L 21 23.01"
                 android:fillColor="#000"
                 android:fillAlpha="0"
-                android:strokeColor="@color/ic_launcher_foreground"
+                android:strokeColor="@color/accent"
                 android:strokeWidth="2"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"/>

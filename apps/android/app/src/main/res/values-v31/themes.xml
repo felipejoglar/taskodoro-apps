@@ -18,7 +18,7 @@
 
     <style name="Theme.Taskodoro.Splash" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBrandingImage">@drawable/splash_branding_image</item>
-        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="windowSplashScreenBackground">@color/background_default</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo_animated</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
         <item name="postSplashScreenTheme">@style/Theme.Taskodoro</item>
