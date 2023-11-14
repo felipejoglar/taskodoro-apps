@@ -29,6 +29,8 @@ androidx-activity =  "1.8.0-rc01"
 androidx-splashscreen =  "1.0.1"
 androidx-lifecycle =  "2.6.2"
 
+coil = "2.5.0"
+
 compose = "1.6.0-alpha06"
 compose-material3 = "1.1.2"
 compose-compiler = "1.5.3"
@@ -57,6 +59,9 @@ androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "
 
 # Splash - https://developer.android.com/jetpack/androidx/releases/core
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
+
+# Coil - https://coil-kt.github.io/coil/compose/
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 # Lifecycle - https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
