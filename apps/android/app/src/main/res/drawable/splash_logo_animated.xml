@@ -30,7 +30,7 @@
                 android:fillColor="#000"
                 android:fillAlpha="0"
                 android:strokeColor="@color/accent"
-                android:strokeWidth="2"
+                android:strokeWidth="3"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"/>
             <path
@@ -39,7 +39,7 @@
                 android:fillColor="#000"
                 android:fillAlpha="0"
                 android:strokeColor="@color/accent"
-                android:strokeWidth="2"
+                android:strokeWidth="3"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"/>
         </vector>
