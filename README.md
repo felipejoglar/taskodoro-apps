@@ -1,9 +1,17 @@
-# Taskodoro
-[![Android CI](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml/badge.svg)](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml)
-[![iOS CI](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml/badge.svg)](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml)
-[![Multiplatform CI](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml/badge.svg)](https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml)
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/6813924/282747595-cf7d6aaf-28de-4740-835e-378cb144a557.svg#gh-light-mode-only" />
+    <img src="https://user-images.githubusercontent.com/6813924/282747440-9c201a34-2f2c-44ec-8a81-0b482996d80d.svg#gh-dark-mode-only" />
+</p>
 
-A productivity app made with Kotlin Multiplatform
+<p align="center">
+    <a href="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml"><img src="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml/badge.svg" alt="Multiplatform CI" /></a>
+    <a href="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml"><img src="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml/badge.svg" alt="Android CI" /></a>
+    <a href="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml"><img src="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml/badge.svg" alt="iOS CI" /></a>
+</p>
+
+<p align="center">
+    Taskodoro is <i>the</i> productivity app made with Kotlin Multiplatform
+</p>
 
 ## License
 
