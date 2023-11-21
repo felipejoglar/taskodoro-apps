@@ -30,15 +30,15 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Pager(
-    steps: List<Page>,
+    pages: List<Page>,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier,
     ) {
-        val pagerState = rememberPagerState(pageCount = steps::count)
+        val pagerState = rememberPagerState(pageCount = pages::count)
         HorizontalPager(state = pagerState) {
-            steps[it].content()
+            pages[it].content()
         }
 
         PagerIndicator(

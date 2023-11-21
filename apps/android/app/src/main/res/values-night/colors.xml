@@ -17,5 +17,6 @@
 
 <resources>
     <color name="background_default">#1F2122</color>
+    <color name="background_subtle">#494D4F</color>
     <color name="foreground_default">#EFF0F1</color>
 </resources>

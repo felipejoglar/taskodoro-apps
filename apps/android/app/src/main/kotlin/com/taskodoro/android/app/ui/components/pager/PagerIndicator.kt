@@ -112,7 +112,7 @@ private fun width(
 @Composable
 private fun PagerPreview() {
     AppTheme(
-        useDynamicColors = false
+        useDynamicColors = false,
     ) {
         Surface {
             PagerIndicator(

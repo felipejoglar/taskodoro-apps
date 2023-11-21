@@ -17,6 +17,17 @@
 <resources>
     <string name="app_name">Taskodoro</string>
 
+    <!--  SCREEN: ONBOARDING  -->
+    <string name="onboarding_welcome">Welcome to %s</string>
+    <string name="onboarding_organize_title">Organize your work</string>
+    <string name="onboarding_organize_description">Taskodoro is built upon the Pomodoro Technique, a well-established time management method.</string>
+    <string name="onboarding_productivity_title">Increase productivity</string>
+    <string name="onboarding_productivity_description">Enhance your productivity by alternating work sessions with short, regular breaks. This helps maintain focus and prevent mental fatigue.</string>
+    <string name="onboarding_stress_title">Minimize stress</string>
+    <string name="onboarding_stress_description">Dividing your workflow into intervals has been proven to reduce stress and promote better overall health.</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_know_more">How does it work?</string>
+
     <!--  SCREEN: CREATE NEW TASK  -->
     <string name="create_new_task_screen_title">Create Task</string>
     <string name="create_new_task_due_date">Due date</string>
