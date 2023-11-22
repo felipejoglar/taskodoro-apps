@@ -17,6 +17,30 @@
 <resources>
     <string name="app_name">Taskodoro</string>
 
+    <!--  SCREEN: ONBOARDING  -->
+    <string name="onboarding_welcome">Welcome to %s</string>
+    <string name="onboarding_organize_title">Organize your work</string>
+    <string name="onboarding_organize_description">Taskodoro is built upon the Pomodoro Technique, a well-established time management method.</string>
+    <string name="onboarding_productivity_title">Increase productivity</string>
+    <string name="onboarding_productivity_description">Enhance your productivity by alternating work sessions with short, regular breaks. This helps maintain focus and prevent mental fatigue.</string>
+    <string name="onboarding_stress_title">Minimize stress</string>
+    <string name="onboarding_stress_description">Dividing your workflow into intervals has been proven to reduce stress and promote better overall health.</string>
+    <string name="onboarding_know_more">How does it work?</string>
+
+    <string name="onboarding_how_it_works_title">How it works</string>
+    <string name="onboarding_how_it_works_description">Flow is based on the popular focus timer method known as the Pomodoro Technique. By default, it consists of four simple steps:</string>
+    <string name="onboarding_how_it_works_step_one_title">Choose a task:</string>
+    <string name="onboarding_how_it_works_step_one_description">Select a task from your to-do list that you want to focus on.</string>
+    <string name="onboarding_how_it_works_step_two_title">Start the timer:</string>
+    <string name="onboarding_how_it_works_step_two_description">Set a short timespan of 25 minutes to stay focused.</string>
+    <string name="onboarding_how_it_works_step_three_title">Focus on the task:</string>
+    <string name="onboarding_how_it_works_step_three_description">Once the timer starts, fully commit to working on the chosen task. This will help you battle distractions.</string>
+    <string name="onboarding_how_it_works_step_four_title">Take a short break:</string>
+    <string name="onboarding_how_it_works_step_four_description">After completing a 25-minute work session, enjoy a 5-minute break. Stand up, stretch your legs, and drink water.</string>
+    <string name="onboarding_how_it_works_repeat">Repeat four times, and then…</string>
+    <string name="onboarding_how_it_works_last_step_title">Take a long break</string>
+    <string name="onboarding_how_it_works_last_step_description">After completing four work sessions, take a longer and more refreshing 30-minute break.</string>
+
     <!--  SCREEN: CREATE NEW TASK  -->
     <string name="create_new_task_screen_title">Create Task</string>
     <string name="create_new_task_due_date">Due date</string>
@@ -43,5 +67,7 @@
 
     <!--  NAVIGATION  -->
     <string name="navigation_back">Back</string>
+    <string name="navigation_close">Close</string>
+    <string name="navigation_continue">Continue</string>
 
 </resources>

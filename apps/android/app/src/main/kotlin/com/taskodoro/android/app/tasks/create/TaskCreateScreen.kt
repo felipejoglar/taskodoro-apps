@@ -31,7 +31,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -45,6 +44,7 @@ import com.taskodoro.android.app.ui.components.AppTemplate
 import com.taskodoro.android.app.ui.components.appbar.TwoRowsTopAppBar
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.buttons.TextButton
 import com.taskodoro.android.app.ui.components.icons.ArrowBack
 import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.icons.Send

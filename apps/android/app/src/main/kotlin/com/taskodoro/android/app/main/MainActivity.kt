@@ -17,20 +17,11 @@
 package com.taskodoro.android.app.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.taskodoro.android.app.tasks.create.TaskCreateScreen
-import com.taskodoro.android.app.tasks.create.TaskCreateViewModel
+import com.taskodoro.android.app.onboarding.OnboardingScreen
 import com.taskodoro.android.app.ui.components.AppTemplate
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,38 +35,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val viewModel = viewModel<TaskCreateViewModel>()
-
-            val state by viewModel.state.collectAsStateWithLifecycle()
-            var openConfirmationDialog by remember { mutableStateOf(false) }
-
-            val onBackClicked = {
-                if (state.title.isNotBlank()) {
-                    openConfirmationDialog = true
-                } else {
-                    finish()
-                }
-            }
-
             AppTemplate {
-                TaskCreateScreen(
-                    state = state,
-                    openConfirmationDialog = openConfirmationDialog,
-                    onTitleChanged = viewModel::onTitleChanged,
-                    onDescriptionChanged = viewModel::onDescriptionChanged,
-                    onDueDateChanged = viewModel::onDueDateChanged,
-                    onSubmitClicked = viewModel::onTaskCreateClicked,
-                    onTaskCreated = {
-                        Toast.makeText(this, "Task created!!", Toast.LENGTH_SHORT).show()
-                    },
-                    onErrorShown = viewModel::onErrorShown,
-                    onDismissConfirmationDialog = { openConfirmationDialog = false },
-                    onDiscardChanges = ::finish,
-                    onBackClicked = onBackClicked,
-                )
+                OnboardingScreen {}
             }
-
-            BackHandler(enabled = true, onBackClicked)
         }
     }
 }

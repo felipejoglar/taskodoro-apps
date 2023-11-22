@@ -1,0 +1,29 @@
+<!--
+  ~    Copyright 2023 Green Peaks Studio
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="2400dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="2400">
+  <path
+      android:pathData="M162,2400C170.8,2300.8 179.5,2201.6 221.2,2121C262.9,2040.3 337.4,1978.2 390.7,1899.2C444,1820.2 476.1,1724.3 540.4,1657.3C604.7,1590.3 701.3,1552.3 796.6,1527.9C891.9,1503.5 986,1492.7 1080,1482L1080,2400Z"
+      android:fillColor="@color/background_subtle"/>
+  <path
+      android:pathData="M918,0C868.3,81.8 818.7,163.5 797,259C775.3,354.4 781.5,463.6 732.2,531.9C682.8,600.3 577.9,628 497.9,685.2C417.8,742.5 362.5,829.3 283.7,873.1C204.8,916.8 102.4,917.4 0,918L0,0Z"
+      android:fillColor="@color/background_subtle"/>
+</vector>

@@ -749,6 +749,7 @@ style:
     active: true
     excludes:
       - '**/components/icons/**'
+      - '**/components/vectors/**'
       - '**/Color.kt'
       - '**/test/**'
       - '**/androidTest/**'
