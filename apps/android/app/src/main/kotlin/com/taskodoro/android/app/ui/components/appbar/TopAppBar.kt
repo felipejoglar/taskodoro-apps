@@ -21,12 +21,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -38,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import com.taskodoro.android.app.ui.components.Tooltip
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.buttons.IconButton
+import com.taskodoro.android.app.ui.components.buttons.TextButton
 import com.taskodoro.android.app.ui.components.icons.ArrowBack
 import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.icons.Send
@@ -99,7 +97,6 @@ private fun TopAppBarActions(actions: ActionsList) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopAppBarIcon(
     icon: TopAppBarAction.Icon,
@@ -114,35 +111,13 @@ private fun TopAppBarIcon(
                 .padding(4.dp),
         )
     } else {
-        if (icon.enabled) {
-            Tooltip(icon.contentDescription) {
-                TopAppBarIconButton(icon, modifier)
-            }
-        } else {
-            TopAppBarIconButton(icon, modifier, false)
-        }
-    }
-}
-
-@Composable
-private fun TopAppBarIconButton(
-    icon: TopAppBarAction.Icon,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-) {
-    IconButton(
-        onClick = icon.action,
-        enabled = enabled,
-        modifier = modifier,
-    ) {
-        Icon(
-            imageVector = icon.icon,
+        IconButton(
+            onClick = icon.action,
+            icon = icon.icon,
             contentDescription = icon.contentDescription,
-            tint = if (enabled) {
-                icon.tint ?: LocalContentColor.current
-            } else {
-                LocalContentColor.current
-            },
+            modifier = modifier,
+            enabled = icon.enabled,
+            iconTint = icon.tint,
         )
     }
 }
