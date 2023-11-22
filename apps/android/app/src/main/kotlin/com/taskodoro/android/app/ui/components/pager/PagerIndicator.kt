@@ -27,7 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -66,7 +66,7 @@ fun PagerIndicator(
             Box(
                 modifier = Modifier
                     .padding(gapSize)
-                    .clip(RoundedCornerShape(50))
+                    .clip(CircleShape)
                     .background(Brush.Companion.linearGradient(listOf(startColor, endColor)))
                     .height(dotSize)
                     .width(width),

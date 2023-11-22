@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,15 +31,15 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Pager(
-    pages: List<Page>,
+    pages: Pages,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier,
     ) {
-        val pagerState = rememberPagerState(pageCount = pages::count)
+        val pagerState = rememberPagerState(pageCount = pages.items::count)
         HorizontalPager(state = pagerState) {
-            pages[it].content()
+            pages.items[it].content()
         }
 
         PagerIndicator(
@@ -51,3 +52,6 @@ fun Pager(
         )
     }
 }
+
+@Immutable
+data class Pages(val items: List<Page>)
