@@ -17,6 +17,11 @@
 package com.taskodoro.android.app.ui.components.icons
 
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.History
+import androidx.compose.material.icons.rounded.Psychology
+import androidx.compose.material.icons.rounded.Repeat
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.Icons as MaterialIcons
 
@@ -24,3 +29,15 @@ object Icons
 
 val Icons.ArrowBack: ImageVector
     get() = MaterialIcons.AutoMirrored.Rounded.ArrowBack
+
+val Icons.History: ImageVector
+    get() = MaterialIcons.Rounded.History
+
+val Icons.CheckCircle: ImageVector
+    get() = MaterialIcons.Rounded.CheckCircle
+
+val Icons.Psychology: ImageVector
+    get() = MaterialIcons.Rounded.Psychology
+
+val Icons.Repeat: ImageVector
+    get() = MaterialIcons.Rounded.Repeat
