@@ -79,7 +79,7 @@ fun OnboardingGoodByePage(
         )
 
         if (openKnowMoreSection) {
-            val bottomSheetState = rememberModalBottomSheetState()
+            val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
             val onDismiss = { openKnowMoreSection = false }
 
             ModalBottomSheet(
@@ -87,7 +87,6 @@ fun OnboardingGoodByePage(
                 sheetState = bottomSheetState,
             ) {
                 OnboardingKnowMoreScreen(
-                    onDismiss = onDismiss,
                     modifier = Modifier
                         .fillMaxSize(),
                 )
