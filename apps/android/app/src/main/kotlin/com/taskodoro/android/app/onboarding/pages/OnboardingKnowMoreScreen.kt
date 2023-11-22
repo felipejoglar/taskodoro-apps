@@ -85,13 +85,13 @@ fun OnboardingKnowMoreScreen(
 
 private val steps = listOf(
     R.string.onboarding_how_it_works_step_one_title to
-            R.string.onboarding_how_it_works_step_one_description,
+        R.string.onboarding_how_it_works_step_one_description,
     R.string.onboarding_how_it_works_step_two_title to
-            R.string.onboarding_how_it_works_step_two_description,
+        R.string.onboarding_how_it_works_step_two_description,
     R.string.onboarding_how_it_works_step_three_title to
-            R.string.onboarding_how_it_works_step_three_description,
+        R.string.onboarding_how_it_works_step_three_description,
     R.string.onboarding_how_it_works_step_four_title to
-            R.string.onboarding_how_it_works_step_four_description,
+        R.string.onboarding_how_it_works_step_four_description,
 )
 
 @Composable

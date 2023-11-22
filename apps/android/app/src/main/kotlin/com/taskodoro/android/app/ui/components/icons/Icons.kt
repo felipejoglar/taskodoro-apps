@@ -18,7 +18,6 @@ package com.taskodoro.android.app.ui.components.icons
 
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Psychology
 import androidx.compose.material.icons.rounded.Repeat
