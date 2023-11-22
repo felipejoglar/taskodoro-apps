@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,12 +33,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
+import com.taskodoro.android.app.ui.components.AppTemplate
 import com.taskodoro.android.app.ui.components.Image
 import com.taskodoro.android.app.ui.components.icons.History
 import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
-import com.taskodoro.android.app.ui.theme.AppTheme
 
 @Composable
 fun OnboardingPage(
@@ -95,27 +94,23 @@ fun OnboardingPage(
 @ScreenPreviews
 @Composable
 private fun OnboardingPagePreview() {
-    AppTheme(
-        useDynamicColors = false,
-    ) {
-        Surface {
-            Preview()
-        }
+    AppTemplate {
+        PreviewPage()
     }
 }
 
 @DynamicColorsPreviews
 @Composable
 private fun OnboardingPageDynamicColorPreview() {
-    AppTheme {
-        Surface {
-            Preview()
-        }
+    AppTemplate(
+        useDynamicColors = true,
+    ) {
+        PreviewPage()
     }
 }
 
 @Composable
-private fun Preview() {
+private fun PreviewPage() {
     OnboardingPage(
         title = "A section title",
         description = "This is a section description where we explain things",
