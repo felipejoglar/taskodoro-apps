@@ -22,23 +22,32 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.taskodoro.android.R
+import com.taskodoro.android.app.ui.components.AppTemplate
 import com.taskodoro.android.app.ui.components.buttons.Button
 import com.taskodoro.android.app.ui.components.buttons.TextButton
 import com.taskodoro.android.app.ui.components.icons.History
 import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
 import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
-import com.taskodoro.android.app.ui.theme.AppTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingGoodByePage(
     title: String,
@@ -53,6 +62,8 @@ fun OnboardingGoodByePage(
         modifier = modifier
             .fillMaxSize(),
     ) {
+        var openKnowMoreSection by rememberSaveable { mutableStateOf(false) }
+
         OnboardingPage(
             title = title,
             description = description,
@@ -62,15 +73,33 @@ fun OnboardingGoodByePage(
 
         ActionButtons(
             onContinueClicked = onContinueClicked,
+            onKnowMoreClicked = { openKnowMoreSection = true },
             modifier = Modifier
-                .align(Alignment.BottomCenter)
+                .align(Alignment.BottomCenter),
         )
+
+        if (openKnowMoreSection) {
+            val bottomSheetState = rememberModalBottomSheetState()
+            val onDismiss = { openKnowMoreSection = false }
+
+            ModalBottomSheet(
+                onDismissRequest = onDismiss,
+                sheetState = bottomSheetState,
+            ) {
+                OnboardingKnowMoreScreen(
+                    onDismiss = onDismiss,
+                    modifier = Modifier
+                        .fillMaxSize(),
+                )
+            }
+        }
     }
 }
 
 @Composable
 private fun ActionButtons(
     onContinueClicked: () -> Unit,
+    onKnowMoreClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -80,19 +109,22 @@ private fun ActionButtons(
             .padding(bottom = 64.dp),
     ) {
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = onKnowMoreClicked,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
         ) {
-            Text(text = stringResource(id = R.string.onboarding_know_more))
+            Text(
+                text = stringResource(id = R.string.onboarding_know_more),
+                fontWeight = FontWeight.Bold,
+            )
         }
         Button(
             onClick = onContinueClicked,
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            Text(text = stringResource(id = R.string.onboarding_continue))
+            Text(text = stringResource(id = R.string.navigation_continue))
         }
     }
 }
@@ -100,11 +132,9 @@ private fun ActionButtons(
 @ScreenPreviews
 @Composable
 private fun OnboardingGoodByePreview() {
-    AppTheme(
-        useDynamicColors = false,
-    ) {
+    AppTemplate {
         Surface {
-            Preview()
+            PreviewPage()
         }
     }
 }
@@ -112,15 +142,17 @@ private fun OnboardingGoodByePreview() {
 @DynamicColorsPreviews
 @Composable
 private fun OnboardingGoodByeDynamicColorPreview() {
-    AppTheme {
+    AppTemplate(
+        useDynamicColors = true,
+    ) {
         Surface {
-            Preview()
+            PreviewPage()
         }
     }
 }
 
 @Composable
-private fun Preview() {
+private fun PreviewPage() {
     OnboardingGoodByePage(
         title = "A section title",
         description = "This is a section description where we explain things",
