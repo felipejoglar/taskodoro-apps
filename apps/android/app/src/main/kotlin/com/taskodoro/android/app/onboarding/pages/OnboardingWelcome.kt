@@ -70,9 +70,12 @@ fun OnboardingWelcomePage(
             )
             Text(
                 text = buildAnnotatedString {
-                    this.append("Welcome to ")
+                    val appName = stringResource(id = R.string.app_name)
+                    val welcomeMessage = stringResource(id = R.string.onboarding_welcome, appName)
+                    
+                    append(welcomeMessage.replace(appName, ""))
                     withStyle(highlightedSpanStyle()) {
-                        append(stringResource(id = R.string.app_name))
+                        append(appName)
                     }
                 },
                 textAlign = TextAlign.Center,
