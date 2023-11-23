@@ -4,9 +4,9 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml"><img src="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/multiplatform_ci.yml/badge.svg" alt="Multiplatform CI" /></a>
-    <a href="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml"><img src="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/android_ci.yml/badge.svg" alt="Android CI" /></a>
-    <a href="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml"><img src="https://github.com/greenpeaksstudio/taskodoro/actions/workflows/ios_ci.yml/badge.svg" alt="iOS CI" /></a>
+    <a href="https://github.com/felipejoglar/taskodoro/actions/workflows/multiplatform_ci.yml"><img src="https://github.com/felipejoglar/taskodoro/actions/workflows/multiplatform_ci.yml/badge.svg" alt="Multiplatform CI" /></a>
+    <a href="https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml"><img src="https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml/badge.svg" alt="Android CI" /></a>
+    <a href="https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml"><img src="https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml/badge.svg" alt="iOS CI" /></a>
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 ## License
 
 ```
-Copyright 2022-2023 Green Peaks Studio
+Copyright 2022-2023 Felipe Joglar
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
