@@ -28,42 +28,45 @@ import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.icons.Psychology
 import com.taskodoro.android.app.ui.components.pager.Page
 import com.taskodoro.android.app.ui.components.pager.Pager
+import com.taskodoro.android.app.ui.components.pager.Pages
 
 @Composable
 fun OnboardingScreen(
     onContinueClicked: () -> Unit,
 ) {
-    val pages = listOf(
-        Page(1U) {
-            OnboardingWelcomePage(
-                background = R.drawable.onboarding_background_even,
-            )
-        },
-        Page(2U) {
-            OnboardingPage(
-                title = stringResource(id = R.string.onboarding_organize_title),
-                description = stringResource(id = R.string.onboarding_organize_description),
-                icon = Icons.History,
-                background = R.drawable.onboarding_background_odd,
-            )
-        },
-        Page(3U) {
-            OnboardingPage(
-                title = stringResource(id = R.string.onboarding_productivity_title),
-                description = stringResource(id = R.string.onboarding_productivity_description),
-                icon = Icons.CheckCircle,
-                background = R.drawable.onboarding_background_even,
-            )
-        },
-        Page(4U) {
-            OnboardingGoodByePage(
-                title = stringResource(id = R.string.onboarding_stress_title),
-                description = stringResource(id = R.string.onboarding_stress_description),
-                icon = Icons.Psychology,
-                background = R.drawable.onboarding_background_odd,
-                onContinueClicked = onContinueClicked,
-            )
-        },
+    val pages = Pages(
+        items = listOf(
+            Page(1U) {
+                OnboardingWelcomePage(
+                    background = R.drawable.onboarding_background_even,
+                )
+            },
+            Page(2U) {
+                OnboardingPage(
+                    title = stringResource(id = R.string.onboarding_organize_title),
+                    description = stringResource(id = R.string.onboarding_organize_description),
+                    icon = Icons.History,
+                    background = R.drawable.onboarding_background_odd,
+                )
+            },
+            Page(3U) {
+                OnboardingPage(
+                    title = stringResource(id = R.string.onboarding_productivity_title),
+                    description = stringResource(id = R.string.onboarding_productivity_description),
+                    icon = Icons.CheckCircle,
+                    background = R.drawable.onboarding_background_even,
+                )
+            },
+            Page(4U) {
+                OnboardingGoodByePage(
+                    title = stringResource(id = R.string.onboarding_stress_title),
+                    description = stringResource(id = R.string.onboarding_stress_description),
+                    icon = Icons.Psychology,
+                    background = R.drawable.onboarding_background_odd,
+                    onContinueClicked = onContinueClicked,
+                )
+            },
+        )
     )
     Pager(pages = pages)
 }
