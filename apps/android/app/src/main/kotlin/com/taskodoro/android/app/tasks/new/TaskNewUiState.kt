@@ -14,19 +14,19 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.android.app.tasks.create
+package com.taskodoro.android.app.tasks.new
 
 import android.os.Parcelable
 import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class TaskCreateUIState(
+data class TaskNewUiState(
     val title: String = "",
     val description: String = "",
     val dueDate: Long? = null,
     val submitEnabled: Boolean = false,
     val loading: Boolean = false,
-    val isTaskCreated: Boolean = false,
+    val isNewTask: Boolean = false,
     @StringRes val error: Int? = null,
 ) : Parcelable

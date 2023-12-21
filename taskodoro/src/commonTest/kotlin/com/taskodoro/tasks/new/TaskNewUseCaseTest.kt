@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.create
+package com.taskodoro.tasks.new
 
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
@@ -26,7 +26,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
-class TaskCreateUseCaseTest {
+class TaskNewUseCaseTest {
 
     @Test
     fun save_failsWithInvalidTitleOnInvalidTitleFailure() {
@@ -57,7 +57,7 @@ class TaskCreateUseCaseTest {
         validator.completeSuccessfully()
         repository.completeSavingWithFailure()
 
-        assertFailsWith(TaskCreateUseCase.SaveFailed::class) {
+        assertFailsWith(TaskNewUseCase.SaveFailed::class) {
             sut.invoke(anyTitle)
         }
     }
@@ -123,10 +123,10 @@ class TaskCreateUseCaseTest {
 
     private fun makeSUT(
         now: Long = 0,
-    ): Triple<TaskCreateUseCase, TaskRepositoryStub, TaskValidatorStub> {
+    ): Triple<TaskNewUseCase, TaskRepositoryStub, TaskValidatorStub> {
         val validator = TaskValidatorStub()
         val repository = TaskRepositoryStub()
-        val sut = TaskCreate(
+        val sut = TaskNew(
             repository = repository,
             validator = validator,
             now = { now },

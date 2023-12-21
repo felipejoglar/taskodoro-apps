@@ -190,7 +190,7 @@ private fun ChipsRowFontScalePreview() {
 private fun ChipsRowCommonPreview() {
     val item = ChipsRowItem(
         icon = Icons.Rounded.CalendarMonth,
-        description = stringResource(id = R.string.create_new_task_due_date),
+        description = stringResource(id = R.string.new_task_due_date),
         onClick = {},
     )
     val chips = ChipsList(listOf(item, item, item, item))

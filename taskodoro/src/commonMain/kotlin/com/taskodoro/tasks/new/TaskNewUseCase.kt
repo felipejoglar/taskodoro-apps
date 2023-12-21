@@ -14,14 +14,14 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.create
+package com.taskodoro.tasks.new
 
 import com.taskodoro.tasks.TaskRepository
 import com.taskodoro.tasks.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
 
-interface TaskCreateUseCase {
+interface TaskNewUseCase {
     object SaveFailed : Exception()
 
     operator fun invoke(
@@ -31,11 +31,11 @@ interface TaskCreateUseCase {
     ): Result<Unit>
 }
 
-class TaskCreate(
+class TaskNew(
     private val repository: TaskRepository,
     private val validator: Validator<Task>,
     private val now: () -> Long,
-) : TaskCreateUseCase {
+) : TaskNewUseCase {
 
     override operator fun invoke(
         title: String,
@@ -56,7 +56,7 @@ class TaskCreate(
         } catch (error: TaskValidatorError) {
             Result.failure(error)
         } catch (exception: TaskRepository.SaveFailed) {
-            throw TaskCreateUseCase.SaveFailed
+            throw TaskNewUseCase.SaveFailed
         }
     }
 }

@@ -169,7 +169,7 @@ fun dueDateField(
     onDueDateClicked: () -> Unit,
 ) = ChipsRowItem(
     icon = Icons.Rounded.CalendarMonth,
-    description = stringResource(id = R.string.create_new_task_due_date),
+    description = stringResource(id = R.string.new_task_due_date),
     onClick = onDueDateClicked,
 )
 

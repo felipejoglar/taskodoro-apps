@@ -20,7 +20,6 @@ import android.content.Context
 import android.widget.Toast
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.navigation.RouteBuilder
 
 const val TaskGraphRoute = "task"
@@ -35,11 +34,11 @@ fun RouteBuilder.taskGraph(
 ) {
     group(
         route = TaskGraphRoute,
-        initialRoute = TaskCreateRoute,
+        initialRoute = TaskNewRoute,
     ) {
-        taskCreateScreen(
+        taskNewScreen(
             context = context,
-            onTaskCreated = { Toast.makeText(context, "Task saved!", Toast.LENGTH_SHORT).show() },
+            onNewTask = { Toast.makeText(context, "Task saved!", Toast.LENGTH_SHORT).show() },
             onDiscardChanges = { navigator.goBack() },
         )
     }

@@ -22,11 +22,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.taskodoro.android.app.tasks.create.TaskCreateScreen
-import com.taskodoro.android.app.tasks.create.TaskCreateViewModel
+import com.taskodoro.android.app.tasks.new.TaskNewScreen
+import com.taskodoro.android.app.tasks.new.TaskNewViewModel
 import com.taskodoro.storage.tasks.LocalTaskRepository
 import com.taskodoro.storage.tasks.TaskStoreFactory
-import com.taskodoro.tasks.create.TaskCreate
+import com.taskodoro.tasks.new.TaskNew
 import com.taskodoro.tasks.validator.TaskValidatorFactory
 import kotlinx.coroutines.Dispatchers
 import moe.tlaster.precompose.navigation.BackHandler
@@ -37,31 +37,31 @@ import moe.tlaster.precompose.viewmodel.viewModel
 import java.time.Instant
 import java.time.ZoneId
 
-const val TaskCreateRoute = "$TaskGraphRoute/create"
+const val TaskNewRoute = "$TaskGraphRoute/new"
 
-fun Navigator.navigateToTaskCreate(options: NavOptions? = null) {
-    navigate(TaskCreateRoute, options)
+fun Navigator.navigateToTaskNew(options: NavOptions? = null) {
+    navigate(TaskNewRoute, options)
 }
 
-fun RouteBuilder.taskCreateScreen(
+fun RouteBuilder.taskNewScreen(
     context: Context,
-    onTaskCreated: () -> Unit,
+    onNewTask: () -> Unit,
     onDiscardChanges: () -> Unit,
 ) {
     scene(
-        route = TaskCreateRoute,
+        route = TaskNewRoute,
     ) {
         val now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
         val viewModel = viewModel { savedStateHolder ->
             val repository = LocalTaskRepository(TaskStoreFactory(context).create())
             val validator = TaskValidatorFactory.create()
 
-            val taskCreate = TaskCreate(
+            val taskNew = TaskNew(
                 repository = repository,
                 validator = validator,
                 now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
             )
-            TaskCreateViewModel(taskCreate, Dispatchers.IO, savedStateHolder)
+            TaskNewViewModel(taskNew, Dispatchers.IO, savedStateHolder)
         }
 
         val state by viewModel.uiState.collectAsState()
@@ -77,18 +77,18 @@ fun RouteBuilder.taskCreateScreen(
 
         BackHandler(enabled = state.title.isNotEmpty(), onBack = onBackPressed)
 
-        TaskCreateScreen(
+        TaskNewScreen(
             state = state,
             openConfirmationDialog = openConfirmationDialog,
             onTitleChanged = viewModel::onTitleChanged,
             onDescriptionChanged = viewModel::onDescriptionChanged,
             onDueDateChanged = viewModel::onDueDateChanged,
-            onSubmitClicked = viewModel::onTaskCreateClicked,
-            onTaskCreated = {
+            onSubmitClicked = viewModel::onSubmitClicked,
+            onNewTask = {
                 viewModel.onTitleChanged("")
                 viewModel.onDescriptionChanged("")
                 viewModel.onDueDateChanged(now())
-                onTaskCreated()
+                onNewTask()
             },
             onErrorShown = viewModel::onErrorShown,
             onDismissConfirmationDialog = { openConfirmationDialog = false },

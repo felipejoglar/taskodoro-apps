@@ -14,11 +14,11 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.android.app.tasks.create
+package com.taskodoro.android.app.tasks.new
 
 import androidx.annotation.StringRes
 import com.taskodoro.android.R
-import com.taskodoro.tasks.create.TaskCreateUseCase
+import com.taskodoro.tasks.new.TaskNewUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -35,18 +35,18 @@ import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
-class TaskCreateViewModel(
-    private val taskCreate: TaskCreateUseCase,
+class TaskNewViewModel(
+    private val taskNew: TaskNewUseCase,
     private val dispatcher: CoroutineDispatcher,
     savedStateHolder: SavedStateHolder,
 ) : ViewModel() {
 
     companion object {
-        private const val STATE_KEY = "TASK_CREATE_UI_STATE_KEY"
+        private const val STATE_KEY = "TASK_NEW_UI_STATE_KEY"
     }
 
     private val savedState =
-        savedStateHolder.consumeRestored(STATE_KEY) as? TaskCreateUIState ?: TaskCreateUIState()
+        savedStateHolder.consumeRestored(STATE_KEY) as? TaskNewUiState ?: TaskNewUiState()
 
     private val _uiState = MutableStateFlow(savedState)
     val uiState = _uiState.asStateFlow()
@@ -67,8 +67,8 @@ class TaskCreateViewModel(
         _uiState.update { it.copy(dueDate = dueDate) }
     }
 
-    fun onTaskCreateClicked() {
-        taskCreate(_uiState.value)
+    fun onSubmitClicked() {
+        taskNew(_uiState.value)
             .flowOn(dispatcher)
             .onStart { updateWith(loading = true) }
             .onSuccess { updateWith(isTaskSaved = true) }
@@ -77,16 +77,16 @@ class TaskCreateViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun taskCreate(state: TaskCreateUIState) =
+    private fun taskNew(state: TaskNewUiState) =
         flow {
-            emit(taskCreate(state.title, state.description, state.dueDate))
+            emit(taskNew(state.title, state.description, state.dueDate))
         }
 
     private fun updateWith(
         loading: Boolean = false,
         isTaskSaved: Boolean = false,
     ) {
-        _uiState.update { it.copy(loading = loading, isTaskCreated = isTaskSaved, error = null) }
+        _uiState.update { it.copy(loading = loading, isNewTask = isTaskSaved, error = null) }
     }
 
     fun onErrorShown() {
@@ -96,14 +96,14 @@ class TaskCreateViewModel(
     private fun handleError(error: TaskValidatorError) {
         when (error) {
             TaskValidatorError.InvalidTitle ->
-                updateWithError(R.string.create_new_task_invalid_title_error)
+                updateWithError(R.string.new_task_invalid_title_error)
 
             TaskValidatorError.InvalidDueDate ->
-                updateWithError(R.string.create_new_task_invalid_date_error)
+                updateWithError(R.string.new_task_invalid_date_error)
         }
     }
 
-    private fun updateWithError(@StringRes error: Int = R.string.create_new_task_unknown_error) {
+    private fun updateWithError(@StringRes error: Int = R.string.new_task_unknown_error) {
         _uiState.update { it.copy(loading = false, error = error) }
     }
 }

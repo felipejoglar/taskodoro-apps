@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.android.app.tasks.create
+package com.taskodoro.android.app.tasks.new
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -53,14 +53,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskCreateScreen(
-    state: TaskCreateUIState,
+fun TaskNewScreen(
+    state: TaskNewUiState,
     openConfirmationDialog: Boolean,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onDueDateChanged: (Long) -> Unit,
     onSubmitClicked: () -> Unit,
-    onTaskCreated: () -> Unit,
+    onNewTask: () -> Unit,
     onErrorShown: () -> Unit,
     onDismissConfirmationDialog: () -> Unit,
     onDiscardChanges: () -> Unit,
@@ -70,8 +70,8 @@ fun TaskCreateScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(state.isTaskCreated) {
-        if (state.isTaskCreated) onTaskCreated()
+    LaunchedEffect(state.isNewTask) {
+        if (state.isNewTask) onNewTask()
     }
 
     state.error?.let {
@@ -91,7 +91,7 @@ fun TaskCreateScreen(
         },
         topBar = {
             TwoRowsTopAppBar(
-                title = stringResource(id = R.string.create_new_task_screen_title),
+                title = stringResource(id = R.string.new_task_screen_title),
                 subtitle = stringResource(id = R.string.project_default_title),
                 navigationIcon = navigationIcon(onBackClicked),
                 actions = ActionsList(
@@ -143,7 +143,7 @@ private fun submitIcon(
     action: () -> Unit,
 ) = TopAppBarAction.Icon(
     icon = Icons.Send,
-    contentDescription = stringResource(id = R.string.create_new_task_create_task_button),
+    contentDescription = stringResource(id = R.string.new_task_submit_button),
     tint = MaterialTheme.colorScheme.primary,
     isLoading = isLoading,
     enabled = enabled,
@@ -159,15 +159,15 @@ private fun ConfirmationDialog(
     AlertDialog(
         onDismissRequest = onDismissConfirmationDialog,
         title = {
-            Text(text = stringResource(id = R.string.create_new_task_confirmation_dialog_title))
+            Text(text = stringResource(id = R.string.new_task_confirmation_dialog_title))
         },
         text = {
-            Text(text = stringResource(id = R.string.create_new_task_confirmation_dialog_text))
+            Text(text = stringResource(id = R.string.new_task_confirmation_dialog_text))
         },
         confirmButton = {
             TextButton(onClick = onDiscardChanges) {
                 Text(
-                    text = stringResource(id = R.string.create_new_task_confirmation_dialog_accept),
+                    text = stringResource(id = R.string.new_task_confirmation_dialog_accept),
                     color = MaterialTheme.colorScheme.error,
                 )
             }
@@ -176,7 +176,7 @@ private fun ConfirmationDialog(
             TextButton(onClick = onDismissConfirmationDialog) {
                 Text(
                     text = stringResource(
-                        id = R.string.create_new_task_confirmation_dialog_dismiss,
+                        id = R.string.new_task_confirmation_dialog_dismiss,
                     ),
                 )
             }
@@ -187,16 +187,16 @@ private fun ConfirmationDialog(
 
 @ScreenPreviews
 @Composable
-private fun TaskCreateScreenPreview() {
+private fun TaskNewScreenPreview() {
     AppTemplate {
-        TaskCreateScreen(
-            state = TaskCreateUIState(),
+        TaskNewScreen(
+            state = TaskNewUiState(),
             openConfirmationDialog = false,
             onTitleChanged = {},
             onDescriptionChanged = {},
             onDueDateChanged = {},
             onSubmitClicked = {},
-            onTaskCreated = {},
+            onNewTask = {},
             onErrorShown = {},
             onDismissConfirmationDialog = {},
             onDiscardChanges = {},
@@ -207,16 +207,16 @@ private fun TaskCreateScreenPreview() {
 
 @ScreenPreviews
 @Composable
-private fun TaskCreateScreenWithDialogPreview() {
+private fun TaskNewScreenWithDialogPreview() {
     AppTemplate {
-        TaskCreateScreen(
-            state = TaskCreateUIState(),
+        TaskNewScreen(
+            state = TaskNewUiState(),
             openConfirmationDialog = true,
             onTitleChanged = {},
             onDescriptionChanged = {},
             onDueDateChanged = {},
             onSubmitClicked = {},
-            onTaskCreated = {},
+            onNewTask = {},
             onErrorShown = {},
             onDismissConfirmationDialog = {},
             onDiscardChanges = {},

@@ -315,7 +315,7 @@ exceptions:
   SwallowedException:
     active: true
     excludes:
-      - '**/TaskCreateUseCase.kt'
+      - '**/TaskNewUseCase.kt'
       - '**/LocalTaskRepository.kt'
       - '**/NSUUIDGenerator.kt'
       - '**/RandomUuidGenerator.kt'
