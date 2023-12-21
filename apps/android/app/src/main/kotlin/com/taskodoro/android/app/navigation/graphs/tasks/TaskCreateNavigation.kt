@@ -32,7 +32,6 @@ import kotlinx.coroutines.Dispatchers
 import moe.tlaster.precompose.navigation.BackHandler
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.navigation.RouteBuilder
 import moe.tlaster.precompose.viewmodel.viewModel
 import java.time.Instant
@@ -53,7 +52,7 @@ fun RouteBuilder.taskCreateScreen(
         route = TaskCreateRoute,
     ) {
         val now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
-        val viewModel = viewModel {
+        val viewModel = viewModel { savedStateHolder ->
             val repository = LocalTaskRepository(TaskStoreFactory(context).create())
             val validator = TaskValidatorFactory.create()
 
@@ -62,7 +61,7 @@ fun RouteBuilder.taskCreateScreen(
                 validator = validator,
                 now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
             )
-            TaskCreateViewModel(taskCreate, Dispatchers.IO)
+            TaskCreateViewModel(taskCreate, Dispatchers.IO, savedStateHolder)
         }
 
         val state by viewModel.uiState.collectAsState()

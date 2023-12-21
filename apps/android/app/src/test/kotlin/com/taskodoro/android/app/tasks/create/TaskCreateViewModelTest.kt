@@ -22,6 +22,7 @@ import com.taskodoro.tasks.create.TaskCreateUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import moe.tlaster.precompose.stateholder.SavedStateHolder
 import org.junit.Assert
 import org.junit.Test
 
@@ -217,6 +218,7 @@ class TaskCreateViewModelTest {
         val sut = TaskCreateViewModel(
             taskCreate = taskCreate,
             dispatcher = UnconfinedTestDispatcher(),
+            savedStateHolder = SavedStateHolder("",null),
         )
 
         return sut to taskCreate

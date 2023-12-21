@@ -31,16 +31,29 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
 class TaskCreateViewModel(
     private val taskCreate: TaskCreateUseCase,
     private val dispatcher: CoroutineDispatcher,
+    savedStateHolder: SavedStateHolder,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(TaskCreateUIState())
+    companion object {
+        private const val STATE_KEY = "TASK_CREATE_UI_STATE_KEY"
+    }
+
+    private val savedState =
+        savedStateHolder.consumeRestored(STATE_KEY) as? TaskCreateUIState ?: TaskCreateUIState()
+
+    private val _uiState = MutableStateFlow(savedState)
     val uiState = _uiState.asStateFlow()
+
+    init {
+        savedStateHolder.registerProvider(STATE_KEY) { _uiState.value }
+    }
 
     fun onTitleChanged(title: String) {
         _uiState.update { it.copy(title = title, submitEnabled = title.isNotBlank()) }
