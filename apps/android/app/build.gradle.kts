@@ -98,6 +98,9 @@ dependencies {
 
     implementation(libs.coil)
 
+    implementation(libs.precompose)
+    implementation(libs.precompose.viewmodel)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 

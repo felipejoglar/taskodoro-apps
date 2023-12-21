@@ -19,9 +19,11 @@ package com.taskodoro.android.app.onboarding.pages
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -85,6 +87,7 @@ fun OnboardingGoodByePage(
             ModalBottomSheet(
                 onDismissRequest = onDismiss,
                 sheetState = bottomSheetState,
+                windowInsets = WindowInsets.statusBars,
             ) {
                 OnboardingKnowMoreScreen(
                     modifier = Modifier

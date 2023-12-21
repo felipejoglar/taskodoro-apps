@@ -16,7 +16,6 @@
 
 package com.taskodoro.android.app.tasks.create
 
-import androidx.lifecycle.SavedStateHandle
 import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.create.TaskCreateUseCase
@@ -32,7 +31,7 @@ class TaskCreateViewModelTest {
     fun init_doesNotModifyInitialState() {
         val (sut, _) = makeSUT()
 
-        Assert.assertEquals(TaskCreateUIState(), sut.state.value)
+        Assert.assertEquals(TaskCreateUIState(), sut.uiState.value)
     }
 
     @Test
@@ -46,7 +45,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStates,
             actions = listOf({
                 sut.onTitleChanged("Hello")
@@ -68,7 +67,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStates,
             actions = listOf({
                 sut.onDescriptionChanged("Hello")
@@ -89,7 +88,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStates,
             actions = listOf({
                 sut.onDueDateChanged(10)
@@ -111,7 +110,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStates,
             actions = listOf {
                 taskCreate.completeSuccessfully()
@@ -130,7 +129,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStates,
             actions = listOf {
                 val validatorErrors = listOf(TaskValidatorError.InvalidTitle)
@@ -150,7 +149,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStates,
             actions = listOf {
                 taskCreate.throwError()
@@ -173,7 +172,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStatesForUnknownError,
             actions = listOf({
                 taskCreate.throwError()
@@ -200,7 +199,7 @@ class TaskCreateViewModelTest {
         )
 
         expectEquals(
-            flow = sut.state,
+            flow = sut.uiState,
             expectedValues = expectedStates,
             actions = listOf({
                 taskCreate.throwError()
@@ -217,7 +216,6 @@ class TaskCreateViewModelTest {
         val taskCreate = TaskCreateUseCaseStub()
         val sut = TaskCreateViewModel(
             taskCreate = taskCreate,
-            savedStateHandle = SavedStateHandle(),
             dispatcher = UnconfinedTestDispatcher(),
         )
 

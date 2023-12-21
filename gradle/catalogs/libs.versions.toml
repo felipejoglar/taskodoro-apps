@@ -17,7 +17,7 @@
 [versions]
 kotlin = "1.9.10"
 
-androidGradlePlugin = "8.3.0-alpha14"
+androidGradlePlugin = "8.3.0-alpha18"
 spotlessGradlePlugin = "6.21.0"
 detektGradlePlugin = "1.23.1"
 
@@ -34,6 +34,8 @@ coil = "2.5.0"
 compose = "1.6.0-alpha06"
 compose-material3 = "1.1.2"
 compose-compiler = "1.5.3"
+
+precompose = "1.5.10"
 
 coroutines = "1.7.3"
 
@@ -62,6 +64,10 @@ androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.re
 
 # Coil - https://coil-kt.github.io/coil/compose/
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+# PreCompose - https://github.com/Tlaster/PreCompose
+precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
+precompose-viewmodel = { module = "moe.tlaster:precompose-viewmodel", version.ref = "precompose" }
 
 # Lifecycle - https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }

@@ -17,48 +17,45 @@
 package com.taskodoro.android.app.tasks.create
 
 import androidx.annotation.StringRes
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.taskodoro.android.R
-import com.taskodoro.android.app.di.concurrency.dispatchers.IODispatcher
 import com.taskodoro.tasks.create.TaskCreateUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import javax.inject.Inject
+import kotlinx.coroutines.flow.update
+import moe.tlaster.precompose.viewmodel.ViewModel
+import moe.tlaster.precompose.viewmodel.viewModelScope
 
-@HiltViewModel
-class TaskCreateViewModel @Inject constructor(
+class TaskCreateViewModel(
     private val taskCreate: TaskCreateUseCase,
-    private val savedStateHandle: SavedStateHandle,
-    @IODispatcher private val dispatcher: CoroutineDispatcher,
+    private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    internal val state = savedStateHandle.getStateFlow(TASK_CREATE_UI_STATE, TaskCreateUIState())
+    private val _uiState = MutableStateFlow(TaskCreateUIState())
+    val uiState = _uiState.asStateFlow()
 
     fun onTitleChanged(title: String) {
-        state.update { it.copy(title = title, submitEnabled = title.isNotBlank()) }
+        _uiState.update { it.copy(title = title, submitEnabled = title.isNotBlank()) }
     }
 
     fun onDescriptionChanged(description: String) {
-        state.update { it.copy(description = description) }
+        _uiState.update { it.copy(description = description) }
     }
 
     fun onDueDateChanged(dueDate: Long) {
-        state.update { it.copy(dueDate = dueDate) }
+        _uiState.update { it.copy(dueDate = dueDate) }
     }
 
     fun onTaskCreateClicked() {
-        taskCreate(state.value)
+        taskCreate(_uiState.value)
             .flowOn(dispatcher)
             .onStart { updateWith(loading = true) }
             .onSuccess { updateWith(isTaskSaved = true) }
@@ -76,11 +73,11 @@ class TaskCreateViewModel @Inject constructor(
         loading: Boolean = false,
         isTaskSaved: Boolean = false,
     ) {
-        state.update { it.copy(loading = loading, isTaskCreated = isTaskSaved, error = null) }
+        _uiState.update { it.copy(loading = loading, isTaskCreated = isTaskSaved, error = null) }
     }
 
     fun onErrorShown() {
-        state.update { it.copy(error = null) }
+        _uiState.update { it.copy(error = null) }
     }
 
     private fun handleError(error: TaskValidatorError) {
@@ -94,17 +91,7 @@ class TaskCreateViewModel @Inject constructor(
     }
 
     private fun updateWithError(@StringRes error: Int = R.string.create_new_task_unknown_error) {
-        state.update { it.copy(loading = false, error = error) }
-    }
-
-    private fun StateFlow<TaskCreateUIState>.update(
-        block: (TaskCreateUIState) -> TaskCreateUIState,
-    ) {
-        savedStateHandle[TASK_CREATE_UI_STATE] = block(this.value)
-    }
-
-    companion object {
-        private const val TASK_CREATE_UI_STATE = "TASK_CREATE_UI_STATE"
+        _uiState.update { it.copy(loading = false, error = error) }
     }
 }
 
