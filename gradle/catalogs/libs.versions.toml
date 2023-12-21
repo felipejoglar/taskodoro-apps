@@ -21,8 +21,6 @@ androidGradlePlugin = "8.3.0-alpha18"
 spotlessGradlePlugin = "6.21.0"
 detektGradlePlugin = "1.23.1"
 
-hilt-android = "2.48"
-
 desugar = "2.0.3"
 activity-compose = "1.7.2"
 androidx-activity =  "1.8.0-rc01"
@@ -90,15 +88,10 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 # Coroutines - https://github.com/Kotlin/kotlinx.coroutines
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
-# Hilt - https://dagger.dev/hilt/gradle-setup
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
-
 [plugins]
 # Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-android-hilt = {id = "com.google.dagger.hilt.android", version.ref = "hilt-android"}
 
 # Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
