@@ -31,7 +31,9 @@ import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.AppTemplate
 import com.taskodoro.android.app.ui.components.appbar.SingleRowTopAppBar
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
+import com.taskodoro.android.app.ui.components.appbar.model.OverflowList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
+import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarOverflow
 import com.taskodoro.android.app.ui.components.icons.Add
 import com.taskodoro.android.app.ui.components.icons.Icons
 import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
@@ -40,6 +42,7 @@ import com.taskodoro.android.app.ui.components.preview.ScreenPreviews
 @Composable
 fun TaskListScreen(
     onNewTaskClicked: () -> Unit,
+    onKnowMoreClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -47,14 +50,20 @@ fun TaskListScreen(
             SingleRowTopAppBar(
                 title = stringResource(id = R.string.task_list_title),
                 actions = ActionsList(
-                    listOf(newIcon(onNewTaskClicked)),
+                    listOf(
+                        newIcon(onNewTaskClicked),
+                    ),
+                ),
+                overflow = OverflowList(
+                    listOf(
+                        knowMoreOverflowMenuItem(onKnowMoreClicked),
+                    ),
                 ),
             )
         },
         modifier = modifier
             .fillMaxSize(),
     ) { paddingValues ->
-
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -76,10 +85,21 @@ private fun newIcon(
     action = action,
 )
 
+@Composable
+fun knowMoreOverflowMenuItem(
+    onKnowMoreClicked: () -> Unit,
+) = TopAppBarOverflow(
+    text = stringResource(id = R.string.task_list_know_more_menu_item),
+    action = onKnowMoreClicked,
+)
+
 @ScreenPreviews
 @Composable
 private fun TaskListScreenPreview() {
     AppTemplate {
-        TaskListScreen(onNewTaskClicked = {})
+        TaskListScreen(
+            onNewTaskClicked = {},
+            onKnowMoreClicked = {},
+        )
     }
 }

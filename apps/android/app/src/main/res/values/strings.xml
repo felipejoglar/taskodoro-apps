@@ -41,6 +41,12 @@
     <string name="onboarding_how_it_works_last_step_title">Take a long break</string>
     <string name="onboarding_how_it_works_last_step_description">After completing four work sessions, take a longer and more refreshing 30-minute break.</string>
 
+    <!--  SCREEN: TASK LIST  -->
+    <string name="task_list_title">Home</string>
+    <string name="task_list_empty_state">No items</string>
+    <string name="task_list_new_task_button">New task</string>
+    <string name="task_list_know_more_menu_item">Know more</string>
+
     <!--  SCREEN: NEW TASK  -->
     <string name="new_task_screen_title">New Task</string>
     <string name="new_task_due_date">Due date</string>
