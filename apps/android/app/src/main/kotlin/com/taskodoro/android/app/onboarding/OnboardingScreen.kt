@@ -66,7 +66,7 @@ fun OnboardingScreen(
                     onContinueClicked = onContinueClicked,
                 )
             },
-        )
+        ),
     )
     Pager(pages = pages)
 }

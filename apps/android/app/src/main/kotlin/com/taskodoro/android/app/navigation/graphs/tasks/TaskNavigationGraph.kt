@@ -37,7 +37,7 @@ fun RouteBuilder.taskGraph(
         initialRoute = TaskListRoute,
     ) {
         taskListScreen(
-            onNewTaskClicked = { navigator.navigateToTaskNew() }
+            onNewTaskClicked = { navigator.navigateToTaskNew() },
         )
 
         taskNewScreen(

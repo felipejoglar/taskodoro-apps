@@ -47,19 +47,19 @@ fun TaskListScreen(
             SingleRowTopAppBar(
                 title = stringResource(id = R.string.task_list_title),
                 actions = ActionsList(
-                    listOf(newIcon(onNewTaskClicked))
-                )
+                    listOf(newIcon(onNewTaskClicked)),
+                ),
             )
         },
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) { paddingValues ->
 
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
         ) {
             Text(text = stringResource(id = R.string.task_list_empty_state))
         }

@@ -218,7 +218,7 @@ class TaskNewViewModelTest {
         val sut = TaskNewViewModel(
             taskNew = taskNew,
             dispatcher = UnconfinedTestDispatcher(),
-            savedStateHolder = SavedStateHolder("",null),
+            savedStateHolder = SavedStateHolder("", null),
         )
 
         return sut to taskNew

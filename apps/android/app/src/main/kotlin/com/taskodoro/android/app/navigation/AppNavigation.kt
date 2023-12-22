@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.taskodoro.android.app.navigation.graphs.onboarding.OnboardingRoute
 import com.taskodoro.android.app.navigation.graphs.onboarding.onboardingGraph
 import com.taskodoro.android.app.navigation.graphs.tasks.navigateToTaskGraph
-import com.taskodoro.android.app.navigation.graphs.onboarding.onboardingScreen
 import com.taskodoro.android.app.navigation.graphs.tasks.taskGraph
 import com.taskodoro.android.app.navigation.transitions.forwardBackwardNavTransition
 import moe.tlaster.precompose.PreComposeApp
@@ -31,10 +30,9 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.navigation.rememberNavigator
 
-
 @Composable
 fun AppNavigation(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     PreComposeApp {
         val navigator = rememberNavigator()
@@ -46,16 +44,14 @@ fun AppNavigation(
             navTransition = forwardBackwardNavTransition(),
             modifier = modifier,
         ) {
-
             onboardingGraph(
                 onContinueClicked = {
                     val options = NavOptions(popUpTo = PopUpTo.First())
                     navigator.navigateToTaskGraph(options)
-                }
+                },
             )
 
             taskGraph(context, navigator)
         }
     }
 }
-

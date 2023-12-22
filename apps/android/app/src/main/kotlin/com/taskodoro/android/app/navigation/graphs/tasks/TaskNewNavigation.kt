@@ -58,7 +58,7 @@ fun RouteBuilder.taskNewScreen(
             val taskNew = TaskNew(
                 repository = repository,
                 validator = validator,
-                now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
+                now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() },
             )
             TaskNewViewModel(taskNew, Dispatchers.IO, savedStateHolder)
         }

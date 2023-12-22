@@ -22,7 +22,6 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
 
-
 const val OnboardingRoute = "$OnboardingGraphRoute/start"
 
 fun Navigator.navigateToOnboarding(options: NavOptions? = null) {
@@ -34,7 +33,7 @@ fun RouteBuilder.onboardingScreen(
 ) {
     scene(
         route = OnboardingRoute,
-        navTransition = fadeThroughNavTransition()
+        navTransition = fadeThroughNavTransition(),
     ) {
         OnboardingScreen { onContinueClicked() }
     }
