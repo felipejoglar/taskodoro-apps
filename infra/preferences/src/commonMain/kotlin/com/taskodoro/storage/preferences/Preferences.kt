@@ -14,31 +14,9 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+package com.taskodoro.storage.preferences
+
+interface Preferences {
+    suspend fun getBoolean(key: String): Boolean
+    suspend fun setBoolean(key: String, value: Boolean)
 }
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-include(":taskodoro")
-include(":infra:database")
-include(":infra:database-test")
-include(":infra:preferences")

@@ -14,31 +14,18 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
+package com.taskodoro.storage.preferences
+
+import android.content.Context
+import com.taskodoro.storage.preferences.datastore.DATA_STORE_FILENAME
+import com.taskodoro.storage.preferences.datastore.DataStorePreferences
+import com.taskodoro.storage.preferences.datastore.createDataStore
+
+actual class PreferencesFactory(private val context: Context) {
+    actual fun create(): Preferences {
+        val dataStore = createDataStore {
+            context.filesDir.resolve(DATA_STORE_FILENAME).absolutePath
+        }
+        return DataStorePreferences(dataStore)
     }
 }
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-include(":taskodoro")
-include(":infra:database")
-include(":infra:database-test")
-include(":infra:preferences")

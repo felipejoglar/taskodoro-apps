@@ -14,31 +14,19 @@
  *    limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+package com.taskodoro.storage.preferences.datastore
 
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("config") {
-            from(files("gradle/catalogs/config.versions.toml"))
-        }
-        create("libs") {
-            from(files("gradle/catalogs/libs.versions.toml"))
-        }
-    }
-}
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import okio.Path.Companion.toPath
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+internal const val DATA_STORE_FILENAME = "taskodoro.preferences"
 
-rootProject.name = "Taskodoro_App"
-
-include(":apps:android:app")
-include(":taskodoro")
-include(":infra:database")
-include(":infra:database-test")
-include(":infra:preferences")
+internal fun createDataStore(
+    producePath: () -> String,
+): DataStore<Preferences> = PreferenceDataStoreFactory.createWithPath(
+    corruptionHandler = null,
+    migrations = emptyList(),
+    produceFile = { producePath().toPath() },
+)

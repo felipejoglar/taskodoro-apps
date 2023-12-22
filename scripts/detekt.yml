@@ -456,6 +456,9 @@ naming:
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
+    excludes:
+      - '**/*.android.kt'
+      - '**/*.native.kt'
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
