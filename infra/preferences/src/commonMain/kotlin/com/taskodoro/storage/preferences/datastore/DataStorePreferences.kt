@@ -21,17 +21,18 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import com.taskodoro.storage.preferences.Preferences
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import androidx.datastore.preferences.core.Preferences as DataStorePreferences
 
 internal class DataStorePreferences(
     private val dataStore: DataStore<DataStorePreferences>,
 ) : Preferences {
 
-    override suspend fun getBoolean(key: String): Boolean {
-        return dataStore.data.first()[booleanPreferencesKey(key)] ?: false
+    override fun getBoolean(key: String): Boolean = runBlocking {
+        return@runBlocking dataStore.data.first()[booleanPreferencesKey(key)] ?: false
     }
 
-    override suspend fun setBoolean(key: String, value: Boolean) {
+    override fun setBoolean(key: String, value: Boolean): Unit = runBlocking {
         dataStore.edit { preferences ->
             preferences[booleanPreferencesKey(key)] = value
         }

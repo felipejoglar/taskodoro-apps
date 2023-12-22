@@ -14,17 +14,26 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.preferences.datastore
+package com.taskodoro.storage.preferences.test
 
-import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.core.Preferences
+import com.taskodoro.storage.preferences.Preferences
+import com.taskodoro.storage.preferences.datastore.DataStorePreferences
 import okio.Path.Companion.toPath
 
-internal const val DATA_STORE_FILENAME = "taskodoro.preferences_pb"
+class TestPreferences(
+    path: String,
+) : Preferences {
 
-internal fun createDataStore(
-    producePath: () -> String,
-): DataStore<Preferences> = PreferenceDataStoreFactory.createWithPath(
-    produceFile = { producePath().toPath() },
-)
+    private val dataStorePreferences = DataStorePreferences(
+        dataStore = PreferenceDataStoreFactory.createWithPath(produceFile = { path.toPath() }),
+    )
+
+    override fun getBoolean(key: String): Boolean {
+        return dataStorePreferences.getBoolean(key)
+    }
+
+    override fun setBoolean(key: String, value: Boolean) {
+        dataStorePreferences.setBoolean(key, value)
+    }
+}
