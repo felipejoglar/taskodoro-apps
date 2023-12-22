@@ -40,6 +40,7 @@ kotlin {
             dependencies {
                 implementation(projects.infra.database)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.datastore)
             }
         }
         val androidMain by getting

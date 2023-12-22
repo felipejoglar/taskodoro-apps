@@ -38,6 +38,7 @@ precompose = "1.5.10"
 coroutines = "1.7.3"
 
 sqlDelight = "2.0.0"
+datastore = "1.1.0-alpha07"
 
 datetime = "0.4.1"
 
@@ -75,6 +76,9 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 sqlDelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqlDelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 sqlDelight-jvm-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
+
+# DataStore - https://developer.android.com/jetpack/androidx/releases/datastore
+datastore = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 
 # kotlinx datetime - https://github.com/Kotlin/kotlinx-datetime
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime"}
