@@ -31,6 +31,7 @@ fun Navigator.navigateToTaskGraph(options: NavOptions? = null) {
 fun RouteBuilder.taskGraph(
     context: Context,
     navigator: Navigator,
+    onKnowMoreClicked: () -> Unit,
 ) {
     group(
         route = TASK_GRAPH_ROUTE,
@@ -38,6 +39,7 @@ fun RouteBuilder.taskGraph(
     ) {
         taskListScreen(
             onNewTaskClicked = { navigator.navigateToTaskNew() },
+            onKnowMoreClicked = onKnowMoreClicked,
         )
 
         taskNewScreen(

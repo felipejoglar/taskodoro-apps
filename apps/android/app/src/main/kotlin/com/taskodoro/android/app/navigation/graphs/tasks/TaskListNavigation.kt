@@ -29,10 +29,14 @@ fun Navigator.navigateToTaskList(options: NavOptions? = null) {
 
 fun RouteBuilder.taskListScreen(
     onNewTaskClicked: () -> Unit,
+    onKnowMoreClicked: () -> Unit,
 ) {
     scene(
         route = TASK_LIST_ROUTE,
     ) {
-        TaskListScreen(onNewTaskClicked)
+        TaskListScreen(
+            onNewTaskClicked = onNewTaskClicked,
+            onKnowMoreClicked = onKnowMoreClicked,
+        )
     }
 }
