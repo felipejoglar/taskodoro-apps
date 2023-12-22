@@ -37,10 +37,10 @@ import moe.tlaster.precompose.viewmodel.viewModel
 import java.time.Instant
 import java.time.ZoneId
 
-const val TaskNewRoute = "$TaskGraphRoute/new"
+const val TASK_NEW_ROUTE = "$TASK_GRAPH_ROUTE/new"
 
 fun Navigator.navigateToTaskNew(options: NavOptions? = null) {
-    navigate(TaskNewRoute, options)
+    navigate(TASK_NEW_ROUTE, options)
 }
 
 fun RouteBuilder.taskNewScreen(
@@ -49,7 +49,7 @@ fun RouteBuilder.taskNewScreen(
     onDiscardChanges: () -> Unit,
 ) {
     scene(
-        route = TaskNewRoute,
+        route = TASK_NEW_ROUTE,
     ) {
         val viewModel = viewModel { savedStateHolder ->
             val repository = LocalTaskRepository(TaskStoreFactory(context).create())

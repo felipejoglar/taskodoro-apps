@@ -21,17 +21,17 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
 
-const val TaskListRoute = "$TaskGraphRoute/list"
+const val TASK_LIST_ROUTE = "$TASK_GRAPH_ROUTE/list"
 
 fun Navigator.navigateToTaskList(options: NavOptions? = null) {
-    navigate(TaskListRoute, options)
+    navigate(TASK_LIST_ROUTE, options)
 }
 
 fun RouteBuilder.taskListScreen(
     onNewTaskClicked: () -> Unit,
 ) {
     scene(
-        route = TaskListRoute,
+        route = TASK_LIST_ROUTE,
     ) {
         TaskListScreen(onNewTaskClicked)
     }

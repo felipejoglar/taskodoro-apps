@@ -169,6 +169,8 @@ complexity:
     ignoreDataClasses: true
     ignoreAnnotatedParameter: [ ]
     ignoreAnnotated: [ 'Composable' ]
+    excludes:
+      - '**/NavTransitions.kt'
   MethodOverloading:
     active: false
     threshold: 6
@@ -748,6 +750,7 @@ style:
   MagicNumber:
     active: true
     excludes:
+      - '**/NavTransitions.kt'
       - '**/components/icons/**'
       - '**/components/vectors/**'
       - '**/Color.kt'

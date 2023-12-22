@@ -22,10 +22,10 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
 
-const val TaskGraphRoute = "task"
+const val TASK_GRAPH_ROUTE = "task"
 
 fun Navigator.navigateToTaskGraph(options: NavOptions? = null) {
-    navigate(TaskGraphRoute, options)
+    navigate(TASK_GRAPH_ROUTE, options)
 }
 
 fun RouteBuilder.taskGraph(
@@ -33,8 +33,8 @@ fun RouteBuilder.taskGraph(
     navigator: Navigator,
 ) {
     group(
-        route = TaskGraphRoute,
-        initialRoute = TaskListRoute,
+        route = TASK_GRAPH_ROUTE,
+        initialRoute = TASK_LIST_ROUTE,
     ) {
         taskListScreen(
             onNewTaskClicked = { navigator.navigateToTaskNew() },

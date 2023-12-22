@@ -33,8 +33,8 @@ import com.taskodoro.android.app.ui.theme.AppTheme
 @Composable
 fun SingleRowTopAppBar(
     title: String,
-    navigationIcon: TopAppBarAction.Icon? = null,
     modifier: Modifier = Modifier,
+    navigationIcon: TopAppBarAction.Icon? = null,
     actions: ActionsList = ActionsList(listOf()),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {

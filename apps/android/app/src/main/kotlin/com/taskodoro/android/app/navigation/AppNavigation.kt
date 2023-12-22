@@ -19,7 +19,7 @@ package com.taskodoro.android.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.taskodoro.android.app.navigation.graphs.onboarding.OnboardingRoute
+import com.taskodoro.android.app.navigation.graphs.onboarding.ONBOARDING_ROUTE
 import com.taskodoro.android.app.navigation.graphs.onboarding.onboardingGraph
 import com.taskodoro.android.app.navigation.graphs.tasks.navigateToTaskGraph
 import com.taskodoro.android.app.navigation.graphs.tasks.taskGraph
@@ -40,7 +40,7 @@ fun AppNavigation(
 
         NavHost(
             navigator = navigator,
-            initialRoute = OnboardingRoute,
+            initialRoute = ONBOARDING_ROUTE,
             navTransition = forwardBackwardNavTransition(),
             modifier = modifier,
         ) {
