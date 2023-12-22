@@ -48,7 +48,7 @@ import com.taskodoro.android.app.ui.theme.AppTheme
 @Composable
 fun TopAppBar(
     title: String,
-    navigationIcon: TopAppBarAction.Icon,
+    navigationIcon: TopAppBarAction.Icon?,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     actions: ActionsList = ActionsList(listOf()),
@@ -57,7 +57,7 @@ fun TopAppBar(
     TopAppBar(
         scrollBehavior = scrollBehavior,
         title = { TitleContent(title, subtitle) },
-        navigationIcon = { TopAppBarIcon(navigationIcon) },
+        navigationIcon = { navigationIcon?.let { TopAppBarIcon(it) } },
         actions = { TopAppBarActions(actions) },
         modifier = modifier,
     )
