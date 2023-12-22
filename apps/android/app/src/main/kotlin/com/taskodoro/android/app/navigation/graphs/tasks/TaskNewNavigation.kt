@@ -51,7 +51,6 @@ fun RouteBuilder.taskNewScreen(
     scene(
         route = TaskNewRoute,
     ) {
-        val now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() }
         val viewModel = viewModel { savedStateHolder ->
             val repository = LocalTaskRepository(TaskStoreFactory(context).create())
             val validator = TaskValidatorFactory.create()
@@ -84,12 +83,7 @@ fun RouteBuilder.taskNewScreen(
             onDescriptionChanged = viewModel::onDescriptionChanged,
             onDueDateChanged = viewModel::onDueDateChanged,
             onSubmitClicked = viewModel::onSubmitClicked,
-            onNewTask = {
-                viewModel.onTitleChanged("")
-                viewModel.onDescriptionChanged("")
-                viewModel.onDueDateChanged(now())
-                onNewTask()
-            },
+            onNewTask = onNewTask,
             onErrorShown = viewModel::onErrorShown,
             onDismissConfirmationDialog = { openConfirmationDialog = false },
             onDiscardChanges = onDiscardChanges,

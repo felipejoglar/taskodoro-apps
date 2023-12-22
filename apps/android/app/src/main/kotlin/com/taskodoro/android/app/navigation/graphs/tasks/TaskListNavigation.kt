@@ -16,37 +16,23 @@
 
 package com.taskodoro.android.app.navigation.graphs.tasks
 
-import android.content.Context
-import android.widget.Toast
+import com.taskodoro.android.app.tasks.list.TaskListScreen
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
 
-const val TaskGraphRoute = "task"
+const val TaskListRoute = "$TaskGraphRoute/list"
 
-fun Navigator.navigateToTaskGraph(options: NavOptions? = null) {
-    navigate(TaskGraphRoute, options)
+fun Navigator.navigateToTaskList(options: NavOptions? = null) {
+    navigate(TaskListRoute, options)
 }
 
-fun RouteBuilder.taskGraph(
-    context: Context,
-    navigator: Navigator,
+fun RouteBuilder.taskListScreen(
+    onNewTaskClicked: () -> Unit,
 ) {
-    group(
-        route = TaskGraphRoute,
-        initialRoute = TaskListRoute,
+    scene(
+        route = TaskListRoute,
     ) {
-        taskListScreen(
-            onNewTaskClicked = { navigator.navigateToTaskNew() }
-        )
-
-        taskNewScreen(
-            context = context,
-            onNewTask = {
-                Toast.makeText(context, "Task saved!", Toast.LENGTH_SHORT).show()
-                navigator.goBack()
-            },
-            onDiscardChanges = { navigator.goBack() },
-        )
+        TaskListScreen(onNewTaskClicked)
     }
 }
