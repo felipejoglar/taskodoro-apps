@@ -17,7 +17,8 @@
 package com.taskodoro.android.app.main
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.taskodoro.android.app.di.DiContainer
 
-@HiltAndroidApp
-class TaskodoroApp : Application()
+class TaskodoroApp : Application() {
+    val diContainer by lazy { DiContainer(applicationContext) }
+}

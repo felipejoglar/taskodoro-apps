@@ -16,7 +16,6 @@
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.android.hilt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.kapt)
@@ -98,8 +97,8 @@ dependencies {
 
     implementation(libs.coil)
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    implementation(libs.precompose)
+    implementation(libs.precompose.viewmodel)
 
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)

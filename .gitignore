@@ -142,3 +142,6 @@ local.properties
 
 # Google/Firebase secrets
 google-services.json
+
+# DataStore Preferences files (mainly created for testing)
+*.preferences_pb

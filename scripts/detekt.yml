@@ -169,6 +169,8 @@ complexity:
     ignoreDataClasses: true
     ignoreAnnotatedParameter: [ ]
     ignoreAnnotated: [ 'Composable' ]
+    excludes:
+      - '**/NavTransitions.kt'
   MethodOverloading:
     active: false
     threshold: 6
@@ -315,7 +317,7 @@ exceptions:
   SwallowedException:
     active: true
     excludes:
-      - '**/TaskCreateUseCase.kt'
+      - '**/TaskNewUseCase.kt'
       - '**/LocalTaskRepository.kt'
       - '**/NSUUIDGenerator.kt'
       - '**/RandomUuidGenerator.kt'
@@ -454,6 +456,9 @@ naming:
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
+    excludes:
+      - '**/*.android.kt'
+      - '**/*.native.kt'
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
@@ -748,6 +753,7 @@ style:
   MagicNumber:
     active: true
     excludes:
+      - '**/NavTransitions.kt'
       - '**/components/icons/**'
       - '**/components/vectors/**'
       - '**/Color.kt'

@@ -21,11 +21,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.taskodoro.android.app.onboarding.OnboardingScreen
+import com.taskodoro.android.app.navigation.AppNavigation
 import com.taskodoro.android.app.ui.components.AppTemplate
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +32,11 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         enableEdgeToEdge()
 
+        val diContainer = (application as TaskodoroApp).diContainer
+
         setContent {
             AppTemplate {
-                OnboardingScreen {}
+                AppNavigation(diContainer)
             }
         }
     }

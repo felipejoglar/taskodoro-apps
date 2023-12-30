@@ -58,7 +58,7 @@ fun DueDateSelection(
         )
 
         SingleRowTopAppBar(
-            title = stringResource(id = R.string.create_new_task_due_date),
+            title = stringResource(id = R.string.new_task_due_date),
             navigationIcon = TopAppBarAction.Icon(
                 icon = Icons.ArrowBack,
                 contentDescription = stringResource(id = R.string.navigation_back),

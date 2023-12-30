@@ -39,7 +39,7 @@ fun Tooltip(
         tooltip = {
             Text(
                 text = tooltipText,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 4.dp),
             )

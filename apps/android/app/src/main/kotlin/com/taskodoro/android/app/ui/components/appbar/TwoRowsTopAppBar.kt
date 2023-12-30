@@ -22,6 +22,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
+import com.taskodoro.android.app.ui.components.appbar.model.OverflowList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
 import com.taskodoro.android.app.ui.components.icons.ArrowBack
 import com.taskodoro.android.app.ui.components.icons.Icons
@@ -39,6 +40,7 @@ fun TwoRowsTopAppBar(
     navigationIcon: TopAppBarAction.Icon,
     modifier: Modifier = Modifier,
     actions: ActionsList = ActionsList(listOf()),
+    overflow: OverflowList = OverflowList(listOf()),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     TopAppBar(
@@ -47,6 +49,7 @@ fun TwoRowsTopAppBar(
         subtitle = subtitle,
         navigationIcon = navigationIcon,
         actions = actions,
+        overflow = overflow,
         modifier = modifier,
     )
 }

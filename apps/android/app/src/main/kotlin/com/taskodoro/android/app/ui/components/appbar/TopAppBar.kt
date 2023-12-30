@@ -16,28 +16,43 @@
 
 package com.taskodoro.android.app.ui.components.appbar
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.taskodoro.android.R
 import com.taskodoro.android.app.ui.components.Tooltip
 import com.taskodoro.android.app.ui.components.appbar.model.ActionsList
+import com.taskodoro.android.app.ui.components.appbar.model.OverflowList
 import com.taskodoro.android.app.ui.components.appbar.model.TopAppBarAction
 import com.taskodoro.android.app.ui.components.buttons.IconButton
 import com.taskodoro.android.app.ui.components.buttons.TextButton
 import com.taskodoro.android.app.ui.components.icons.ArrowBack
 import com.taskodoro.android.app.ui.components.icons.Icons
+import com.taskodoro.android.app.ui.components.icons.Overflow
 import com.taskodoro.android.app.ui.components.icons.Send
 import com.taskodoro.android.app.ui.components.preview.ComponentPreviews
 import com.taskodoro.android.app.ui.components.preview.DynamicColorsPreviews
@@ -48,17 +63,18 @@ import com.taskodoro.android.app.ui.theme.AppTheme
 @Composable
 fun TopAppBar(
     title: String,
-    navigationIcon: TopAppBarAction.Icon,
+    navigationIcon: TopAppBarAction.Icon?,
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     actions: ActionsList = ActionsList(listOf()),
+    overflow: OverflowList = OverflowList(listOf()),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     TopAppBar(
         scrollBehavior = scrollBehavior,
         title = { TitleContent(title, subtitle) },
-        navigationIcon = { TopAppBarIcon(navigationIcon) },
-        actions = { TopAppBarActions(actions) },
+        navigationIcon = { navigationIcon?.let { TopAppBarIcon(it) } },
+        actions = { TopAppBarActions(actions, overflow) },
         modifier = modifier,
     )
 }
@@ -88,12 +104,19 @@ private fun TitleContent(
 }
 
 @Composable
-private fun TopAppBarActions(actions: ActionsList) {
+private fun TopAppBarActions(
+    actions: ActionsList,
+    overflow: OverflowList,
+) {
     actions.items.map { element ->
         when (element) {
             is TopAppBarAction.Button -> TopAppBarButton(button = element)
             is TopAppBarAction.Icon -> TopAppBarIcon(icon = element)
         }
+    }
+
+    if (overflow.items.isNotEmpty()) {
+        OverflowMenu(overflow)
     }
 }
 
@@ -134,6 +157,59 @@ private fun TopAppBarButton(
             modifier = modifier,
         ) {
             Text(text = button.text.uppercase())
+        }
+    }
+}
+
+@Composable
+private fun OverflowMenu(
+    overflow: OverflowList,
+    modifier: Modifier = Modifier,
+) {
+    var isOverflowExpanded by remember { mutableStateOf(false) }
+
+    Box(
+        modifier = modifier
+            .wrapContentSize(Alignment.TopEnd),
+    ) {
+        TopAppBarIcon(
+            TopAppBarAction.Icon(
+                icon = Icons.Overflow,
+                contentDescription = stringResource(id = R.string.top_app_bar_overflow_button),
+                tint = MaterialTheme.colorScheme.primary,
+                action = { isOverflowExpanded = true },
+            ),
+        )
+
+        DropdownMenu(
+            expanded = isOverflowExpanded,
+            onDismissRequest = { isOverflowExpanded = false },
+            offset = DpOffset(x = 16.dp, y = 0.dp),
+        ) {
+            overflow.items.forEach { overflowItem ->
+                val onClick = {
+                    isOverflowExpanded = false
+                    overflowItem.action()
+                }
+
+                if (overflowItem.icon != null) {
+                    DropdownMenuItem(
+                        text = { Text(overflowItem.text) },
+                        onClick = onClick,
+                        leadingIcon = {
+                            Icon(
+                                imageVector = overflowItem.icon,
+                                contentDescription = overflowItem.text,
+                            )
+                        },
+                    )
+                } else {
+                    DropdownMenuItem(
+                        text = { Text(overflowItem.text) },
+                        onClick = onClick,
+                    )
+                }
+            }
         }
     }
 }

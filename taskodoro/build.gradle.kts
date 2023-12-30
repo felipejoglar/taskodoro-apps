@@ -39,6 +39,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.infra.database)
+                implementation(projects.infra.preferences)
                 implementation(libs.kotlinx.datetime)
             }
         }
