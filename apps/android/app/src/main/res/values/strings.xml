@@ -43,7 +43,7 @@
 
     <!--  SCREEN: TASK LIST  -->
     <string name="task_list_title">Home</string>
-    <string name="task_list_empty_state">No items</string>
+    <string name="task_list_empty_state">No items found</string>
     <string name="task_list_new_task_button">New task</string>
     <string name="task_list_know_more_menu_item">Know more</string>
 
