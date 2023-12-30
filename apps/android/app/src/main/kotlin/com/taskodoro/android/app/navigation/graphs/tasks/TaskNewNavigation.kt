@@ -16,7 +16,6 @@
 
 package com.taskodoro.android.app.navigation.graphs.tasks
 
-import android.content.Context
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,18 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.taskodoro.android.app.tasks.new.TaskNewScreen
 import com.taskodoro.android.app.tasks.new.TaskNewViewModel
-import com.taskodoro.storage.tasks.LocalTaskRepository
-import com.taskodoro.storage.tasks.TaskStoreFactory
-import com.taskodoro.tasks.new.TaskNew
-import com.taskodoro.tasks.validator.TaskValidatorFactory
+import com.taskodoro.tasks.new.TaskNewUseCase
 import kotlinx.coroutines.Dispatchers
 import moe.tlaster.precompose.navigation.BackHandler
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
 import moe.tlaster.precompose.viewmodel.viewModel
-import java.time.Instant
-import java.time.ZoneId
 
 const val TASK_NEW_ROUTE = "$TASK_GRAPH_ROUTE/new"
 
@@ -44,7 +38,7 @@ fun Navigator.navigateToTaskNew(options: NavOptions? = null) {
 }
 
 fun RouteBuilder.taskNewScreen(
-    context: Context,
+    taskNew: TaskNewUseCase,
     onNewTask: () -> Unit,
     onDiscardChanges: () -> Unit,
 ) {
@@ -52,14 +46,6 @@ fun RouteBuilder.taskNewScreen(
         route = TASK_NEW_ROUTE,
     ) {
         val viewModel = viewModel { savedStateHolder ->
-            val repository = LocalTaskRepository(TaskStoreFactory(context).create())
-            val validator = TaskValidatorFactory.create()
-
-            val taskNew = TaskNew(
-                repository = repository,
-                validator = validator,
-                now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() },
-            )
             TaskNewViewModel(taskNew, Dispatchers.IO, savedStateHolder)
         }
 

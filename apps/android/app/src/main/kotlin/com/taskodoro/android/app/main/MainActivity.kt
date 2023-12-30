@@ -32,9 +32,11 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         enableEdgeToEdge()
 
+        val diContainer = (application as TaskodoroApp).diContainer
+
         setContent {
             AppTemplate {
-                AppNavigation()
+                AppNavigation(diContainer)
             }
         }
     }

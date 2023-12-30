@@ -19,7 +19,7 @@ package com.taskodoro.android.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import com.taskodoro.android.app.di.DiContainer
 import com.taskodoro.android.app.navigation.graphs.onboarding.ONBOARDING_GRAPH_ROUTE
 import com.taskodoro.android.app.navigation.graphs.onboarding.navigateToOnboarding
 import com.taskodoro.android.app.navigation.graphs.onboarding.onboardingGraph
@@ -27,7 +27,6 @@ import com.taskodoro.android.app.navigation.graphs.tasks.TASK_GRAPH_ROUTE
 import com.taskodoro.android.app.navigation.graphs.tasks.navigateToTaskGraph
 import com.taskodoro.android.app.navigation.graphs.tasks.taskGraph
 import com.taskodoro.android.app.navigation.transitions.forwardBackwardNavTransition
-import com.taskodoro.onboarding.OnboardingStoreFactory
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import moe.tlaster.precompose.PreComposeApp
@@ -38,14 +37,15 @@ import moe.tlaster.precompose.navigation.rememberNavigator
 
 @Composable
 fun AppNavigation(
+    di: DiContainer,
     modifier: Modifier = Modifier,
 ) {
+    val onboardingStore = di.onboardingStore
+
     PreComposeApp {
         val navigator = rememberNavigator()
         val scope = rememberCoroutineScope()
-        val context = LocalContext.current
 
-        val onboardingStore = OnboardingStoreFactory(context).create()
         val isOnboarded = onboardingStore.isOnboarded().getOrThrow()
 
         val initialRoute = if (isOnboarded) TASK_GRAPH_ROUTE else ONBOARDING_GRAPH_ROUTE
@@ -58,7 +58,7 @@ fun AppNavigation(
         ) {
             onboardingGraph(
                 onContinueClicked = {
-                    flowOf(onboardingStore.setOnboarded(true)).launchIn(scope)
+                    flowOf(onboardingStore.setOnboarded()).launchIn(scope)
 
                     val options = NavOptions(popUpTo = PopUpTo.First())
                     navigator.navigateToTaskGraph(options)
@@ -66,7 +66,7 @@ fun AppNavigation(
             )
 
             taskGraph(
-                context = context,
+                taskNew = di.taskNewUseCase,
                 navigator = navigator,
                 onKnowMoreClicked = { navigator.navigateToOnboarding() },
             )

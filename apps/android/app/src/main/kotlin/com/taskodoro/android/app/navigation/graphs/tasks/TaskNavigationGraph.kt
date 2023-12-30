@@ -16,8 +16,7 @@
 
 package com.taskodoro.android.app.navigation.graphs.tasks
 
-import android.content.Context
-import android.widget.Toast
+import com.taskodoro.tasks.new.TaskNewUseCase
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
@@ -29,7 +28,7 @@ fun Navigator.navigateToTaskGraph(options: NavOptions? = null) {
 }
 
 fun RouteBuilder.taskGraph(
-    context: Context,
+    taskNew: TaskNewUseCase,
     navigator: Navigator,
     onKnowMoreClicked: () -> Unit,
 ) {
@@ -43,11 +42,8 @@ fun RouteBuilder.taskGraph(
         )
 
         taskNewScreen(
-            context = context,
-            onNewTask = {
-                Toast.makeText(context, "Task saved!", Toast.LENGTH_SHORT).show()
-                navigator.goBack()
-            },
+            taskNew = taskNew,
+            onNewTask = navigator::goBack,
             onDiscardChanges = { navigator.goBack() },
         )
     }
