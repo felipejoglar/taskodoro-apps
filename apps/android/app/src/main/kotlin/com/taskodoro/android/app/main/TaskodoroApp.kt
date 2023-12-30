@@ -22,4 +22,3 @@ import com.taskodoro.android.app.di.DiContainer
 class TaskodoroApp : Application() {
     val diContainer by lazy { DiContainer(applicationContext) }
 }
-

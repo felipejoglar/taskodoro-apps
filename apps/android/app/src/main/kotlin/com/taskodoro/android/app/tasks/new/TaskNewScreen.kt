@@ -165,7 +165,10 @@ private fun ConfirmationDialog(
             Text(text = stringResource(id = R.string.new_task_confirmation_dialog_text))
         },
         confirmButton = {
-            TextButton(onClick = onDiscardChanges) {
+            TextButton(onClick = {
+                onDismissConfirmationDialog()
+                onDiscardChanges()
+            }) {
                 Text(
                     text = stringResource(id = R.string.new_task_confirmation_dialog_accept),
                     color = MaterialTheme.colorScheme.error,

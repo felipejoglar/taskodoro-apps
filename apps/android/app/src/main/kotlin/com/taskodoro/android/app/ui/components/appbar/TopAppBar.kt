@@ -187,10 +187,15 @@ private fun OverflowMenu(
             offset = DpOffset(x = 16.dp, y = 0.dp),
         ) {
             overflow.items.forEach { overflowItem ->
+                val onClick = {
+                    isOverflowExpanded = false
+                    overflowItem.action()
+                }
+
                 if (overflowItem.icon != null) {
                     DropdownMenuItem(
                         text = { Text(overflowItem.text) },
-                        onClick = overflowItem.action,
+                        onClick = onClick,
                         leadingIcon = {
                             Icon(
                                 imageVector = overflowItem.icon,
@@ -201,7 +206,7 @@ private fun OverflowMenu(
                 } else {
                     DropdownMenuItem(
                         text = { Text(overflowItem.text) },
-                        onClick = overflowItem.action,
+                        onClick = onClick,
                     )
                 }
             }
