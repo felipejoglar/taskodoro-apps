@@ -18,5 +18,5 @@ package com.taskodoro.onboarding
 
 interface OnboardingStore {
     fun isOnboarded(): Result<Boolean>
-    fun setOnboarded(value: Boolean): Result<Unit>
+    fun setOnboarded(): Result<Unit>
 }

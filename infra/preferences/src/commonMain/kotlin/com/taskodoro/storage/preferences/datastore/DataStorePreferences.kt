@@ -22,10 +22,9 @@ import androidx.datastore.preferences.core.edit
 import com.taskodoro.storage.preferences.Preferences
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import androidx.datastore.preferences.core.Preferences as DataStorePreferences
 
 internal class DataStorePreferences(
-    private val dataStore: DataStore<DataStorePreferences>,
+    private val dataStore: DataStore<androidx.datastore.preferences.core.Preferences>,
 ) : Preferences {
 
     override fun getBoolean(key: String): Boolean = runBlocking {

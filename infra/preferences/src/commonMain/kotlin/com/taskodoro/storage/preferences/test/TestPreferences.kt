@@ -16,18 +16,27 @@
 
 package com.taskodoro.storage.preferences.test
 
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.edit
 import com.taskodoro.storage.preferences.Preferences
 import com.taskodoro.storage.preferences.datastore.DataStorePreferences
+import kotlinx.coroutines.runBlocking
 import okio.Path.Companion.toPath
 
+private lateinit var dataStore: DataStore<androidx.datastore.preferences.core.Preferences>
+
 class TestPreferences(
-    path: String,
+    path: String = "test.preferences_pb",
 ) : Preferences {
 
-    private val dataStorePreferences = DataStorePreferences(
-        dataStore = PreferenceDataStoreFactory.createWithPath(produceFile = { path.toPath() }),
-    )
+    private val dataStorePreferences by lazy { DataStorePreferences(dataStore) }
+
+    init {
+        if (::dataStore.isInitialized.not()) {
+            dataStore = PreferenceDataStoreFactory.createWithPath(produceFile = { path.toPath() })
+        }
+    }
 
     override fun getBoolean(key: String): Boolean {
         return dataStorePreferences.getBoolean(key)
@@ -35,5 +44,9 @@ class TestPreferences(
 
     override fun setBoolean(key: String, value: Boolean) {
         dataStorePreferences.setBoolean(key, value)
+    }
+
+    fun clear(): Unit = runBlocking {
+        dataStore.edit { it.clear() }
     }
 }

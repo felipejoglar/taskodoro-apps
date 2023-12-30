@@ -33,9 +33,9 @@ internal class PreferencesOnboardingStore(
         }
     }
 
-    override fun setOnboarded(value: Boolean): Result<Unit> {
+    override fun setOnboarded(): Result<Unit> {
         return runCatching {
-            preferences.setBoolean(IS_ONBOARDED_KEY, value)
+            preferences.setBoolean(IS_ONBOARDED_KEY, true)
         }
     }
 }
