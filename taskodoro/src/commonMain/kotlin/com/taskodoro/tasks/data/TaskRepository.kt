@@ -23,11 +23,13 @@ class TaskRepository(
     private val store: TaskStore,
 ) : TaskRepository {
 
+    object SaveFailed : Exception()
+
     override fun save(task: Task): Result<Unit> =
         try {
             store.save(task)
             Result.success(Unit)
         } catch (exception: Exception) {
-            Result.failure(TaskRepository.SaveFailed)
+            Result.failure(SaveFailed)
         }
 }

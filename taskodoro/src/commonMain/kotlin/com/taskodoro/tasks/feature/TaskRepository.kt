@@ -19,7 +19,5 @@ package com.taskodoro.tasks.feature
 import com.taskodoro.tasks.feature.model.Task
 
 interface TaskRepository {
-    object SaveFailed : Exception()
-
     fun save(task: Task): Result<Unit>
 }

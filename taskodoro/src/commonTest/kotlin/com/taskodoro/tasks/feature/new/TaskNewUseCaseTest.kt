@@ -53,13 +53,13 @@ class TaskNewUseCaseTest {
     }
 
     @Test
-    fun save_failsWithSaveFailedExceptionOnInsertionFailure() {
+    fun save_failsWithExceptionOnInsertionFailure() {
         val (sut, repository, validator) = makeSUT()
 
         validator.completeSuccessfully()
         repository.completeSavingWithFailure()
 
-        assertFailsWith(TaskNewUseCase.SaveFailed::class) {
+        assertFailsWith(Exception::class) {
             sut.invoke(anyTitle)
         }
     }
@@ -150,7 +150,7 @@ class TaskNewUseCaseTest {
             savedTask = task
             if (shouldThrow) {
                 shouldThrow = false
-                throw TaskRepository.SaveFailed
+                throw Exception()
             }
             return result!!
         }

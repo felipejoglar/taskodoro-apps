@@ -55,8 +55,6 @@ class TaskNew(
             Result.success(Unit)
         } catch (error: TaskValidatorError) {
             Result.failure(error)
-        } catch (exception: TaskRepository.SaveFailed) {
-            throw TaskNewUseCase.SaveFailed
         }
     }
 }
