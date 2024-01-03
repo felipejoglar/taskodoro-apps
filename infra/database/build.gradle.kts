@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.sqlDelight.android.driver)
+                implementation(libs.sqlDelight.jvm.driver)
             }
         }
         val nativeMain by creating {

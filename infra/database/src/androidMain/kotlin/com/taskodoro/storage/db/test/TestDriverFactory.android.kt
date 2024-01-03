@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,21 +17,11 @@
 package com.taskodoro.storage.db.test
 
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
-import app.cash.sqldelight.driver.native.wrapConnection
-import co.touchlab.sqliter.DatabaseConfiguration
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.taskodoro.storage.db.TaskodoroDB
 
 actual object TestDriverFactory {
-    actual fun create(): SqlDriver {
-        val schema = TaskodoroDB.Schema
-        return NativeSqliteDriver(
-            DatabaseConfiguration(
-                name = null,
-                version = schema.version.toInt(),
-                create = { connection -> wrapConnection(connection) { schema.create(it) } },
-                inMemory = true,
-            ),
-        )
-    }
+    actual fun create(): SqlDriver =
+        JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+            .also { TaskodoroDB.Schema.create(it) }
 }

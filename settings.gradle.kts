@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,5 +40,4 @@ rootProject.name = "Taskodoro_App"
 include(":apps:android:app")
 include(":taskodoro")
 include(":infra:database")
-include(":infra:database-test")
 include(":infra:preferences")
