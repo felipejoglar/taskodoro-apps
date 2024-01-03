@@ -1,5 +1,5 @@
 #
-#    Copyright 2022 Felipe Joglar
+#    Copyright 2023 Felipe Joglar
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -15,23 +15,23 @@
 #
 
 [versions]
-kotlin = "1.9.10"
+kotlin = "1.9.21"
 
 androidGradlePlugin = "8.2.0"
 spotlessGradlePlugin = "6.21.0"
 detektGradlePlugin = "1.23.1"
 
-desugar = "2.0.3"
-activity-compose = "1.7.2"
-androidx-activity =  "1.8.0-rc01"
+desugar = "2.0.4"
+activity-compose = "1.8.2"
+androidx-activity =  "1.8.2"
 androidx-splashscreen =  "1.0.1"
 androidx-lifecycle =  "2.6.2"
 
 coil = "2.5.0"
 
-compose = "1.6.0-alpha06"
+compose = "1.6.0-beta03"
 compose-material3 = "1.1.2"
-compose-compiler = "1.5.3"
+compose-compiler = "1.5.7"
 
 precompose = "1.5.10"
 
