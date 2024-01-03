@@ -16,9 +16,7 @@
 
 package com.taskodoro.tasks.feature.new
 
-import com.taskodoro.tasks.feature.TaskRepository
-import com.taskodoro.tasks.feature.new.TaskNew
-import com.taskodoro.tasks.feature.new.TaskNewUseCase
+import com.taskodoro.tasks.feature.TaskSaver
 import com.taskodoro.tasks.feature.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
@@ -125,11 +123,11 @@ class TaskNewUseCaseTest {
 
     private fun makeSUT(
         now: Long = 0,
-    ): Triple<TaskNewUseCase, TaskRepositoryStub, TaskValidatorStub> {
+    ): Triple<TaskNewUseCase, TaskSaverStub, TaskValidatorStub> {
         val validator = TaskValidatorStub()
-        val repository = TaskRepositoryStub()
+        val repository = TaskSaverStub()
         val sut = TaskNew(
-            repository = repository,
+            saver = repository,
             validator = validator,
             now = { now },
         )
@@ -139,7 +137,7 @@ class TaskNewUseCaseTest {
 
     private val anyTitle = "A task"
 
-    private class TaskRepositoryStub : TaskRepository {
+    private class TaskSaverStub : TaskSaver {
         private var result: Result<Unit>? = null
         private var shouldThrow = false
 

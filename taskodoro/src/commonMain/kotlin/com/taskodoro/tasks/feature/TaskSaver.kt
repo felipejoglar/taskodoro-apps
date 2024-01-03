@@ -18,6 +18,6 @@ package com.taskodoro.tasks.feature
 
 import com.taskodoro.tasks.feature.model.Task
 
-interface TaskRepository {
+interface TaskSaver {
     fun save(task: Task): Result<Unit>
 }

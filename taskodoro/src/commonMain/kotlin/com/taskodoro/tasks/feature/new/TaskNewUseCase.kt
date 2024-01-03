@@ -16,14 +16,12 @@
 
 package com.taskodoro.tasks.feature.new
 
-import com.taskodoro.tasks.feature.TaskRepository
+import com.taskodoro.tasks.feature.TaskSaver
 import com.taskodoro.tasks.feature.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
 
 interface TaskNewUseCase {
-    object SaveFailed : Exception()
-
     operator fun invoke(
         title: String,
         description: String? = null,
@@ -32,7 +30,7 @@ interface TaskNewUseCase {
 }
 
 class TaskNew(
-    private val repository: TaskRepository,
+    private val saver: TaskSaver,
     private val validator: Validator<Task>,
     private val now: () -> Long,
 ) : TaskNewUseCase {
@@ -51,7 +49,7 @@ class TaskNew(
 
         return try {
             validator.validate(task)
-            repository.save(task)
+            saver.save(task)
             Result.success(Unit)
         } catch (error: TaskValidatorError) {
             Result.failure(error)

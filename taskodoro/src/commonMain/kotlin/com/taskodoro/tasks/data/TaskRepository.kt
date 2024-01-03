@@ -16,12 +16,12 @@
 
 package com.taskodoro.tasks.data
 
-import com.taskodoro.tasks.feature.TaskRepository
+import com.taskodoro.tasks.feature.TaskSaver
 import com.taskodoro.tasks.feature.model.Task
 
 class TaskRepository(
     private val store: TaskStore,
-) : TaskRepository {
+) : TaskSaver {
 
     object SaveFailed : Exception()
 

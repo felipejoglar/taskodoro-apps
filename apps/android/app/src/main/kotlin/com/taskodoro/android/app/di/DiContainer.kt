@@ -37,7 +37,7 @@ class DiContainer(
             val validator = TaskValidatorFactory.create()
 
             return TaskNew(
-                repository = taskRepository,
+                saver = taskRepository,
                 validator = validator,
                 now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() },
             )

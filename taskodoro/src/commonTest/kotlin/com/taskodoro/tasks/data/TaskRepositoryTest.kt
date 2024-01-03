@@ -17,7 +17,6 @@
 package com.taskodoro.tasks.data
 
 import com.taskodoro.helpers.anyTask
-import com.taskodoro.tasks.feature.TaskRepository
 import com.taskodoro.tasks.feature.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -39,7 +38,7 @@ class TaskRepositoryTest {
         store.completeInsertionWithFailure()
         val result = sut.save(task)
 
-        assertEquals(Result.failure(com.taskodoro.tasks.data.TaskRepository.SaveFailed), result)
+        assertEquals(Result.failure(TaskRepository.SaveFailed), result)
     }
 
     @Test
