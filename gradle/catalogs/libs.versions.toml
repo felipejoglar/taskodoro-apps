@@ -17,7 +17,7 @@
 [versions]
 kotlin = "1.9.10"
 
-androidGradlePlugin = "8.3.0-beta01"
+androidGradlePlugin = "8.2.0"
 spotlessGradlePlugin = "6.21.0"
 detektGradlePlugin = "1.23.1"
 
