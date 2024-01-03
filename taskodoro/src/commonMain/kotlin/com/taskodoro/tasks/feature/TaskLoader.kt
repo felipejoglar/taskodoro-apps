@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.data
+package com.taskodoro.tasks.feature
 
-import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.feature.model.Task
 
-interface TaskLocalDataSource {
-    fun getAllTasks(): List<Task>
+interface TaskLoader {
+    fun load(onChange: (List<Task>) -> Unit)
 }
