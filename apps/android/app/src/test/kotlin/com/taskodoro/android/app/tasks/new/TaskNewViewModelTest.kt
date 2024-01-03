@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.taskodoro.android.app.tasks.new
 
 import com.taskodoro.android.R
 import com.taskodoro.android.app.helpers.expectEquals
-import com.taskodoro.tasks.new.TaskNewUseCase
+import com.taskodoro.tasks.feature.new.TaskNewUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

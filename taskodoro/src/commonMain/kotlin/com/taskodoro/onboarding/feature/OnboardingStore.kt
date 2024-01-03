@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,20 +14,9 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks
+package com.taskodoro.onboarding.feature
 
-import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.model.Task
-
-class LocalTaskRepository(
-    private val store: TaskStore,
-) : TaskRepository {
-
-    override fun save(task: Task): Result<Unit> =
-        try {
-            store.save(task)
-            Result.success(Unit)
-        } catch (exception: Exception) {
-            Result.failure(TaskRepository.SaveFailed)
-        }
+interface OnboardingStore {
+    fun isOnboarded(): Result<Boolean>
+    fun setOnboarded(): Result<Unit>
 }

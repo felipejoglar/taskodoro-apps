@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,8 +14,10 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks
+package com.taskodoro.tasks.data
 
-expect class TaskStoreFactory {
-    fun create(): TaskStore
+import com.taskodoro.tasks.feature.model.Task
+
+interface TaskStore {
+    fun save(task: Task)
 }

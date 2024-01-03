@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,10 +14,12 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.tasks.new
+package com.taskodoro.tasks.feature.new
 
-import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.feature.TaskRepository
+import com.taskodoro.tasks.feature.new.TaskNew
+import com.taskodoro.tasks.feature.new.TaskNewUseCase
+import com.taskodoro.tasks.feature.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
 import com.taskodoro.tasks.validator.ValidatorError

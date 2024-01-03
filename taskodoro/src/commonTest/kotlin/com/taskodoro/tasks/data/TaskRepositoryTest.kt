@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks
+package com.taskodoro.tasks.data
 
 import com.taskodoro.helpers.anyTask
-import com.taskodoro.tasks.TaskRepository
-import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.feature.TaskRepository
+import com.taskodoro.tasks.feature.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class LocalTaskRepositoryTest {
+class TaskRepositoryTest {
 
     @Test
     fun init_doesNotMessageStoreOnCreation() {
@@ -57,7 +57,7 @@ class LocalTaskRepositoryTest {
 
     private fun makeSUT(): Pair<TaskRepository, TaskStoreSpy> {
         val store = TaskStoreSpy()
-        val sut = LocalTaskRepository(store = store)
+        val sut = TaskRepository(store = store)
 
         return sut to store
     }

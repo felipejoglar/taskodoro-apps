@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.storage.tasks.store
+package com.taskodoro.tasks.data.local
 
 import com.taskodoro.helpers.anyTask
 import com.taskodoro.model.Uuid
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.db.test.TestDriverFactory
-import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.feature.model.Task
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails

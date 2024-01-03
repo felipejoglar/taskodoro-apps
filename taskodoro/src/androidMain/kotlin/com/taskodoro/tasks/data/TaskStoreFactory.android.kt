@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,9 +14,21 @@
  *    limitations under the License.
  */
 
-package com.taskodoro.onboarding
+package com.taskodoro.tasks.data
 
-interface OnboardingStore {
-    fun isOnboarded(): Result<Boolean>
-    fun setOnboarded(): Result<Unit>
+import android.content.Context
+import com.taskodoro.storage.db.DatabaseFactory
+import com.taskodoro.tasks.data.local.SQLDelightTaskStore
+
+actual class TaskStoreFactory(
+    private val context: Context,
+) {
+
+    actual fun create(): TaskStore {
+        val database = DatabaseFactory(context).create().apply {
+            taskdoroDBQueries.clearDB()
+        }
+
+        return SQLDelightTaskStore(database = database)
+    }
 }
