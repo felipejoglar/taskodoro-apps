@@ -318,7 +318,7 @@ exceptions:
     active: true
     excludes:
       - '**/TaskNewUseCase.kt'
-      - '**/LocalTaskRepository.kt'
+      - '**/TaskRepository.kt'
       - '**/NSUUIDGenerator.kt'
       - '**/RandomUuidGenerator.kt'
       - '**/test/**'
@@ -365,7 +365,7 @@ exceptions:
   TooGenericExceptionCaught:
     active: true
     excludes:
-      - '**/LocalTaskRepository.kt'
+      - '**/TaskRepository.kt'
       - '**/NSUUIDGenerator.kt'
       - '**/RandomUuidGenerator.kt'
       - '**/test/**'
