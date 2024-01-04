@@ -25,83 +25,33 @@ kotlin {
 
     listOf(
         iosArm64(),
-        iosX64(),
         iosSimulatorArm64(),
-    ).forEach {
-        it.binaries.framework {
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = "Taskodoro"
+            isStatic = true
         }
     }
 
     sourceSets {
 
-        /* Main source sets */
-        val commonMain by getting {
-            dependencies {
-                implementation(projects.infra.database)
-                implementation(projects.infra.preferences)
-                implementation(libs.kotlinx.datetime)
-            }
+        commonMain.dependencies {
+            implementation(projects.infra.database)
+            implementation(projects.infra.preferences)
+            implementation(libs.kotlinx.datetime)
         }
-        val androidMain by getting
-        val nativeMain by creating
-        val iosMain by creating
-        val iosArm64Main by getting
-        val iosX64Main by getting
-        val iosSimulatorArm64Main by getting
 
-        /* Main hierarchy */
-        androidMain.dependsOn(commonMain)
-        nativeMain.dependsOn(commonMain)
-        iosMain.dependsOn(nativeMain)
-        iosX64Main.dependsOn(iosMain)
-        iosArm64Main.dependsOn(iosMain)
-        iosSimulatorArm64Main.dependsOn(iosMain)
-
-        /* Test source sets */
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
-        }
-        val androidUnitTest by getting
-        val iosArm64Test by getting
-        val iosX64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating
-        val nativeTest by creating
-
-        /* Test hierarchy */
-        androidUnitTest.dependsOn(commonTest)
-        nativeTest.dependsOn(commonTest)
-        iosTest.dependsOn(nativeTest)
-        iosArm64Test.dependsOn(iosTest)
-        iosX64Test.dependsOn(iosTest)
-        iosSimulatorArm64Test.dependsOn(iosTest)
-    }
-
-    // Enable concurrent sweep phase in new native memory manager.
-    // https://kotlinlang.org/docs/whatsnew1620.html#concurrent-implementation-for-the-sweep-phase-in-new-memory-manager
-    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
-        binaries.all {
-            freeCompilerArgs = freeCompilerArgs.plus("-Xgc=cms")
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }
 
 android {
     namespace = "com.taskodoro"
-
     compileSdk = config.versions.compileSdk.get().toInt()
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
         minSdk = config.versions.minSdk.get().toInt()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 }
