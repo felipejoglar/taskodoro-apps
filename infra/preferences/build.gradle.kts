@@ -33,6 +33,10 @@ kotlin {
         }
 
     }
+
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExpectActualClasses")
+    }
 }
 
 android {
@@ -41,5 +45,10 @@ android {
 
     defaultConfig {
         minSdk = config.versions.minSdk.get().toInt()
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
