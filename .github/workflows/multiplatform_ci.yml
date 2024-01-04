@@ -55,9 +55,6 @@ jobs:
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
 
-      - name: Setup Xcode
-        uses: ./.github/actions/xcode-setup
-
       - name: Build
         run: ./gradlew taskodoro:clean taskodoro:assemble
 
@@ -73,9 +70,6 @@ jobs:
 
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
-
-      - name: Setup Xcode
-        uses: ./.github/actions/xcode-setup
 
       - name: Run Unit Tests
         run: ./gradlew taskodoro:clean taskodoro:allTests
