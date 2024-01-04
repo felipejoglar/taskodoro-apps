@@ -22,8 +22,8 @@ on:
       - settings.gradle.kts
 
 env:
-  IOS_DEVICE: iPhone 14
-  IOS_VERSION: 16.4
+  IOS_DEVICE: iPhone 15 Pro
+  IOS_VERSION: 17.2
 
 concurrency:
   group: ios-${{ github.ref }}

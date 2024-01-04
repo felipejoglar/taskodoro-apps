@@ -21,7 +21,9 @@ struct TaskodoroApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TasksUIComposer.makeTasksScreen()
+            VStack {
+                Text("Hello, World!")   
+            }
         }
     }
 }
