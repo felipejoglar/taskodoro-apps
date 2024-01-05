@@ -7,38 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		885952A82823E682004CC870 /* TaskodoroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885952A72823E682004CC870 /* TaskodoroTests.swift */; };
+		881D13B72B4772F60023856D /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 881D13B62B4772F60023856D /* Config.xcconfig */; };
 		88CC304927B3D5B300D08D2C /* TaskodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC304827B3D5B300D08D2C /* TaskodoroApp.swift */; };
 		88CC304D27B3D5B600D08D2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CC304C27B3D5B600D08D2C /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		885952A92823E682004CC870 /* PBXContainerItemProxy */ = {
+		881D13B12B47704B0023856D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88CC303D27B3D5B300D08D2C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 88CC304427B3D5B300D08D2C;
-			remoteInfo = Taskodoro;
+			remoteInfo = app;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		885952A52823E682004CC870 /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		885952A72823E682004CC870 /* TaskodoroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskodoroTests.swift; sourceTree = "<group>"; };
-		88CC304527B3D5B300D08D2C /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		881D13AD2B47704B0023856D /* appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = appTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		881D13B62B4772F60023856D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		88CC304527B3D5B300D08D2C /* app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CC304827B3D5B300D08D2C /* TaskodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskodoroApp.swift; sourceTree = "<group>"; };
 		88CC304C27B3D5B600D08D2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		885952A22823E682004CC870 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88CC304227B3D5B300D08D2C /* Frameworks */ = {
+		881D13AA2B47704B0023856D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -48,19 +41,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		885952A62823E682004CC870 /* AppTests */ = {
+		881D13AE2B47704B0023856D /* appTests */ = {
 			isa = PBXGroup;
 			children = (
-				885952A72823E682004CC870 /* TaskodoroTests.swift */,
 			);
-			path = AppTests;
+			path = appTests;
+			sourceTree = "<group>";
+		};
+		881D13B82B4773C40023856D /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				881D13B62B4772F60023856D /* Config.xcconfig */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		88CC303C27B3D5B300D08D2C = {
 			isa = PBXGroup;
 			children = (
-				88CC304727B3D5B300D08D2C /* App */,
-				885952A62823E682004CC870 /* AppTests */,
+				881D13B82B4773C40023856D /* Configuration */,
+				88CC304727B3D5B300D08D2C /* app */,
+				881D13AE2B47704B0023856D /* appTests */,
 				88CC304627B3D5B300D08D2C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,58 +69,57 @@
 		88CC304627B3D5B300D08D2C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				88CC304527B3D5B300D08D2C /* App.app */,
-				885952A52823E682004CC870 /* AppTests.xctest */,
+				88CC304527B3D5B300D08D2C /* app.app */,
+				881D13AD2B47704B0023856D /* appTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		88CC304727B3D5B300D08D2C /* App */ = {
+		88CC304727B3D5B300D08D2C /* app */ = {
 			isa = PBXGroup;
 			children = (
 				88CC304827B3D5B300D08D2C /* TaskodoroApp.swift */,
 				88CC304C27B3D5B600D08D2C /* Assets.xcassets */,
 			);
-			path = App;
+			path = app;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		885952A42823E682004CC870 /* AppTests */ = {
+		881D13AC2B47704B0023856D /* appTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 885952AB2823E682004CC870 /* Build configuration list for PBXNativeTarget "AppTests" */;
+			buildConfigurationList = 881D13B52B47704C0023856D /* Build configuration list for PBXNativeTarget "appTests" */;
 			buildPhases = (
-				885952A12823E682004CC870 /* Sources */,
-				885952A22823E682004CC870 /* Frameworks */,
-				885952A32823E682004CC870 /* Resources */,
+				881D13A92B47704B0023856D /* Sources */,
+				881D13AA2B47704B0023856D /* Frameworks */,
+				881D13AB2B47704B0023856D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				885952AA2823E682004CC870 /* PBXTargetDependency */,
+				881D13B22B47704B0023856D /* PBXTargetDependency */,
 			);
-			name = AppTests;
-			productName = TaskodoroTests;
-			productReference = 885952A52823E682004CC870 /* AppTests.xctest */;
+			name = appTests;
+			productName = appTests;
+			productReference = 881D13AD2B47704B0023856D /* appTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		88CC304427B3D5B300D08D2C /* App */ = {
+		88CC304427B3D5B300D08D2C /* app */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 88CC306927B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "App" */;
+			buildConfigurationList = 88CC306927B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "app" */;
 			buildPhases = (
-				B19DA0D3282325C1002C433A /* Run Script */,
+				B19DA0D3282325C1002C433A /* Compile Kotlin */,
 				88CC304127B3D5B300D08D2C /* Sources */,
-				88CC304227B3D5B300D08D2C /* Frameworks */,
 				88CC304327B3D5B300D08D2C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = App;
+			name = app;
 			productName = Taskodoro;
-			productReference = 88CC304527B3D5B300D08D2C /* App.app */;
+			productReference = 88CC304527B3D5B300D08D2C /* app.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -129,11 +129,11 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1510;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
-					885952A42823E682004CC870 = {
-						CreatedOnToolsVersion = 13.3;
+					881D13AC2B47704B0023856D = {
+						CreatedOnToolsVersion = 15.1;
 						TestTargetID = 88CC304427B3D5B300D08D2C;
 					};
 					88CC304427B3D5B300D08D2C = {
@@ -141,7 +141,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 88CC304027B3D5B300D08D2C /* Build configuration list for PBXProject "App" */;
+			buildConfigurationList = 88CC304027B3D5B300D08D2C /* Build configuration list for PBXProject "app" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -154,14 +154,14 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				88CC304427B3D5B300D08D2C /* App */,
-				885952A42823E682004CC870 /* AppTests */,
+				88CC304427B3D5B300D08D2C /* app */,
+				881D13AC2B47704B0023856D /* appTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		885952A32823E682004CC870 /* Resources */ = {
+		881D13AB2B47704B0023856D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -172,6 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				881D13B72B4772F60023856D /* Config.xcconfig in Resources */,
 				88CC304D27B3D5B600D08D2C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,7 +180,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B19DA0D3282325C1002C433A /* Run Script */ = {
+		B19DA0D3282325C1002C433A /* Compile Kotlin */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -188,23 +189,22 @@
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "Compile Kotlin";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/../../..\"\n./gradlew :taskodoro:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/../../..\"\n./gradlew :taskodoro:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		885952A12823E682004CC870 /* Sources */ = {
+		881D13A92B47704B0023856D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				885952A82823E682004CC870 /* TaskodoroTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,50 +219,64 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		885952AA2823E682004CC870 /* PBXTargetDependency */ = {
+		881D13B22B47704B0023856D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 88CC304427B3D5B300D08D2C /* App */;
-			targetProxy = 885952A92823E682004CC870 /* PBXContainerItemProxy */;
+			target = 88CC304427B3D5B300D08D2C /* app */;
+			targetProxy = 881D13B12B47704B0023856D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		885952AC2823E682004CC870 /* Debug */ = {
+		881D13B32B47704C0023856D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.AppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}.appTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App.app/App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/app.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/app";
 			};
 			name = Debug;
 		};
-		885952AD2823E682004CC870 /* Release */ = {
+		881D13B42B47704C0023856D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios.AppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}.appTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App.app/App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/app.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/app";
 			};
 			name = Release;
 		};
 		88CC306727B3D5B700D08D2C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 881D13B62B4772F60023856D /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -324,6 +338,7 @@
 		};
 		88CC306827B3D5B700D08D2C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 881D13B62B4772F60023856D /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -383,12 +398,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "${VERSION_CODE}";
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../taskodoro/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Taskodoro;
+				INFOPLIST_KEY_CFBundleDisplayName = "${APP_NAME}";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -400,13 +416,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${VERSION_NAME}";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
 					Taskodoro,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -423,12 +439,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "${VERSION_CODE}";
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../taskodoro/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Taskodoro;
+				INFOPLIST_KEY_CFBundleDisplayName = "${APP_NAME}";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -440,13 +457,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${VERSION_NAME}";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
 					Taskodoro,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.taskodoro.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -460,16 +477,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		885952AB2823E682004CC870 /* Build configuration list for PBXNativeTarget "AppTests" */ = {
+		881D13B52B47704C0023856D /* Build configuration list for PBXNativeTarget "appTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				885952AC2823E682004CC870 /* Debug */,
-				885952AD2823E682004CC870 /* Release */,
+				881D13B32B47704C0023856D /* Debug */,
+				881D13B42B47704C0023856D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		88CC304027B3D5B300D08D2C /* Build configuration list for PBXProject "App" */ = {
+		88CC304027B3D5B300D08D2C /* Build configuration list for PBXProject "app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88CC306727B3D5B700D08D2C /* Debug */,
@@ -478,7 +495,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		88CC306927B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "App" */ = {
+		88CC306927B3D5B700D08D2C /* Build configuration list for PBXNativeTarget "app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88CC306A27B3D5B700D08D2C /* Debug */,

@@ -1,5 +1,5 @@
 //
-//  Copyright 2022 Felipe Joglar
+//  Copyright 2024 Felipe Joglar
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -13,8 +13,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-        
 
-import XCTest
+TEAM_ID=
+BUNDLE_ID=com.taskodoro.ios
+APP_NAME=Taskodoro
 
-class TaskodoroTests: XCTestCase {}
+VERSION_NAME=1.0
+VERSION_CODE=1

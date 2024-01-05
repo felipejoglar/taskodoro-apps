@@ -58,7 +58,7 @@ jobs:
         uses: ./.github/actions/gradle-setup
 
       - name: Build
-        run: ./gradlew apps:android:app:clean apps:android:app:assemble --scan
+        run: ./gradlew apps:android:app:clean apps:android:app:assemble
 
   unit-tests:
     name: Unit Tests
@@ -74,7 +74,7 @@ jobs:
         uses: ./.github/actions/gradle-setup
 
       - name: Run Unit tests
-        run: ./gradlew apps:android:app:clean apps:android:app:test --scan
+        run: ./gradlew apps:android:app:clean apps:android:app:test
 
   ui-tests:
     name: Instrumentation Tests
@@ -135,4 +135,4 @@ jobs:
           ram-size: 4096M
           emulator-boot-timeout: 12000
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
-          script: ./gradlew apps:android:app:clean apps:android:app:connectedAndroidTest --scan
+          script: ./gradlew apps:android:app:clean apps:android:app:connectedAndroidTest
