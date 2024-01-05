@@ -45,7 +45,7 @@ jobs:
   build:
     name: Build
     needs: [static-analysis]
-    runs-on: macos-latest
+    runs-on: macos-13
     timeout-minutes: 15
 
     steps:
@@ -55,13 +55,16 @@ jobs:
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
 
+      - name: Setup Xcode
+        uses: ./.github/actions/xcode-setup
+
       - name: Build
         run: ./gradlew taskodoro:clean taskodoro:assemble
 
   unit-tests:
     name: Unit Tests
     needs: [build]
-    runs-on: macos-latest
+    runs-on: macos-13
     timeout-minutes: 10
 
     steps:
@@ -70,6 +73,9 @@ jobs:
 
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
+
+      - name: Setup Xcode
+        uses: ./.github/actions/xcode-setup
 
       - name: Run Unit Tests
         run: ./gradlew taskodoro:clean taskodoro:allTests
