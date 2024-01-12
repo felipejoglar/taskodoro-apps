@@ -22,8 +22,8 @@ on:
       - settings.gradle.kts
 
 env:
-  IOS_DEVICE: iPhone 15 Pro
-  IOS_VERSION: 17.2
+  IOS_DEVICE: iPhone 14
+  IOS_VERSION: 16.2
 
 concurrency:
   group: ios-${{ github.ref }}
@@ -31,38 +31,19 @@ concurrency:
 
 jobs:
   build:
-    name: Build
-    runs-on: macos-13
-    timeout-minutes: 15
+    name: Build & Test
+    runs-on: macos-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
-
-      - name: Setup Xcode
-        uses: ./.github/actions/xcode-setup
 
       - name: Build
         run: sudo xcodebuild clean build -project apps/ios/app/app.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=${{ env.IOS_DEVICE }},OS=${{ env.IOS_VERSION }}" ONLY_ACTIVE_ARCH=YES
-
-  unit-tests:
-    name: Unit Tests
-    needs: [ build ]
-    runs-on: macos-13
-    timeout-minutes: 15
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Gradle
-        uses: ./.github/actions/gradle-setup
-
-      - name: Setup Xcode
-        uses: ./.github/actions/xcode-setup
 
       - name: Run Unit Tests
         run: sudo xcodebuild clean test -project apps/ios/app/app.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=${{ env.IOS_DEVICE }},OS=${{ env.IOS_VERSION }}" ONLY_ACTIVE_ARCH=YES
