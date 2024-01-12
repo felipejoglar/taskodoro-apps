@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package com.taskodoro.tasks.validator
 
 import com.taskodoro.helpers.anyTask
-import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.feature.model.Task
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,61 +25,28 @@ kotlin {
     androidTarget()
 
     iosArm64()
-    iosX64()
     iosSimulatorArm64()
 
     sourceSets {
 
-        /* Main source sets */
-        val commonMain by getting
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.sqlDelight.android.driver)
-            }
+        androidMain.dependencies {
+            implementation(libs.sqlDelight.android.driver)
+            implementation(libs.sqlDelight.jvm.driver)
         }
-        val nativeMain by creating {
-            dependencies {
-                implementation(libs.sqlDelight.native.driver)
-            }
+
+        nativeMain.dependencies {
+            implementation(libs.sqlDelight.native.driver)
         }
-        val iosMain by creating
-        val iosArm64Main by getting
-        val iosX64Main by getting
-        val iosSimulatorArm64Main by getting
+    }
 
-        /* Main hierarchy */
-        androidMain.dependsOn(commonMain)
-        nativeMain.dependsOn(commonMain)
-        iosMain.dependsOn(nativeMain)
-        iosX64Main.dependsOn(iosMain)
-        iosArm64Main.dependsOn(iosMain)
-        iosSimulatorArm64Main.dependsOn(iosMain)
-
-        /* Test source sets */
-        val commonTest by getting
-        val androidUnitTest by getting
-        val iosArm64Test by getting
-        val iosX64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating
-        val nativeTest by creating
-
-        /* Test hierarchy */
-        androidUnitTest.dependsOn(commonTest)
-        nativeTest.dependsOn(commonTest)
-        iosTest.dependsOn(nativeTest)
-        iosArm64Test.dependsOn(iosTest)
-        iosX64Test.dependsOn(iosTest)
-        iosSimulatorArm64Test.dependsOn(iosTest)
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExpectActualClasses")
     }
 }
 
 android {
     namespace = "com.taskodoro"
-
     compileSdk = config.versions.compileSdk.get().toInt()
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
         minSdk = config.versions.minSdk.get().toInt()

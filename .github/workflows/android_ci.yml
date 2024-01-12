@@ -26,61 +26,35 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  static-analysis:
-    name: Static Analysis
+  build-and-test:
+    name: Build & Test
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
 
       - name: Run Spotless
-        run: ./gradlew spotlessCheck --scan
+        run: ./gradlew spotlessCheck
 
       - name: Run Detekt
-        run: ./gradlew apps:android:app:detekt --scan
-
-  build:
-    name: Build
-    needs: [static-analysis]
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Gradle
-        uses: ./.github/actions/gradle-setup
+        run: ./gradlew apps:android:app:detekt
 
       - name: Build
-        run: ./gradlew apps:android:app:clean apps:android:app:assemble --scan
-
-  unit-tests:
-    name: Unit Tests
-    needs: [ build ]
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Gradle
-        uses: ./.github/actions/gradle-setup
+        run: ./gradlew apps:android:app:clean apps:android:app:assemble
 
       - name: Run Unit tests
-        run: ./gradlew apps:android:app:clean apps:android:app:test --scan
+        run: ./gradlew apps:android:app:clean apps:android:app:test
 
   ui-tests:
     name: Instrumentation Tests
-    needs: [ unit-tests ]
+    needs: [ build-and-test ]
     runs-on: macos-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     strategy:
       fail-fast: true
@@ -89,7 +63,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Gradle
         uses: ./.github/actions/gradle-setup
@@ -135,4 +109,4 @@ jobs:
           ram-size: 4096M
           emulator-boot-timeout: 12000
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
-          script: ./gradlew apps:android:app:clean apps:android:app:connectedAndroidTest --scan
+          script: ./gradlew apps:android:app:clean apps:android:app:connectedAndroidTest

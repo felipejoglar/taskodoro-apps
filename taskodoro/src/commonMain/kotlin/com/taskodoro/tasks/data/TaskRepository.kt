@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +16,20 @@
 
 package com.taskodoro.tasks.data
 
-import com.taskodoro.tasks.model.Task
+import com.taskodoro.tasks.feature.TaskSaver
+import com.taskodoro.tasks.feature.model.Task
 
 class TaskRepository(
-    private val localDataSource: TaskLocalDataSource,
-) {
+    private val store: TaskStore,
+) : TaskSaver {
 
-    fun getTasks(): List<Task> = localDataSource.getAllTasks()
+    object SaveFailed : Exception()
+
+    override fun save(task: Task): Result<Unit> =
+        try {
+            store.save(task)
+            Result.success(Unit)
+        } catch (exception: Exception) {
+            Result.failure(SaveFailed)
+        }
 }
