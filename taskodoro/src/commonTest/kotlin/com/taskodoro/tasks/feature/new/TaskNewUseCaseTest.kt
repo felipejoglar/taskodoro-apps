@@ -21,6 +21,7 @@ import com.taskodoro.tasks.feature.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
 import com.taskodoro.tasks.validator.ValidatorError
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -29,7 +30,7 @@ import kotlin.test.assertNull
 class TaskNewUseCaseTest {
 
     @Test
-    fun save_failsWithInvalidTitleOnInvalidTitleFailure() {
+    fun save_failsWithInvalidTitleOnInvalidTitleFailure() = runTest {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithInvalidTitleFailure()
@@ -40,7 +41,7 @@ class TaskNewUseCaseTest {
     }
 
     @Test
-    fun save_failsWithInvalidDueDateOnInvalidDueDateFailure() {
+    fun save_failsWithInvalidDueDateOnInvalidDueDateFailure() = runTest {
         val (sut, _, validator) = makeSUT()
 
         validator.completeWithInvalidDueDateFailure()
@@ -51,7 +52,7 @@ class TaskNewUseCaseTest {
     }
 
     @Test
-    fun save_failsWithExceptionOnInsertionFailure() {
+    fun save_failsWithExceptionOnInsertionFailure() = runTest {
         val (sut, repository, validator) = makeSUT()
 
         validator.completeSuccessfully()
@@ -63,7 +64,7 @@ class TaskNewUseCaseTest {
     }
 
     @Test
-    fun save_succeedsOnSuccessfulInsertion() {
+    fun save_succeedsOnSuccessfulInsertion() = runTest {
         val (sut, repository, validator) = makeSUT()
 
         validator.completeSuccessfully()
@@ -74,7 +75,7 @@ class TaskNewUseCaseTest {
     }
 
     @Test
-    fun save_savesCorrectTitleTrimmed() {
+    fun save_savesCorrectTitleTrimmed() = runTest {
         val (sut, repository, validator) = makeSUT()
         val title = "  A title   "
 
@@ -89,7 +90,7 @@ class TaskNewUseCaseTest {
     }
 
     @Test
-    fun save_savesCorrectDescription() {
+    fun save_savesCorrectDescription() = runTest {
         val (sut, repository, validator) = makeSUT()
         val description = "A description"
 
@@ -104,7 +105,7 @@ class TaskNewUseCaseTest {
     }
 
     @Test
-    fun save_savesCorrectDueDate() {
+    fun save_savesCorrectDueDate() = runTest {
         val now = 0L
         val dueDate = 100L
         val (sut, repository, validator) = makeSUT(now)
@@ -144,7 +145,7 @@ class TaskNewUseCaseTest {
         lateinit var savedTask: Task
             private set
 
-        override fun save(task: Task): Result<Unit> {
+        override suspend fun save(task: Task): Result<Unit> {
             savedTask = task
             if (shouldThrow) {
                 shouldThrow = false

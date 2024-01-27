@@ -18,6 +18,7 @@ package com.taskodoro.tasks.data
 
 import com.taskodoro.helpers.anyTask
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -31,7 +32,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    fun save_failsOnInsertionError() {
+    fun save_failsOnInsertionError() = runTest {
         val (sut, store) = makeSUT()
         val task = anyTask()
 
@@ -42,7 +43,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    fun save_succeedsOnSuccessfulInsertion() {
+    fun save_succeedsOnSuccessfulInsertion() = runTest {
         val (sut, store) = makeSUT()
         val task = anyTask()
 
@@ -73,7 +74,7 @@ class TaskRepositoryTest {
 
         private var insertionSuccessful = true
 
-        override fun save(task: Task) {
+        override suspend fun save(task: Task) {
             messages.add(Message.SAVE)
             savedTasks.add(task)
 

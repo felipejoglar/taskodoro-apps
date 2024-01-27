@@ -25,7 +25,7 @@ class TaskRepository(
 
     object SaveFailed : Exception()
 
-    override fun save(task: Task): Result<Unit> =
+    override suspend fun save(task: Task): Result<Unit> =
         try {
             store.save(task)
             Result.success(Unit)

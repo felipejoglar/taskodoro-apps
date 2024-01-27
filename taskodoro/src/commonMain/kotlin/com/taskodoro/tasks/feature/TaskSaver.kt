@@ -19,5 +19,5 @@ package com.taskodoro.tasks.feature
 import com.taskodoro.tasks.feature.model.Task
 
 interface TaskSaver {
-    fun save(task: Task): Result<Unit>
+    suspend fun save(task: Task): Result<Unit>
 }

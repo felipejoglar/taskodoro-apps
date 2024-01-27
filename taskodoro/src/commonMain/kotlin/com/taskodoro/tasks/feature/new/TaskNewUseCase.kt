@@ -22,7 +22,7 @@ import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
 
 interface TaskNewUseCase {
-    operator fun invoke(
+    suspend operator fun invoke(
         title: String,
         description: String? = null,
         dueDate: Long? = null,
@@ -35,7 +35,7 @@ class TaskNew(
     private val now: () -> Long,
 ) : TaskNewUseCase {
 
-    override operator fun invoke(
+    override suspend operator fun invoke(
         title: String,
         description: String?,
         dueDate: Long?,

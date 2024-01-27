@@ -19,5 +19,5 @@ package com.taskodoro.tasks.data
 import com.taskodoro.tasks.feature.model.Task
 
 interface TaskStore {
-    fun save(task: Task)
+    suspend fun save(task: Task)
 }
