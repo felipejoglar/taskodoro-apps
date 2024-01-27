@@ -23,9 +23,9 @@ detektGradlePlugin = "1.23.1"
 
 desugar = "2.0.4"
 activity-compose = "1.8.2"
-androidx-activity =  "1.8.2"
-androidx-splashscreen =  "1.0.1"
-androidx-lifecycle =  "2.6.2"
+androidx-activity = "1.8.2"
+androidx-splashscreen = "1.0.1"
+androidx-lifecycle = "2.6.2"
 
 coil = "2.5.0"
 
@@ -35,12 +35,12 @@ compose-compiler = "1.5.7"
 
 precompose = "1.5.10"
 
-coroutines = "1.7.3"
 
 sqlDelight = "2.0.1"
 datastore = "1.1.0-alpha07"
 
 datetime = "0.4.1"
+coroutines = "1.7.3"
 
 junit = "4.13.2"
 
@@ -81,7 +81,10 @@ sqlDelight-jvm-driver = { module = "app.cash.sqldelight:sqlite-driver", version.
 datastore = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 
 # kotlinx datetime - https://github.com/Kotlin/kotlinx-datetime
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime"}
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
+
+# kotlinx coroutines - https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
 # JUnit - https://junit.org/junit4/
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -90,7 +93,7 @@ junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 
 # Coroutines - https://github.com/Kotlin/kotlinx.coroutines
-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 [plugins]
 # Android Gradle Plugin - https://developer.android.com/studio/releases/gradle-plugin
@@ -98,19 +101,19 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
 # Kotlin Gradle Plugin - https://kotlinlang.org/docs/releases.html
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin"}
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"}
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 
 # SQLDelight - https://cashapp.github.io/sqldelight/multiplatform_sqlite/
-sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight"}
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 
 # Spotless - https://github.com/diffplug/spotless
-spotless = { id = "com.diffplug.spotless", version.ref = "spotlessGradlePlugin"}
+spotless = { id = "com.diffplug.spotless", version.ref = "spotlessGradlePlugin" }
 
 # Detekt - https://detekt.dev/
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektGradlePlugin"}
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektGradlePlugin" }
 
 [bundles]
 androidx-compose = [

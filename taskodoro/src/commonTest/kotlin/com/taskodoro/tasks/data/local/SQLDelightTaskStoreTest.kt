@@ -21,6 +21,7 @@ import com.taskodoro.model.Uuid
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.db.test.TestDriverFactory
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
@@ -28,7 +29,7 @@ import kotlin.test.assertFails
 class SQLDelightTaskStoreTest {
 
     @Test
-    fun save_succeedsOnSuccessfulInsertion() {
+    fun save_succeedsOnSuccessfulInsertion() = runTest {
         val sut = makeSUT()
         val task = anyTask()
 
@@ -38,7 +39,7 @@ class SQLDelightTaskStoreTest {
     }
 
     @Test
-    fun save_failsOnInsertionFailure() {
+    fun save_failsOnInsertionFailure() = runTest {
         val sut = makeSUT()
         val task = anyTask()
         sut.save(task)

@@ -227,7 +227,7 @@ class TaskNewViewModelTest {
     private class TaskNewUseCaseStub : TaskNewUseCase {
         private var result: Result<Unit>? = null
 
-        override fun invoke(
+        override suspend fun invoke(
             title: String,
             description: String?,
             dueDate: Long?,

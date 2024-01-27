@@ -27,13 +27,13 @@ internal class PreferencesOnboardingStore(
         private const val IS_ONBOARDED_KEY = "is_onboarded_key"
     }
 
-    override fun isOnboarded(): Result<Boolean> {
+    override suspend fun isOnboarded(): Result<Boolean> {
         return runCatching {
             preferences.getBoolean(IS_ONBOARDED_KEY)
         }
     }
 
-    override fun setOnboarded(): Result<Unit> {
+    override suspend fun setOnboarded(): Result<Unit> {
         return runCatching {
             preferences.setBoolean(IS_ONBOARDED_KEY, true)
         }

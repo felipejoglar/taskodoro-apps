@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import com.taskodoro.android.app.navigation.graphs.tasks.TASK_GRAPH_ROUTE
 import com.taskodoro.android.app.navigation.graphs.tasks.navigateToTaskGraph
 import com.taskodoro.android.app.navigation.graphs.tasks.taskGraph
 import com.taskodoro.android.app.navigation.transitions.forwardBackwardNavTransition
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
@@ -46,8 +46,7 @@ fun AppNavigation(
         val navigator = rememberNavigator()
         val scope = rememberCoroutineScope()
 
-        val isOnboarded = onboardingStore.isOnboarded().getOrThrow()
-
+        val isOnboarded = runBlocking { onboardingStore.isOnboarded().getOrThrow() }
         val initialRoute = if (isOnboarded) TASK_GRAPH_ROUTE else ONBOARDING_GRAPH_ROUTE
 
         NavHost(
@@ -58,7 +57,7 @@ fun AppNavigation(
         ) {
             onboardingGraph(
                 onContinueClicked = {
-                    flowOf(onboardingStore.setOnboarded()).launchIn(scope)
+                    scope.launch { onboardingStore.setOnboarded() }
 
                     val options = NavOptions(popUpTo = PopUpTo.First())
                     navigator.navigateToTaskGraph(options)

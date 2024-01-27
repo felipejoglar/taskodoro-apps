@@ -39,10 +39,12 @@ kotlin {
             implementation(projects.infra.database)
             implementation(projects.infra.preferences)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.coroutines)
         }
 
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 

@@ -19,6 +19,9 @@ package com.taskodoro.tasks.data.local
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.tasks.data.TaskStore
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 
 internal class SQLDelightTaskStore(
     database: TaskodoroDB,
@@ -26,16 +29,18 @@ internal class SQLDelightTaskStore(
 
     internal val tasksQueries = database.localTaskQueries
 
-    override fun save(task: Task) {
-        tasksQueries.insert(
-            id = task.id.uuidString,
-            title = task.title,
-            description = task.description,
-            priority = task.priority.ordinal.toLong(),
-            completed = false,
-            dueDate = task.dueDate,
-            createdAt = task.createdAt,
-            updatedAt = 0,
-        )
+    override suspend fun save(task: Task) {
+        withContext(Dispatchers.IO) {
+            tasksQueries.insert(
+                id = task.id.uuidString,
+                title = task.title,
+                description = task.description,
+                priority = task.priority.ordinal.toLong(),
+                completed = false,
+                dueDate = task.dueDate,
+                createdAt = task.createdAt,
+                updatedAt = 0,
+            )
+        }
     }
 }
