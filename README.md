@@ -4,9 +4,9 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/felipejoglar/taskodoro/actions/workflows/multiplatform_ci.yml"><img src="https://github.com/felipejoglar/taskodoro/actions/workflows/multiplatform_ci.yml/badge.svg" alt="Multiplatform CI" /></a>
-    <a href="https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml"><img src="https://github.com/felipejoglar/taskodoro/actions/workflows/android_ci.yml/badge.svg" alt="Android CI" /></a>
-    <a href="https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml"><img src="https://github.com/felipejoglar/taskodoro/actions/workflows/ios_ci.yml/badge.svg" alt="iOS CI" /></a>
+    <a href="https://github.com/felipejoglar/taskodoro-apps/actions/workflows/multiplatform_ci.yml"><img src="https://github.com/felipejoglar/taskodoro-apps/actions/workflows/multiplatform_ci.yml/badge.svg" alt="Multiplatform CI" /></a>
+    <a href="https://github.com/felipejoglar/taskodoro-apps/actions/workflows/android_ci.yml"><img src="https://github.com/felipejoglar/taskodoro-apps/actions/workflows/android_ci.yml/badge.svg" alt="Android CI" /></a>
+    <a href="https://github.com/felipejoglar/taskodoro-apps/actions/workflows/ios_ci.yml"><img src="https://github.com/felipejoglar/taskodoro-apps/actions/workflows/ios_ci.yml/badge.svg" alt="iOS CI" /></a>
 </p>
 
 <p align="center">
