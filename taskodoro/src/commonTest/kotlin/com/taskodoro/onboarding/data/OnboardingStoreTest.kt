@@ -18,6 +18,7 @@ package com.taskodoro.onboarding.data
 
 import com.taskodoro.onboarding.feature.OnboardingStore
 import com.taskodoro.storage.preferences.test.TestPreferences
+import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -26,14 +27,14 @@ import kotlin.test.assertTrue
 class OnboardingStoreTest {
 
     @Test
-    fun isOnboarded_returnsFalseWhenNotPreviouslySet() {
+    fun isOnboarded_returnsFalseWhenNotPreviouslySet() = runTest {
         val sut = makeSut()
 
         assertFalse(sut.isOnboarded().getOrThrow())
     }
 
     @Test
-    fun setOnboarded_setsValueCorrectly() {
+    fun setOnboarded_setsValueCorrectly() = runTest {
         val sut = makeSut()
 
         sut.setOnboarded()
