@@ -101,7 +101,7 @@ dependencies {
     implementation(libs.precompose.viewmodel)
 
     testImplementation(libs.junit)
-    testImplementation(libs.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

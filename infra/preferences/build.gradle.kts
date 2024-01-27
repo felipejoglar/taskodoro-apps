@@ -30,6 +30,7 @@ kotlin {
 
         commonMain.dependencies {
             implementation(libs.datastore)
+            implementation(libs.kotlinx.coroutines)
         }
 
     }
