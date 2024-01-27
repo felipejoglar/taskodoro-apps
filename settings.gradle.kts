@@ -35,7 +35,7 @@ dependencyResolutionManagement {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "Taskodoro_App"
+rootProject.name = "taskodoro-apps"
 
 include(":apps:android:app")
 include(":taskodoro")
