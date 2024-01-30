@@ -35,7 +35,7 @@ class SQLDelightTaskStoreTest {
 
         sut.save(task)
 
-        assertEquals(task, sut.load().first())
+        assertEquals(task, sut.loadAll().first())
     }
 
     @Test
@@ -59,7 +59,7 @@ class SQLDelightTaskStoreTest {
 
     private fun TaskodoroDB.clear() = taskdoroDBQueries.clearDB()
 
-    private fun SQLDelightTaskStore.load() = tasksQueries.load()
+    private fun SQLDelightTaskStore.loadAll() = tasksQueries.load()
         .executeAsList()
         .map {
             Task(

@@ -17,7 +17,8 @@
 package com.taskodoro.tasks.feature
 
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.flow.Flow
 
 interface TaskLoader {
-    fun load(onChange: (List<Task>) -> Unit)
+    fun load(): Flow<List<Task>>
 }

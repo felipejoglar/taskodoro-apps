@@ -21,6 +21,7 @@ import com.taskodoro.tasks.data.TaskStore
 import com.taskodoro.tasks.feature.model.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 internal class SQLDelightTaskStore(
@@ -42,5 +43,9 @@ internal class SQLDelightTaskStore(
                 updatedAt = 0,
             )
         }
+    }
+
+    override fun load(): Flow<List<Task>> {
+        TODO("Not yet implemented")
     }
 }

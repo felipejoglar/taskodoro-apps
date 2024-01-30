@@ -17,7 +17,9 @@
 package com.taskodoro.tasks.data
 
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.flow.Flow
 
 interface TaskStore {
     suspend fun save(task: Task)
+    fun load(): Flow<List<Task>>
 }
