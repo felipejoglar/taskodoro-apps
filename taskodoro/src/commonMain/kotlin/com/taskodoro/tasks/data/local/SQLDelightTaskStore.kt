@@ -16,16 +16,23 @@
 
 package com.taskodoro.tasks.data.local
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import com.taskodoro.model.Uuid
+import com.taskodoro.storage.db.LocalTask
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.tasks.data.TaskStore
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 internal class SQLDelightTaskStore(
     database: TaskodoroDB,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TaskStore {
 
     internal val tasksQueries = database.localTaskQueries
@@ -46,6 +53,26 @@ internal class SQLDelightTaskStore(
     }
 
     override fun load(): Flow<List<Task>> {
-        TODO("Not yet implemented")
+        return tasksQueries.load()
+            .asFlow()
+            .mapToList(dispatcher)
+            .map { it.toModels() }
     }
 }
+
+private fun List<LocalTask>.toModels() =
+    mapNotNull { task ->
+        val id = Uuid.from(task.id)
+        if (id != null) id to task else null
+    }.map { (id, task) ->
+        Task(
+            id = id,
+            title = task.title,
+            description = task.description,
+            priority = Task.Priority.fromValue(task.priority?.toInt() ?: 0),
+            dueDate = task.dueDate,
+            isCompleted = task.completed,
+            createdAt = task.createdAt,
+            updatedAt = task.updatedAt ?: 0,
+        )
+    }

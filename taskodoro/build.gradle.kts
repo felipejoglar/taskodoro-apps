@@ -40,6 +40,7 @@ kotlin {
             implementation(projects.infra.preferences)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.coroutines)
+            implementation(libs.sqlDelight.coroutines)
         }
 
         commonTest.dependencies {
