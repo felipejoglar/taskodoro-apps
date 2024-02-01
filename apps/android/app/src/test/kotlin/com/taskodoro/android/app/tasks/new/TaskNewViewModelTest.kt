@@ -21,6 +21,7 @@ import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.feature.new.TaskNewUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
+import kotlinx.datetime.LocalDateTime
 import moe.tlaster.precompose.stateholder.SavedStateHolder
 import org.junit.Assert
 import org.junit.Test
@@ -228,7 +229,7 @@ class TaskNewViewModelTest {
         override suspend fun invoke(
             title: String,
             description: String?,
-            dueDate: Long?,
+            dueDate: LocalDateTime?,
         ): Result<Unit> {
             return result!!
         }

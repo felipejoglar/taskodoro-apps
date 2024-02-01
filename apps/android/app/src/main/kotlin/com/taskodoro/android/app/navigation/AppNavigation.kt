@@ -65,6 +65,7 @@ fun AppNavigation(
             )
 
             taskGraph(
+                taskLoader = di.taskRepository,
                 taskNew = di.taskNewUseCase,
                 navigator = navigator,
                 onKnowMoreClicked = { navigator.navigateToOnboarding() },

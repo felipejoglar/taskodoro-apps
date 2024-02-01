@@ -55,8 +55,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-
-        isCoreLibraryDesugaringEnabled = true
     }
 
     buildFeatures {
@@ -83,8 +81,6 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.android.desugar)
-
     implementation(projects.taskodoro)
 
     implementation(libs.bundles.androidx.compose)
@@ -94,6 +90,8 @@ dependencies {
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.coil)
 

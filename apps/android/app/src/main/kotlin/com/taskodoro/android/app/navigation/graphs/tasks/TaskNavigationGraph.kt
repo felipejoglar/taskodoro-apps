@@ -16,6 +16,7 @@
 
 package com.taskodoro.android.app.navigation.graphs.tasks
 
+import com.taskodoro.tasks.feature.TaskLoader
 import com.taskodoro.tasks.feature.new.TaskNewUseCase
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -28,6 +29,7 @@ fun Navigator.navigateToTaskGraph(options: NavOptions? = null) {
 }
 
 fun RouteBuilder.taskGraph(
+    taskLoader: TaskLoader,
     taskNew: TaskNewUseCase,
     navigator: Navigator,
     onKnowMoreClicked: () -> Unit,
@@ -37,6 +39,8 @@ fun RouteBuilder.taskGraph(
         initialRoute = TASK_LIST_ROUTE,
     ) {
         taskListScreen(
+            taskLoader = taskLoader,
+            onTaskClicked = {},
             onNewTaskClicked = { navigator.navigateToTaskNew() },
             onKnowMoreClicked = onKnowMoreClicked,
         )

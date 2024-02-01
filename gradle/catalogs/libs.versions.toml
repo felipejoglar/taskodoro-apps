@@ -29,8 +29,8 @@ androidx-lifecycle = "2.6.2"
 
 coil = "2.5.0"
 
-compose = "1.6.0-beta03"
-compose-material3 = "1.1.2"
+compose = "1.6.0"
+compose-material3 = "1.2.0-rc01"
 compose-compiler = "1.5.7"
 
 precompose = "1.5.10"
@@ -45,8 +45,6 @@ coroutines = "1.7.3"
 junit = "4.13.2"
 
 [libraries]
-# Desugaring - https://developer.android.com/studio/write/java8-support#library-desugaring
-android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
 # Jetpack Compose - https://developer.android.com/jetpack/androidx/releases/compose
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }

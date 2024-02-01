@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -55,6 +56,7 @@ fun DueDateSelection(
         val datePickerState = rememberDatePickerState(
             initialDisplayMode = DisplayMode.Picker,
             initialSelectedDateMillis = initialSelectedDateSeconds?.asMillis() ?: today,
+            selectableDates = fromToday,
         )
 
         SingleRowTopAppBar(
@@ -81,12 +83,24 @@ fun DueDateSelection(
         DatePicker(
             state = datePickerState,
             title = null,
-            dateValidator = { it >= today },
             showModeToggle = false,
             modifier = Modifier.padding(top = 16.dp),
         )
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+private val fromToday: SelectableDates
+    get() = object : SelectableDates {
+        override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+            return utcTimeMillis >= today
+        }
+
+        override fun isSelectableYear(year: Int): Boolean {
+            val currentYear = LocalDate.now().atStartOfDay().year
+            return year >= currentYear
+        }
+    }
 
 private val today: Long
     get() = TimeUnit.SECONDS.toMillis(LocalDate.now().atStartOfDay().toEpochSecond(ZoneOffset.UTC))

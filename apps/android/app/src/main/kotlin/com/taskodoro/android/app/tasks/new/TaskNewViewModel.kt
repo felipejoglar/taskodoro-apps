@@ -26,6 +26,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
@@ -73,7 +76,10 @@ class TaskNewViewModel(
     }
 
     private suspend fun taskNew(state: TaskNewUiState): Result<Unit> {
-        return taskNew(state.title, state.description, state.dueDate)
+        val dueDate = state.dueDate?.let {
+            Instant.fromEpochSeconds(it).toLocalDateTime(TimeZone.currentSystemDefault())
+        }
+        return taskNew(state.title, state.description, dueDate)
     }
 
     private fun updateWith(

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2023 Felipe Joglar
+ *    Copyright 2024 Felipe Joglar
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +16,16 @@
 
 package com.taskodoro.android.app.navigation.graphs.tasks
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.taskodoro.android.app.tasks.list.TaskListScreen
+import com.taskodoro.android.app.tasks.list.TaskListViewModel
+import com.taskodoro.tasks.feature.TaskLoader
+import com.taskodoro.tasks.feature.model.Task
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
+import moe.tlaster.precompose.viewmodel.viewModel
 
 const val TASK_LIST_ROUTE = "$TASK_GRAPH_ROUTE/list"
 
@@ -28,13 +34,23 @@ fun Navigator.navigateToTaskList(options: NavOptions? = null) {
 }
 
 fun RouteBuilder.taskListScreen(
+    taskLoader: TaskLoader,
+    onTaskClicked: (Task) -> Unit,
     onNewTaskClicked: () -> Unit,
     onKnowMoreClicked: () -> Unit,
 ) {
     scene(
         route = TASK_LIST_ROUTE,
     ) {
+        val viewModel = viewModel {
+            TaskListViewModel(taskLoader = taskLoader)
+        }
+
+        val state by viewModel.uiState.collectAsState()
+
         TaskListScreen(
+            state = state,
+            onTaskClicked = onTaskClicked,
             onNewTaskClicked = onNewTaskClicked,
             onKnowMoreClicked = onKnowMoreClicked,
         )

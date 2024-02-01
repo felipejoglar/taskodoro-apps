@@ -23,8 +23,9 @@ import com.taskodoro.tasks.data.TaskStoreFactory
 import com.taskodoro.tasks.feature.new.TaskNew
 import com.taskodoro.tasks.feature.new.TaskNewUseCase
 import com.taskodoro.tasks.validator.TaskValidatorFactory
-import java.time.Instant
-import java.time.ZoneId
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class DiContainer(
     private val applicationContext: Context,
@@ -39,11 +40,11 @@ class DiContainer(
             return TaskNew(
                 saver = taskRepository,
                 validator = validator,
-                now = { Instant.now().atZone(ZoneId.of("UTC")).toEpochSecond() },
+                now = { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) },
             )
         }
 
-    private val taskRepository by lazy {
+    val taskRepository by lazy {
         TaskRepository(TaskStoreFactory(applicationContext).create())
     }
 }
