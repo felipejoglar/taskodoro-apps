@@ -1,6 +1,5 @@
 insert:
-INSERT INTO LocalTask(id, title, description, priority, completed, dueDate, createdAt, updatedAt)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO LocalTask VALUES ?;
 
 load:
-SELECT * FROM LocalTask ORDER BY dueDate DESC;
+SELECT * FROM LocalTask ORDER BY dueDate ASC;

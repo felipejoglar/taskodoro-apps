@@ -17,28 +17,14 @@
 package com.taskodoro.tasks.feature.model
 
 import com.taskodoro.model.Uuid
+import kotlinx.datetime.LocalDateTime
 
 data class Task(
     val id: Uuid = Uuid(),
     val title: String,
     val description: String? = null,
-    val priority: Priority = Priority.MEDIUM,
-    val dueDate: Long,
     val isCompleted: Boolean = false,
-    val createdAt: Long,
-    val updatedAt: Long = 0,
-) {
-
-    enum class Priority {
-        LOW, MEDIUM, HIGH;
-
-        companion object {
-            fun fromValue(value: Int) =
-                when {
-                    value < 1 -> LOW
-                    value == 1 -> MEDIUM
-                    else -> HIGH
-                }
-        }
-    }
-}
+    val dueDate: LocalDateTime,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
+)

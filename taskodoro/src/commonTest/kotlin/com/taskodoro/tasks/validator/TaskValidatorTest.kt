@@ -20,8 +20,10 @@ import com.taskodoro.helpers.anyTask
 import com.taskodoro.tasks.feature.model.Task
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
+import kotlinx.datetime.toLocalDateTime
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.fail
@@ -101,7 +103,7 @@ class TaskValidatorTest {
     private fun taskWith(title: String) =
         anyTask(title = title, dueDate = today)
 
-    private fun taskWith(dueDate: Long) =
+    private fun taskWith(dueDate: LocalDateTime) =
         anyTask(dueDate = dueDate)
 
     private fun assertNotFails(block: () -> Unit) {
@@ -112,19 +114,19 @@ class TaskValidatorTest {
         }
     }
 
-    private val today: Long = Clock.System
+    private val today = Clock.System
         .now()
-        .epochSeconds
+        .toLocalDateTime(TimeZone.currentSystemDefault())
 
-    private val yesterday: Long = Clock.System
+    private val yesterday = Clock.System
         .now()
         .minus(1, DateTimeUnit.DAY, TimeZone.UTC)
-        .epochSeconds
+        .toLocalDateTime(TimeZone.currentSystemDefault())
 
-    private val tomorrow: Long = Clock.System
+    private val tomorrow = Clock.System
         .now()
         .minus(-1, DateTimeUnit.DAY, TimeZone.UTC)
-        .epochSeconds
+        .toLocalDateTime(TimeZone.currentSystemDefault())
 
     // endregion
 }

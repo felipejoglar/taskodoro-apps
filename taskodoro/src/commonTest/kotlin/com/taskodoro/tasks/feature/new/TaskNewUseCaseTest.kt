@@ -22,6 +22,10 @@ import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
 import com.taskodoro.tasks.validator.ValidatorError
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -106,8 +110,8 @@ class TaskNewUseCaseTest {
 
     @Test
     fun save_savesCorrectDueDate() = runTest {
-        val now = 0L
-        val dueDate = 100L
+        val now = now
+        val dueDate = now
         val (sut, repository, validator) = makeSUT(now)
 
         validator.completeSuccessfully()
@@ -123,19 +127,20 @@ class TaskNewUseCaseTest {
     // region Helpers
 
     private fun makeSUT(
-        now: Long = 0,
+        date: LocalDateTime = now,
     ): Triple<TaskNewUseCase, TaskSaverStub, TaskValidatorStub> {
         val validator = TaskValidatorStub()
         val repository = TaskSaverStub()
         val sut = TaskNew(
             saver = repository,
             validator = validator,
-            now = { now },
+            now = { date },
         )
 
         return Triple(sut, repository, validator)
     }
 
+    private val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
     private val anyTitle = "A task"
 
     private class TaskSaverStub : TaskSaver {

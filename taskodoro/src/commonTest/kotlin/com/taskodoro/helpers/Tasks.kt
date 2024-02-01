@@ -17,12 +17,17 @@
 package com.taskodoro.helpers
 
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 internal fun anyTask(
     title: String = "A task title",
-    dueDate: Long = 0,
+    dueDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
 ) = Task(
     title = title,
     dueDate = dueDate,
-    createdAt = 0L,
+    createdAt = dueDate,
+    updatedAt = dueDate,
 )

@@ -18,13 +18,15 @@ package com.taskodoro.tasks.validator
 
 import com.taskodoro.tasks.feature.model.Task
 import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 object TaskValidatorFactory {
 
     private const val MINIMUM_TITLE_LENGTH = 4
 
     fun create(): Validator<Task> {
-        val now = { Clock.System.now().epochSeconds }
+        val now = { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
 
         val validators = listOf(
             TitleLengthValidator(MINIMUM_TITLE_LENGTH),

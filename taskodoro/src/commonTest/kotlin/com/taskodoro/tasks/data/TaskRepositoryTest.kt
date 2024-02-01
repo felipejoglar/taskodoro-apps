@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
@@ -108,9 +109,7 @@ class TaskRepositoryTest {
         return sut to store
     }
 
-    private fun makeTasks() = List(3) {
-        Task(title = "Task $it", dueDate = 0, createdAt = 0)
-    }
+    private fun makeTasks() = List(3) { anyTask() }
 
     private class TaskStoreSpy : TaskStore {
         enum class Message {
