@@ -17,7 +17,6 @@
 package com.taskodoro.tasks.data.local
 
 import com.taskodoro.helpers.anyTask
-import com.taskodoro.model.Uuid
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.db.test.TestDriverFactory
 import com.taskodoro.tasks.feature.model.Task
@@ -51,15 +50,16 @@ class SQLDelightTaskStoreTest {
         val task = anyTask()
         val anotherTask = anyTask()
 
-        sut.save(task)
         sut.save(anotherTask)
+        sut.save(task)
 
         val receivedTasks = mutableListOf<List<Task>>()
         backgroundScope.launch(UnconfinedTestDispatcher()) {
             sut.load().toList(receivedTasks)
         }
 
-        assertEquals(listOf(task, anotherTask), receivedTasks.first())
+        val expectedOrderedTasks = listOf(task, anotherTask)
+        assertEquals(expectedOrderedTasks, receivedTasks.first())
     }
 
     // region Helpers
@@ -73,17 +73,6 @@ class SQLDelightTaskStoreTest {
     }
 
     private fun TaskodoroDB.clear() = taskdoroDBQueries.clearDB()
-
-    private fun SQLDelightTaskStore.loadAll() = tasksQueries.load()
-        .executeAsList()
-        .map {
-            Task(
-                id = Uuid.from(it.id)!!,
-                title = it.title,
-                dueDate = it.dueDate,
-                createdAt = it.createdAt,
-            )
-        }
 
     // endregion
 }
