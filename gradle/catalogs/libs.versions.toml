@@ -76,6 +76,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 sqlDelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqlDelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 sqlDelight-jvm-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
+sqlDelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
 
 # DataStore - https://developer.android.com/jetpack/androidx/releases/datastore
 datastore = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }

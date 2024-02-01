@@ -18,22 +18,19 @@ package com.taskodoro.tasks.validator
 
 import com.taskodoro.tasks.feature.model.Task
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
 internal class DueDateValidator(
-    private val now: () -> Long,
+    private val now: () -> LocalDateTime,
 ) : Validator<Task> {
 
     override fun validate(value: Task) {
-        val dueDateDay = extractDayFrom(value.dueDate)
-        val currentDateDay = extractDayFrom(now())
 
-        if (dueDateDay < currentDateDay) {
+        if (value.dueDate.date < now().date) {
             throw TaskValidatorError.InvalidDueDate
         }
     }
-
-    private fun extractDayFrom(epoch: Long) =
-        Instant.fromEpochSeconds(epoch).toLocalDateTime(TimeZone.UTC).date.toEpochDays()
 }

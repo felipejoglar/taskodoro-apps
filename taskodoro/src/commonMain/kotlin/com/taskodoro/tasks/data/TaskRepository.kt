@@ -16,12 +16,14 @@
 
 package com.taskodoro.tasks.data
 
+import com.taskodoro.tasks.feature.TaskLoader
 import com.taskodoro.tasks.feature.TaskSaver
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(
     private val store: TaskStore,
-) : TaskSaver {
+) : TaskSaver, TaskLoader {
 
     object SaveFailed : Exception()
 
@@ -32,4 +34,8 @@ class TaskRepository(
         } catch (exception: Exception) {
             Result.failure(SaveFailed)
         }
+
+    override fun load(): Flow<List<Task>> {
+        return store.load()
+    }
 }

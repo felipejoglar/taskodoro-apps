@@ -18,10 +18,20 @@ package com.taskodoro.tasks.data
 
 import com.taskodoro.helpers.anyTask
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TaskRepositoryTest {
 
     @Test
@@ -53,6 +63,43 @@ class TaskRepositoryTest {
         assertEquals(Result.success(Unit), result)
     }
 
+    @Test
+    fun load_failsOnRetrievalError() = runTest {
+        val retrievalError = Exception()
+        val (sut, store) = makeSUT()
+
+        store.completeRetrievalWithError(retrievalError)
+
+        assertFails { sut.load().collect() }
+    }
+
+    @Test
+    fun load_succeedsOnSuccessfulRetrieval() = runTest {
+        val (sut, store) = makeSUT()
+
+        val receivedTasks = mutableListOf<List<Task>>()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            sut.load().toList(receivedTasks)
+        }
+        store.completeRetrievalSuccessfullyWith(emptyList())
+
+        assertEquals(emptyList(), receivedTasks.first())
+    }
+
+    @Test
+    fun load_succeedsWithTasksOnSuccessfulRetrieval() = runTest {
+        val tasks = makeTasks()
+        val (sut, store) = makeSUT()
+
+        val receivedTasks = mutableListOf<List<Task>>()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            sut.load().toList(receivedTasks)
+        }
+        store.completeRetrievalSuccessfullyWith(tasks)
+
+        assertEquals(tasks, receivedTasks.first())
+    }
+
     // region Helpers
 
     private fun makeSUT(): Pair<TaskRepository, TaskStoreSpy> {
@@ -62,9 +109,11 @@ class TaskRepositoryTest {
         return sut to store
     }
 
+    private fun makeTasks() = List(3) { anyTask() }
+
     private class TaskStoreSpy : TaskStore {
         enum class Message {
-            SAVE,
+            SAVE, LOAD,
         }
 
         var messages = mutableListOf<Message>()
@@ -87,6 +136,24 @@ class TaskRepositoryTest {
 
         fun completeInsertionWithFailure() {
             insertionSuccessful = false
+        }
+
+        private val flow = MutableSharedFlow<List<Task>>()
+        private var retrievalError: Exception? = null
+
+        override fun load(): Flow<List<Task>> {
+            messages.add(Message.LOAD)
+
+            retrievalError?.let { throw it }
+            return flow
+        }
+
+        fun completeRetrievalWithError(error: Exception) {
+            retrievalError = error
+        }
+
+        suspend fun completeRetrievalSuccessfullyWith(tasks: List<Task>) {
+            flow.emit(tasks)
         }
     }
 

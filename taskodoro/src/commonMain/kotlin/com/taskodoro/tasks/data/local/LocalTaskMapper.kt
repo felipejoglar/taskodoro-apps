@@ -16,42 +16,43 @@
 
 package com.taskodoro.tasks.data.local
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.taskodoro.model.Uuid
 import com.taskodoro.storage.db.LocalTask
-import com.taskodoro.storage.db.TaskodoroDB
-import com.taskodoro.tasks.data.TaskStore
 import com.taskodoro.tasks.feature.model.Task
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
-internal class SQLDelightTaskStore(
-    database: TaskodoroDB,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : TaskStore {
+fun Task.toLocal() = LocalTask(
+    id = id.uuidString,
+    title = title,
+    description = description,
+    completed = isCompleted,
+    dueDate = dueDate.toLocal(),
+    createdAt = createdAt.toLocal(),
+    updatedAt = updatedAt.toLocal(),
+)
 
-    private val tasksQueries = database.localTaskQueries
-
-    override suspend fun save(task: Task) {
-        withContext(Dispatchers.IO) {
-            tasksQueries.insert(task.toLocal())
-        }
+fun List<LocalTask>.toModels() =
+    mapNotNull { task ->
+        val id = Uuid.from(task.id)
+        if (id != null) id to task else null
+    }.map { (id, task) ->
+        Task(
+            id = id,
+            title = task.title,
+            description = task.description,
+            isCompleted = task.completed,
+            dueDate = task.dueDate.toModel(),
+            createdAt = task.createdAt.toModel(),
+            updatedAt = task.updatedAt.toModel(),
+        )
     }
 
-    override fun load(): Flow<List<Task>> {
-        return tasksQueries.load()
-            .asFlow()
-            .mapToList(dispatcher)
-            .map { it.toModels() }
-    }
-}
+private fun LocalDateTime.toLocal() =
+    toInstant(TimeZone.currentSystemDefault()).toString()
+
+private fun String.toModel() =
+    Instant.parse(this).toLocalDateTime(TimeZone.currentSystemDefault())

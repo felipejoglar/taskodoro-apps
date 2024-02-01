@@ -17,26 +17,20 @@
 package com.taskodoro.tasks.data.local
 
 import com.taskodoro.helpers.anyTask
-import com.taskodoro.model.Uuid
 import com.taskodoro.storage.db.TaskodoroDB
 import com.taskodoro.storage.db.test.TestDriverFactory
 import com.taskodoro.tasks.feature.model.Task
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SQLDelightTaskStoreTest {
-
-    @Test
-    fun save_succeedsOnSuccessfulInsertion() = runTest {
-        val sut = makeSUT()
-        val task = anyTask()
-
-        sut.save(task)
-
-        assertEquals(task, sut.load().first())
-    }
 
     @Test
     fun save_failsOnInsertionFailure() = runTest {
@@ -44,7 +38,28 @@ class SQLDelightTaskStoreTest {
         val task = anyTask()
         sut.save(task)
 
-        assertFails { sut.save(task) }
+        assertFails {
+            val duplicatedTask = task
+            sut.save(duplicatedTask)
+        }
+    }
+
+    @Test
+    fun load_succeedsAfterSuccessfulInsertion() = runTest {
+        val sut = makeSUT()
+        val task = anyTask()
+        val anotherTask = anyTask()
+
+        sut.save(anotherTask)
+        sut.save(task)
+
+        val receivedTasks = mutableListOf<List<Task>>()
+        backgroundScope.launch(UnconfinedTestDispatcher()) {
+            sut.load().toList(receivedTasks)
+        }
+
+        val expectedOrderedTasks = listOf(task, anotherTask)
+        assertEquals(expectedOrderedTasks, receivedTasks.first())
     }
 
     // region Helpers
@@ -54,21 +69,10 @@ class SQLDelightTaskStoreTest {
         val db = TaskodoroDB(driver)
         db.clear()
 
-        return SQLDelightTaskStore(database = db)
+        return SQLDelightTaskStore(database = db, dispatcher = UnconfinedTestDispatcher())
     }
 
     private fun TaskodoroDB.clear() = taskdoroDBQueries.clearDB()
-
-    private fun SQLDelightTaskStore.load() = tasksQueries.load()
-        .executeAsList()
-        .map {
-            Task(
-                id = Uuid.from(it.id)!!,
-                title = it.title,
-                dueDate = it.dueDate,
-                createdAt = it.createdAt,
-            )
-        }
 
     // endregion
 }

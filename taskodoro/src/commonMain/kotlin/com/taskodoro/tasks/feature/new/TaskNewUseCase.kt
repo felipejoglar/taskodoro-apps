@@ -20,31 +20,34 @@ import com.taskodoro.tasks.feature.TaskSaver
 import com.taskodoro.tasks.feature.model.Task
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.Validator
+import kotlinx.datetime.LocalDateTime
 
 interface TaskNewUseCase {
     suspend operator fun invoke(
         title: String,
         description: String? = null,
-        dueDate: Long? = null,
+        dueDate: LocalDateTime? = null,
     ): Result<Unit>
 }
 
 class TaskNew(
     private val saver: TaskSaver,
     private val validator: Validator<Task>,
-    private val now: () -> Long,
+    private val now: () -> LocalDateTime,
 ) : TaskNewUseCase {
 
     override suspend operator fun invoke(
         title: String,
         description: String?,
-        dueDate: Long?,
+        dueDate: LocalDateTime?,
     ): Result<Unit> {
+        val now = now()
         val task = Task(
             title = title.trim(),
             description = description,
-            dueDate = dueDate ?: now(),
-            createdAt = now(),
+            dueDate = dueDate ?: now,
+            createdAt = now,
+            updatedAt = now
         )
 
         return try {

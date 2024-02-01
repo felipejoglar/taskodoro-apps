@@ -25,10 +25,7 @@ actual class TaskStoreFactory(
 ) {
 
     actual fun create(): TaskStore {
-        val database = DatabaseFactory(context).create().apply {
-            taskdoroDBQueries.clearDB()
-        }
-
+        val database = DatabaseFactory(context).create()
         return SQLDelightTaskStore(database = database)
     }
 }

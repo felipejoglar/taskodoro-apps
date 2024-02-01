@@ -4,11 +4,10 @@ CREATE TABLE LocalTask  (
     id TEXT NOT NULL PRIMARY KEY UNIQUE,
     title TEXT NOT NULL,
     description TEXT,
-    priority INTEGER DEFAULT 1,
     completed INTEGER AS Boolean NOT NULL DEFAULT 0,
-    dueDate INTEGER NOT NULL,
-    createdAt INTEGER NOT NULL,
-    updatedAt INTEGER
+    dueDate TEXT NOT NULL,
+    createdAt TEXT NOT NULL,
+    updatedAt TEXT NOT NULL
 );
 
 CREATE UNIQUE INDEX task_id ON LocalTask(id);

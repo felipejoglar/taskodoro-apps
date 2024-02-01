@@ -24,7 +24,6 @@ import androidx.compose.runtime.setValue
 import com.taskodoro.android.app.tasks.new.TaskNewScreen
 import com.taskodoro.android.app.tasks.new.TaskNewViewModel
 import com.taskodoro.tasks.feature.new.TaskNewUseCase
-import kotlinx.coroutines.Dispatchers
 import moe.tlaster.precompose.navigation.BackHandler
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -46,7 +45,7 @@ fun RouteBuilder.taskNewScreen(
         route = TASK_NEW_ROUTE,
     ) {
         val viewModel = viewModel { savedStateHolder ->
-            TaskNewViewModel(taskNew, Dispatchers.IO, savedStateHolder)
+            TaskNewViewModel(taskNew, savedStateHolder)
         }
 
         val state by viewModel.uiState.collectAsState()

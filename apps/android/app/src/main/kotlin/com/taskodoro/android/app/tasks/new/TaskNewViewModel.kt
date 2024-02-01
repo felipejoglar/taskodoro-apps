@@ -20,24 +20,18 @@ import androidx.annotation.StringRes
 import com.taskodoro.android.R
 import com.taskodoro.tasks.feature.new.TaskNewUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
 class TaskNewViewModel(
     private val taskNew: TaskNewUseCase,
-    private val dispatcher: CoroutineDispatcher,
     savedStateHolder: SavedStateHolder,
 ) : ViewModel() {
 
@@ -68,19 +62,19 @@ class TaskNewViewModel(
     }
 
     fun onSubmitClicked() {
-        taskNew(_uiState.value)
-            .flowOn(dispatcher)
-            .onStart { updateWith(loading = true) }
-            .onSuccess { updateWith(isTaskSaved = true) }
-            .onFailure { handleError(it as TaskValidatorError) }
-            .catch { updateWithError() }
-            .launchIn(viewModelScope)
+        viewModelScope.launch {
+            runCatching {
+                updateWith(loading = true)
+                taskNew(_uiState.value)
+                    .onSuccess { updateWith(isTaskSaved = true) }
+                    .onFailure { handleError(it as TaskValidatorError) }
+            }.onFailure { updateWithError() }
+        }
     }
 
-    private fun taskNew(state: TaskNewUiState) =
-        flow {
-            emit(taskNew(state.title, state.description, state.dueDate))
-        }
+    private suspend fun taskNew(state: TaskNewUiState): Result<Unit> {
+        return taskNew(state.title, state.description, state.dueDate)
+    }
 
     private fun updateWith(
         loading: Boolean = false,

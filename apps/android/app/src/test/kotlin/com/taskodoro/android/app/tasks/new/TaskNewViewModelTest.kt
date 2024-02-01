@@ -21,7 +21,6 @@ import com.taskodoro.android.app.helpers.expectEquals
 import com.taskodoro.tasks.feature.new.TaskNewUseCase
 import com.taskodoro.tasks.validator.TaskValidatorError
 import com.taskodoro.tasks.validator.ValidatorError
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import moe.tlaster.precompose.stateholder.SavedStateHolder
 import org.junit.Assert
 import org.junit.Test
@@ -217,7 +216,6 @@ class TaskNewViewModelTest {
         val taskNew = TaskNewUseCaseStub()
         val sut = TaskNewViewModel(
             taskNew = taskNew,
-            dispatcher = UnconfinedTestDispatcher(),
             savedStateHolder = SavedStateHolder("", null),
         )
 
